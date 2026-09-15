@@ -1,0 +1,1683 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dinas PUPR Kota Ambon - Portal Resmi & E-Disposisi Surat</title>
+  <meta property="og:title" content="Dinas PUPR Kota Ambon - Portal Resmi & E-Disposisi Surat" />
+  <meta property="og:description" content="Portal resmi dan sistem monitoring e-disposisi surat Dinas PUPR Kota Ambon." />
+  <meta property="og:image" content="https://i-rigasi-rauk.vercel.app/gambar-thumbnail.png" />
+  <meta property="og:url" content="https://i-rigasi-rauk.vercel.app" />
+  <meta property="og:type" content="website" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        pu: {
+                            blue: '#0F2C59',
+                            darkblue: '#081C38',
+                            lightblue: '#2563EB',
+                            yellow: '#F59E0B',
+                            gold: '#D97706',
+                            accent: '#38BDF8',
+                            bg: '#F8FAFC'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-nav {
+            background: rgba(15, 44, 89, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        .hero-gradient {
+          background: linear-gradient(135deg, rgba(8, 28, 56, 0.4) 0%, rgba(15, 44, 89, 0.4) 40%, rgba(15, 44, 89, 0.4) 100%);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased leading-relaxed min-h-screen flex flex-col justify-between selection:bg-pu-yellow selection:text-pu-darkblue">
+
+    <!-- MODAL / HALAMAN LOGIN AKSES MASUK -->
+    <div id="login-overlay" class="fixed inset-0 z-50 bg-slate-900/20 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full overflow-hidden shadow-2xl border border-slate-200 animate-in fade-in zoom-in duration-300">
+            <div class="bg-pu-darkblue text-white p-6 text-center relative border-b border-slate-700">
+                <div class="w-16 h-16 bg-transparent rounded-xl mx-auto flex items-center justify-center p-1.5 mb-3">
+                    <img src="Lambang_Ambon.png" alt="Logo Pemkot Ambon" class="w-full h-full object-contain">
+                </div>
+                <span class="text-xs font-semibold uppercase tracking-wider text-pu-yellow">Pemerintah Kota Ambon</span>
+                <h2 class="text-xl font-bold tracking-tight text-white mt-1">Dinas PUPR Kota Ambon</h2>
+                <p class="text-xs text-slate-300 mt-1">Silakan masuk menggunakan akun resmi Anda</p>
+            </div>
+
+            <form onsubmit="handleLogin(event)" class="p-6 space-y-4 text-xs">
+                <div id="login-error-msg" class="hidden p-3 bg-red-50 border border-red-200 text-red-600 rounded-xl font-medium text-center">
+                    Username atau password salah!
+                </div>
+
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">Username</label>
+                    <div class="relative">
+                        <i class="fa-solid fa-user absolute left-3.5 top-3.5 text-slate-400"></i>
+                        <input type="text" id="login-username" required placeholder="Masukkan username..." class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-pu-blue focus:border-pu-blue text-xs font-medium">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">Password</label>
+                    <div class="relative">
+                        <i class="fa-solid fa-lock absolute left-3.5 top-3.5 text-slate-400"></i>
+                        <input type="password" id="login-password" required placeholder="Masukkan password..." class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-pu-blue focus:border-pu-blue text-xs font-medium">
+                    </div>
+                </div>
+
+                <div class="pt-2">
+                    <button type="submit" class="w-full py-3 bg-pu-yellow hover:bg-amber-400 text-pu-darkblue font-extrabold text-sm rounded-xl shadow-md transition transform active:scale-95 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-right-to-bracket"></i>
+                        <span>Masuk ke Portal</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- EXTERNAL APP VIEWER DENGAN TOMBOL KEMBALI KE BERANDA -->
+    <div id="external-app-viewer" class="hidden fixed inset-0 z-50 bg-slate-900 flex flex-col">
+        <div class="bg-pu-darkblue text-white px-4 py-3 flex items-center justify-between border-b border-slate-700 shadow-md z-10">
+            <div class="flex items-center space-x-3">
+                <div class="w-9 h-9 bg-darkblue rounded-[8px] flex items-center justify-center overflow-hidden p-1 border border-slate-700">
+                    <img src="Lambang_Ambon.png" alt="Logo Pemkot Ambon" class="w-full h-full object-contain">
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-[10px] font-semibold uppercase tracking-wider text-pu-yellow">Pemerintah Kota Ambon</span>
+                    <span class="text-sm font-bold tracking-tight text-white leading-tight">Dinas PUPR Kota Ambon</span>
+                </div>
+            </div>
+            <button onclick="closeExternalApp()" class="px-4 py-2 bg-pu-yellow hover:bg-amber-400 text-pu-darkblue font-extrabold rounded-xl text-xs flex items-center gap-2 shadow-md transition transform active:scale-95 cursor-pointer">
+                <i class="fa-solid fa-house text-sm"></i>
+                <span>Kembali ke Beranda</span>
+            </button>
+        </div>
+        <div class="w-full h-full relative flex-grow">
+            <iframe id="external-iframe" src="" class="w-full h-full border-0"></iframe>
+        </div>
+    </div>
+
+    <header class="sticky top-0 z-40 w-full glass-nav text-white border-b border-slate-700/50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="relative group cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+				<div class="w-12 h-12 bg-darkblue rounded-[10px] flex items-center justify-center overflow-hidden p-1">
+				<img src="Lambang_Ambon.png" alt="Logo Pemkot Ambon" class="w-full h-full object-contain">
+				</div>
+			</div>                  
+                <div class="flex flex-col">
+                    <span class="text-xs font-semibold uppercase tracking-wider text-pu-yellow">Pemerintah Kota Ambon</span>
+                    <span class="text-base sm:text-lg font-bold tracking-tight text-white leading-tight">Dinas PUPR Kota Ambon</span>
+                </div>
+            </div>
+
+            <nav class="hidden md:flex items-center space-x-1 lg:space-x-2">
+                <a href="#hero" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-200 hover:text-white hover:bg-white/10 transition">Beranda</a>
+                <a href="#pelayanan-utama" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-200 hover:text-white hover:bg-white/10 transition">Pelayanan Utama</a>
+                <a href="https://script.google.com/macros/s/AKfycbwz_FYlaswk4lzTY2bJFEKtLZ-OmIA3cgQ9BAzqniP0MDrUyt2bGwj7Imd3BUkmmCbJ/exec" target="_blank" class="px-3 py-2 rounded-lg text-sm font-medium text-amber-300 hover:text-white hover:bg-white/10 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-bullhorn"></i> Pengaduan
+                </a>
+                <a href="#layanan-surat" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-200 hover:text-white hover:bg-white/10 transition flex items-center gap-1.5">
+                    <span class="relative flex h-2 w-2">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-pu-yellow opacity-75"></span>
+                      <span class="relative inline-flex rounded-full h-2 w-2 bg-pu-yellow"></span>
+                    </span>
+                    Tracking Surat
+                </a>
+                <a href="#staf-teknis" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-200 hover:text-white hover:bg-white/10 transition">Staf Teknis</a>
+                
+                <button onclick="openConfigApiModal()" class="ml-2 px-2.5 py-1.5 rounded-lg text-xs font-semibold text-emerald-300 bg-emerald-950/50 hover:bg-emerald-900/80 border border-emerald-500/40 transition flex items-center gap-1.5 shadow-sm" title="Integrasi Google Sheets">
+                    <i class="fa-solid fa-file-excel text-emerald-400"></i>
+                    <span>Google Sheets</span>
+                </button>
+            </nav>
+
+            <div class="flex items-center space-x-3">
+                <a href="#layanan-surat" class="hidden sm:inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-pu-yellow to-amber-500 hover:from-amber-400 hover:to-pu-yellow text-pu-darkblue font-bold text-sm shadow-md hover:shadow-lg transition-all duration-200 transform hover:-translate-y-0.5">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <span>Cek Surat</span>
+                </a>
+                
+                <button onclick="handleLogout()" class="hidden sm:inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-sm shadow-md transition-all duration-200">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Logout</span>
+                </button>
+                
+                <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg bg-white/10 text-slate-200 hover:text-white focus:outline-none">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-pu-darkblue/95 border-b border-slate-700 px-4 pt-2 pb-6 space-y-2">
+            <a href="#hero" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-slate-200 hover:bg-white/10">Beranda</a>
+            <a href="#pelayanan-utama" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-slate-200 hover:bg-white/10">Pelayanan Utama</a>
+            <a href="https://script.google.com/macros/s/AKfycbwz_FYlaswk4lzTY2bJFEKtLZ-OmIA3cgQ9BAzqniP0MDrUyt2bGwj7Imd3BUkmmCbJ/exec" target="_blank" class="block px-3 py-2 rounded-md text-base font-medium text-amber-300 hover:bg-white/10 flex items-center gap-2">
+                <i class="fa-solid fa-bullhorn"></i> Pengaduan
+            </a>
+            <a href="#layanan-surat" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-amber-300 hover:bg-white/10">Tracking Surat & Disposisi</a>
+            <a href="#staf-teknis" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-slate-200 hover:bg-white/10">Staf Teknis</a>
+            
+            <button onclick="openConfigApiModal(); toggleMobileMenu();" class="w-full text-left px-3 py-2 rounded-md text-sm font-semibold text-emerald-300 hover:bg-white/10 flex items-center gap-2">
+                <i class="fa-solid fa-file-excel text-emerald-400"></i> Google Sheets Sync
+            </button>
+            <button onclick="handleLogout(); toggleMobileMenu();" class="w-full text-left px-3 py-2 rounded-md text-sm font-semibold text-red-300 hover:bg-red-900/50 flex items-center gap-2">
+                <i class="fa-solid fa-right-from-bracket text-red-400"></i> Logout
+            </button>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <section id="hero" class="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-slate-900 text-white">
+            <div class="absolute inset-0 z-0">
+                <img id="hero-bg-image" src="" 
+                     alt="Gedung PUPR Ambon & Infrastruktur" 
+                     class="w-full h-full object-cover object-center scale-105 transition-all duration-1000 ease-in-out"
+                     onerror="this.src='https://placehold.co/1920x1080/0f2c59/ffffff?text=Gedung+Dinas+PUPR+Kota+Ambon'">
+                <div class="absolute inset-0 hero-gradient"></div>
+            </div>
+
+            <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 text-center">
+                <div class="space-y-6 flex flex-col items-center">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-800/80 border border-pu-yellow/40 backdrop-blur-md">
+                        <span class="text-xs font-semibold text-pu-yellow tracking-wide uppercase">Portal Resmi Dinas PUPR Kota Ambon</span>
+                    </div>
+
+                    <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight text-white max-w-4xl">
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-pu-yellow to-amber-500">Mewujudkan Ambon yang berkelanjutan</span>
+                    </h1>
+
+                    <p class="text-base sm:text-lg text-slate-300 max-w-2xl font-normal leading-relaxed">
+                        Selamat datang di portal informasi digital Dinas Pekerjaan Umum dan Penataan Ruang Kota Ambon. Pantau disposisi surat masuk, status tindak lanjut, serta dokumentasi lapangan.
+                    </p>
+
+                    <div class="pt-4 flex flex-wrap gap-3 justify-center">
+                        <a href="#layanan-surat" class="px-6 py-3.5 rounded-xl bg-pu-yellow hover:bg-amber-400 text-pu-darkblue font-extrabold text-base shadow-xl shadow-amber-500/20 hover:shadow-amber-500/40 transition-all duration-300 transform hover:-translate-y-1 flex items-center gap-2.5">
+                            <i class="fa-solid fa-envelope-open-text text-lg"></i>
+                            <span>Lihat Surat & Disposisi</span>
+                        </a>
+                        <a href="https://script.google.com/macros/s/AKfycbwz_FYlaswk4lzTY2bJFEKtLZ-OmIA3cgQ9BAzqniP0MDrUyt2bGwj7Imd3BUkmmCbJ/exec" target="_blank" class="px-6 py-3.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-extrabold text-base shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex items-center gap-2.5">
+                            <i class="fa-solid fa-bullhorn text-lg"></i>
+                            <span>Layanan Pengaduan</span>
+                        </a>
+                        <a href="#staf-teknis" class="px-6 py-3.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-white font-semibold text-base border border-slate-600 hover:border-slate-500 transition-all duration-300 backdrop-blur-md flex items-center gap-2.5">
+                            <i class="fa-solid fa-users text-amber-400"></i>
+                            <span>Staf Teknis</span>
+                        </a>
+                        <a href="#pelayanan-utama" class="px-6 py-3.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-white font-semibold text-base border border-slate-600 hover:border-slate-500 transition-all duration-300 backdrop-blur-md flex items-center gap-2.5">
+                            <i class="fa-solid fa-shield-halved text-amber-400"></i>
+                            <span>Pelayanan Utama</span>
+                        </a>
+                    </div>
+
+                    <div class="pt-8 border-t border-slate-700/60 grid grid-cols-3 gap-6 max-w-lg w-full mt-4">
+                        <div class="bg-slate-800/40 rounded-lg p-3 backdrop-blur-sm border border-slate-700/50 text-center">
+                            <span class="block text-2xl font-bold text-amber-400" id="counter-total-surat">0</span>
+                            <span class="text-xs text-slate-300 font-medium">Surat Terdaftar</span>
+                        </div>
+                        <div class="bg-slate-800/40 rounded-lg p-3 backdrop-blur-sm border border-slate-700/50 text-center">
+                            <span class="block text-2xl font-bold text-amber-400" id="counter-selesai">0</span>
+                            <span class="text-xs text-slate-300 font-medium">Selesai Ditindaklanjuti</span>
+                        </div>
+                        <div class="bg-slate-800/40 rounded-lg p-3 backdrop-blur-sm border border-slate-700/50 text-center">
+                            <span class="block text-2xl font-bold text-amber-400">100%</span>
+                            <span class="text-xs text-slate-300 font-medium">Google Sheet Sync</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bagian Pelayanan Utama dengan Tombol Transparan & Tautan Baru -->
+        <section id="pelayanan-utama" class="py-20 bg-gradient-to-b from-amber-50/80 via-yellow-50/50 to-white border-b border-amber-200/60">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <span class="text-xs font-bold uppercase tracking-widest text-pu-gold bg-amber-100/80 px-3.5 py-1.5 rounded-full border border-amber-300 shadow-sm">E-DISPOSISI & TRANSPARANSI PELAYANAN</span>
+
+                    <p class="text-pu-darkblue font-bold text-base sm:text-lg mt-6">Integrasi Rekam Informasi dan Monitoring Administrasi Surat Instansi</p>
+                    <p class="text-slate-600 mt-2 text-sm max-w-2xl mx-auto">Klik pada salah satu menu atau tombol transparan di bawah untuk membuka halaman layanan terkait secara interaktif.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- 1. Air Bersih -->
+                    <div onclick="openExternalApp('https://air-bersih-ufyu.vercel.app/', 'Air Bersih')" class="group relative bg-white/95 hover:bg-pu-blue rounded-2xl p-6 border border-amber-200/80 hover:border-pu-blue transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-1 cursor-pointer flex flex-col justify-between">
+                        <div>
+                            <div class="w-14 h-14 rounded-xl bg-amber-100 text-amber-600 group-hover:bg-amber-400 group-hover:text-pu-darkblue flex items-center justify-center text-2xl font-bold mb-5 transition-all">
+                                <i class="fa-solid fa-faucet-drip"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 group-hover:text-white transition">Air Bersih</h3>
+                            <p class="text-sm text-slate-600 group-hover:text-slate-200 mt-2 leading-relaxed">Pengelolaan dan penyediaan fasilitas air bersih serta jaringan distribusi bagi masyarakat Kota Ambon.</p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-100 group-hover:border-white/10">
+                            <button type="button" class="w-full py-2.5 px-4 rounded-xl bg-transparent border border-slate-300 group-hover:border-white/40 text-slate-700 group-hover:text-white font-semibold text-xs transition flex items-center justify-center gap-2 backdrop-blur-sm">
+                                <span>Buka Layanan</span>
+                                <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 2. Talud -->
+                    <div onclick="openExternalApp('https://layanan-talud-qdx7.vercel.app/', 'Talud (Tanah, Sungai, Pantai)')" class="group relative bg-white/95 hover:bg-pu-blue rounded-2xl p-6 border border-amber-200/80 hover:border-pu-blue transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-1 cursor-pointer flex flex-col justify-between">
+                        <div>
+                            <div class="w-14 h-14 rounded-xl bg-blue-100 text-blue-600 group-hover:bg-amber-400 group-hover:text-pu-darkblue flex items-center justify-center text-2xl font-bold mb-5 transition-all">
+                                <i class="fa-solid fa-water"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 group-hover:text-white transition">Talud (Tanah, Sungai, Pantai)</h3>
+                            <p class="text-sm text-slate-600 group-hover:text-slate-200 mt-2 leading-relaxed">Pembangunan dan pemeliharaan struktur pengaman tebing, bantaran sungai, serta abrasi pantai Kota Ambon.</p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-100 group-hover:border-white/10">
+                            <button type="button" class="w-full py-2.5 px-4 rounded-xl bg-transparent border border-slate-300 group-hover:border-white/40 text-slate-700 group-hover:text-white font-semibold text-xs transition flex items-center justify-center gap-2 backdrop-blur-sm">
+                                <span>Buka Layanan</span>
+                                <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 3. Bangunan (Infrastruktur) -->
+                    <div onclick="openExternalApp('https://infrastruktur-15lu.vercel.app/', 'Infrastruktur')" class="group relative bg-white/95 hover:bg-pu-blue rounded-2xl p-6 border border-amber-200/80 hover:border-pu-blue transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-1 cursor-pointer flex flex-col justify-between">
+                        <div>
+                            <div class="w-14 h-14 rounded-xl bg-emerald-100 text-emerald-600 group-hover:bg-amber-400 group-hover:text-pu-darkblue flex items-center justify-center text-2xl font-bold mb-5 transition-all">
+                                <i class="fa-solid fa-building"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 group-hover:text-white transition">Bangunan</h3>
+                            <p class="text-sm text-slate-600 group-hover:text-slate-200 mt-2 leading-relaxed">Pengawasan, perencanaan, dan pembangunan infrastruktur bangunan gedung serta fasilitas publik.</p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-100 group-hover:border-white/10">
+                            <button type="button" class="w-full py-2.5 px-4 rounded-xl bg-transparent border border-slate-300 group-hover:border-white/40 text-slate-700 group-hover:text-white font-semibold text-xs transition flex items-center justify-center gap-2 backdrop-blur-sm">
+                                <span>Buka Layanan</span>
+                                <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 4. Sanitasi -->
+                    <div onclick="openExternalApp('https://layanan-sanitasi-ipp5.vercel.app/', 'Sanitasi')" class="group relative bg-white/95 hover:bg-pu-blue rounded-2xl p-6 border border-amber-200/80 hover:border-pu-blue transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-1 cursor-pointer flex flex-col justify-between">
+                        <div>
+                            <div class="w-14 h-14 rounded-xl bg-cyan-100 text-cyan-600 group-hover:bg-amber-400 group-hover:text-pu-darkblue flex items-center justify-center text-2xl font-bold mb-5 transition-all">
+                                <i class="fa-solid fa-pump-soap"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 group-hover:text-white transition">Sanitasi</h3>
+                            <p class="text-sm text-slate-600 group-hover:text-slate-200 mt-2 leading-relaxed">Pengembangan sistem pengelolaan air limbah domestik dan infrastruktur sanitasi lingkungan perkotaan.</p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-100 group-hover:border-white/10">
+                            <button type="button" class="w-full py-2.5 px-4 rounded-xl bg-transparent border border-slate-300 group-hover:border-white/40 text-slate-700 group-hover:text-white font-semibold text-xs transition flex items-center justify-center gap-2 backdrop-blur-sm">
+                                <span>Buka Layanan</span>
+                                <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Layanan Surat & Tracking Section -->
+        <section id="layanan-surat" class="py-20 bg-slate-100/80 relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+                    <div>
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 text-pu-blue text-xs font-bold mb-2">
+                            <i class="fa-solid fa-arrows-rotate animate-spin"></i> Live Digital Tracking
+                        </div>
+                        <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Status & Agenda Surat Masuk</h2>
+                        <p class="text-slate-600 text-sm mt-1">Sistem informasi disposisi pimpinan, penanggung jawab teknis, scan berkas, dan bukti tindak lanjut.</p>
+                    </div>
+
+                    <div class="flex flex-wrap items-center gap-2">
+                        <button onclick="openConfigApiModal()" class="px-3 py-2.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-700 font-bold text-xs flex items-center gap-1.5 shadow-sm transition" title="Koneksi Google Sheets">
+                            <i class="fa-solid fa-file-excel text-emerald-600"></i>
+                            <span>Google Sheets</span>
+                        </button>
+                        <button onclick="openNewLetterModal()" class="px-4 py-2.5 rounded-xl bg-pu-blue hover:bg-pu-darkblue text-white font-semibold text-xs flex items-center gap-2 shadow-sm transition">
+                            <i class="fa-solid fa-plus text-amber-400"></i> Input Surat Baru
+                        </button>
+                        <button onclick="refreshData()" class="px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-medium text-xs flex items-center gap-1.5 shadow-sm transition">
+                            <i class="fa-solid fa-rotate text-blue-600"></i> Refresh
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm mb-6 flex flex-col md:flex-row gap-4 justify-between items-center">
+                    <div class="relative w-full md:w-96">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400 text-sm"></i>
+                        <input type="text" id="search-table-input" onkeyup="filterLettersTable()" placeholder="Cari nomor surat, perihal, atau pengirim..." class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs focus:ring-2 focus:ring-pu-blue focus:border-pu-blue transition">
+                    </div>
+                    <div class="flex flex-wrap items-center gap-3 w-full md:w-auto justify-end">
+                        <div class="flex items-center gap-2">
+                            <label class="text-xs font-semibold text-slate-600">Status:</label>
+                            <select id="status-filter-select" onchange="filterLettersTable()" class="bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs font-medium focus:ring-2 focus:ring-pu-blue">
+                                <option value="ALL">Semua Status</option>
+                                <option value="Diproses">Diproses</option>
+                                <option value="Disposisi Pimpinan">Disposisi Pimpinan</option>
+                                <option value="Selesai Ditindaklanjuti">Selesai Ditindaklanjuti</option>
+                            </select>
+                        </div>
+                        <span class="text-xs text-slate-500 font-medium">Menampilkan <strong id="showing-count" class="text-pu-blue">0</strong> dari <strong id="total-count" class="text-slate-800">0</strong> surat</span>
+                    </div>
+                </div>
+
+                <div class="hidden">
+                    <input type="hidden" id="active-api-url" value="">
+                    <span id="current-mode-badge">Mode Simulasi</span>
+                    <span id="status-log">> Ready</span>
+                </div>
+
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-xs">
+                            <thead>
+                                <tr class="bg-slate-900 text-white font-semibold">
+                                    <th class="py-3.5 px-4 sm:px-6">Nomor & Tanggal</th>
+                                    <th class="py-3.5 px-4 sm:px-6">Perihal & Asal Surat</th>
+                                    <th class="py-3.5 px-4 sm:px-6">Penanggung Jawab</th>
+                                    <th class="py-3.5 px-4 sm:px-6">Disposisi Pimpinan</th>
+                                    <th class="py-3.5 px-4 sm:px-6">Status</th>
+                                    <th class="py-3.5 px-4 sm:px-6 text-center">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="surat-table-body" class="divide-y divide-slate-100">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION STAF TEKNIS -->
+        <section id="staf-teknis" class="py-20 relative bg-slate-900 text-white border-b border-slate-700">
+            <div class="absolute inset-0 z-0">
+                <img src="pupr.png" alt="Background Dinas PUPR" class="w-full h-full object-cover object-center opacity-300">
+                <div class="absolute inset-0 bg-gradient-to-b from-pu-darkblue/20 via-slate-300/20 to-pu-darkblue/20"></div>
+            </div>
+
+            <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <span class="text-xs font-bold uppercase tracking-widest text-pu-gold bg-amber-950/80 px-3 py-1 rounded-full border border-amber-500/40">Staf Teknis & Penanggung Jawab</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-3 tracking-tight">Bidang PSDA - IP</h2>
+                    <p class="text-slate-300 mt-3 text-base">Penanggung jawab teknis disposisi, survei kelapangan, serta tindak lanjut surat permohonan masyarakat dan instansi.</p>
+                </div>
+
+                <div id="staff-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-[#061428] text-slate-400 border-t border-slate-800 text-xs sm:text-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+                <div class="space-y-3">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-[#081C38] rounded-[8px] flex items-center justify-center overflow-hidden p-1 border border-slate-700">
+                            <img src="Lambang_Ambon.png" alt="Logo Pemkot Ambon" class="w-full h-full object-contain">
+                        </div>
+                        <div>
+                            <h4 class="text-white font-bold text-base leading-tight">Dinas PUPR Kota Ambon</h4>
+                            <span class="text-xs text-amber-400 font-medium">Pemerintah Kota Ambon • Maluku</span>
+                        </div>
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed max-w-md pt-1">
+                        Mewujudkan pembangunan infrastruktur yang handal, inklusif, dan tertata secara berkelanjutan demi kesejahteraan warga Kota Ambon.
+                    </p>
+                </div>
+
+                <div class="space-y-3">
+                    <h4 class="text-amber-400 font-bold text-sm tracking-wider uppercase">Kontak Kantor</h4>
+                    <div class="space-y-2 text-xs text-slate-300">
+                        <p class="flex items-start gap-2">
+                            <i class="fa-solid fa-location-dot text-amber-400 mt-0.5"></i>
+                            <span>Jl. Yan Paays No. 30, Kelurahan Ahusen, Kecamatan Sirimau, Kota Ambon, Maluku</span>
+                        </p>
+                        <p class="flex items-center gap-2">
+                            <i class="fa-solid fa-phone text-amber-400"></i>
+                            <span>(0911) 312757</span>
+                        </p>
+                        <p class="flex items-center gap-2">
+                            <i class="fa-solid fa-envelope text-amber-400"></i>
+                            <span>pupr@ambon.go.id</span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="space-y-3">
+                    <h4 class="text-amber-400 font-bold text-sm tracking-wider uppercase">Pemberitahuan Sistem</h4>
+                    <div class="p-3.5 rounded-xl bg-[#0B1E3A] border border-slate-700/60 text-xs text-slate-300 leading-relaxed">
+                        Sistem pelacakan e-Disposisi ini secara langsung terhubung dengan Google Spreadsheet resmi Dinas Pekerjaan Umum & Penataan Ruang Kota Ambon.
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-10 pt-6 border-t border-slate-800 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 gap-4">
+                <p>&copy; 2026 Dinas Pekerjaan Umum & Penataan Ruang Kota Ambon. All Rights Reserved.</p>
+                <div class="text-slate-400 font-medium">
+                    Sistem E-Disposisi v3.5 • Ambon Manise
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Modal 1: Detail Surat & Disposisi Viewer -->
+    <div id="modal-detail-surat" class="fixed inset-0 z-50 hidden bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+        <div class="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col shadow-2xl border border-slate-200 animate-in fade-in zoom-in duration-200">
+            <div class="bg-pu-darkblue text-white p-5 flex items-center justify-between border-b border-slate-700">
+                <div class="flex items-center gap-3">
+                    <div class="p-2.5 bg-amber-400 text-pu-darkblue rounded-xl font-bold">
+                        <i class="fa-solid fa-file-contract text-lg"></i>
+                    </div>
+                    <div>
+                        <span id="modal-nomor-surat-badge" class="text-xs font-mono font-bold text-amber-400 uppercase">NO. SURAT</span>
+                        <h3 id="modal-perihal-title" class="text-base sm:text-lg font-bold leading-tight">Detail Disposisi Surat</h3>
+                    </div>
+                </div>
+                <button onclick="closeModal('modal-detail-surat')" class="text-slate-300 hover:text-white p-1 text-xl">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="p-6 overflow-y-auto custom-scrollbar space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200 text-xs">
+                    <div>
+                        <span class="text-slate-400 uppercase font-semibold block text-[10px]">Nomor Surat</span>
+                        <span id="det-nomor" class="font-bold text-slate-800 text-sm font-mono">-</span>
+                    </div>
+                    <div>
+                        <span class="text-slate-400 uppercase font-semibold block text-[10px]">Tanggal Surat</span>
+                        <span id="det-tanggal" class="font-bold text-slate-800 text-sm">-</span>
+                    </div>
+                    <div>
+                        <span class="text-slate-400 uppercase font-semibold block text-[10px]">Asal / Pengirim</span>
+                        <span id="det-asal" class="font-bold text-slate-800 text-sm">-</span>
+                    </div>
+                    <div>
+                        <span class="text-slate-400 uppercase font-semibold block text-[10px]">Penanggung Jawab Teknis</span>
+                        <div class="mt-0.5 relative">
+                            <button type="button" onclick="toggleEditPjDropdown()" id="det-pj-btn" class="w-full text-left font-bold text-pu-blue text-sm flex items-center justify-between bg-white px-2.5 py-1.5 rounded-lg border border-slate-300 hover:bg-slate-100 transition shadow-sm">
+                                <span id="det-pj" class="truncate"><i class="fa-solid fa-user-check text-emerald-600 mr-1"></i> -</span>
+                                <i class="fa-solid fa-chevron-down text-[10px] text-slate-500"></i>
+                            </button>
+                            <div id="det-pj-dropdown" class="hidden absolute z-20 mt-1 w-72 bg-white rounded-xl shadow-xl border border-slate-200 p-2 max-h-56 overflow-y-auto custom-scrollbar space-y-1">
+                                <div class="text-[10px] font-bold text-slate-400 uppercase px-2 py-1">Pilih Staf Penanggung Jawab:</div>
+                                <div id="det-pj-checkboxes" class="space-y-1"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="text-slate-400 uppercase font-semibold block text-[10px]">Status Saat Ini</span>
+                        <div id="det-status-badge" class="mt-1 inline-block">-</div>
+                    </div>
+                    <div>
+                        <span class="text-slate-400 uppercase font-semibold block text-[10px]">Instruksi Disposisi Pimpinan</span>
+                        <span id="det-disposisi" class="font-semibold text-amber-700 block mt-1 bg-amber-50 p-1.5 rounded border border-amber-200">-</span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between">
+                            <h4 class="font-bold text-sm text-slate-900 flex items-center gap-2">
+                                <i class="fa-solid fa-file-pdf text-red-500"></i> Berkas / Scan Surat Masuk
+                            </h4>
+                            <div class="flex items-center gap-2">
+                                <label for="edit-scan-file-input" class="cursor-pointer text-xs bg-pu-blue hover:bg-pu-darkblue text-white px-2 py-1 rounded font-semibold transition flex items-center gap-1" title="Edit Scan Surat">
+                                    <i class="fa-solid fa-pen-to-square"></i> Edit Scan
+                                </label>
+                                <input type="file" id="edit-scan-file-input" accept="image/*,.pdf,.doc,.docx" class="hidden" onchange="handleEditScanUpload(this)">
+                                <a id="det-scan-download" href="#" target="_blank" class="text-xs text-pu-blue hover:underline font-semibold flex items-center gap-1">
+                                    <i class="fa-solid fa-expand"></i> Buka Full Berkas
+                                </a>
+                            </div>
+                        </div>
+                        <div id="det-scan-preview-box" onclick="openFullscreenImage(currentActiveSuratItem?.scanUrl, 'Scan Berkas Surat')" class="h-64 rounded-xl border border-slate-300 bg-slate-100 overflow-hidden relative flex items-center justify-center group cursor-pointer"></div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between">
+                            <h4 class="font-bold text-sm text-slate-900 flex items-center gap-2">
+                                <i class="fa-solid fa-camera text-emerald-600"></i> Dokumentasi Setelah Ditindaklanjuti
+                            </h4>
+                            <div class="flex items-center gap-2">
+                                <label for="edit-dok-file-input" class="cursor-pointer text-xs bg-emerald-600 hover:bg-emerald-700 text-white px-2 py-1 rounded font-semibold transition flex items-center gap-1" title="Edit Dokumentasi Lapangan">
+                                    <i class="fa-solid fa-pen-to-square"></i> Edit Dok
+                                </label>
+                                <input type="file" id="edit-dok-file-input" accept="image/*" class="hidden" onchange="handleEditDokUpload(this)">
+                                <button id="det-dok-download" type="button" class="text-xs text-emerald-600 hover:underline font-semibold flex items-center gap-1">
+                                    <i class="fa-solid fa-expand"></i> Buka Full Gambar
+                                </button>
+                            </div>
+                        </div>
+                        <div onclick="openFullscreenImage(document.getElementById('det-dok-img').src, 'Dokumentasi Lapangan')" class="h-64 rounded-xl border border-slate-300 bg-slate-100 overflow-hidden relative flex items-center justify-center group cursor-pointer">
+                            <img id="det-dok-img" src="" alt="Dokumentasi Tindak Lanjut" class="w-full h-full object-cover transition duration-300 group-hover:scale-105" onerror="this.src='https://placehold.co/600x800/f1f5f9/64748b?text=Foto+Tindak+Lanjut+Lapangan'">
+                            <div class="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                                <span class="bg-emerald-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow"><i class="fa-solid fa-expand mr-1"></i> Klik untuk Buka Full Gambar</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-slate-50 p-4 border-t border-slate-200 flex justify-end gap-2">
+                <button onclick="saveCurrentLetterChanges()" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
+                    <i class="fa-solid fa-floppy-disk"></i> Simpan File
+                </button>
+                <button onclick="closeModal('modal-detail-surat')" class="px-5 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-xs font-bold transition">
+                    Tutup Detail
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 2: Input Surat Baru -->
+    <div id="modal-input-surat" class="fixed inset-0 z-50 hidden bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-2xl max-w-2xl w-full overflow-hidden shadow-2xl border border-slate-200 animate-in fade-in duration-200">
+            <div class="bg-pu-blue text-white p-5 flex items-center justify-between">
+                <h3 class="text-base sm:text-lg font-bold flex items-center gap-2">
+                    <i class="fa-solid fa-file-circle-plus text-amber-400"></i> Registrasi Surat Masuk Baru
+                </h3>
+                <button onclick="closeModal('modal-input-surat')" class="text-slate-300 hover:text-white text-xl">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <form id="form-input-surat" onsubmit="handleNewLetterSubmit(event)" class="p-6 space-y-4 text-xs">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">Nomor Surat *</label>
+                        <input type="text" id="input-nomor" required placeholder="600/..." class="w-full p-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-pu-blue">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">Tanggal Surat *</label>
+                        <input type="date" id="input-tanggal" required class="w-full p-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-pu-blue">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">Asal / Pengirim Surat *</label>
+                        <input type="text" id="input-asal" required placeholder="Contoh: Kantor Kecamatan Sirimau..." class="w-full p-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-pu-blue">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">Penanggung Jawab Teknis</label>
+                        <div id="input-pj-container" class="max-h-40 overflow-y-auto border border-slate-300 rounded-xl p-2.5 space-y-1.5 bg-slate-50 custom-scrollbar"></div>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">Perihal Surat *</label>
+                    <input type="text" id="input-perihal" required placeholder="Permohonan Perbaikan Drainase..." class="w-full p-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-pu-blue">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">Disposisi Pimpinan</label>
+                        <input type="text" id="input-disposisi" placeholder="Tindak lanjuti & ukur lokasi..." class="w-full p-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-pu-blue">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">Status Awal</label>
+                        <select id="input-status" class="w-full p-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-pu-blue">
+                            <option value="Diproses">Diproses</option>
+                            <option value="Disposisi Pimpinan">Disposisi Pimpinan</option>
+                            <option value="Selesai Ditindaklanjuti">Selesai Ditindaklanjuti</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">Upload Berkas / Scan Surat (>1MB Didukung)</label>
+                        <div class="flex flex-col gap-2">
+                            <input type="file" id="input-scan-file" accept="image/*,.pdf,.doc,.docx" onchange="handleFileUpload(this, 'scan')" class="hidden">
+                            <label for="input-scan-file" class="cursor-pointer flex items-center justify-center gap-2 p-3 bg-slate-50 hover:bg-slate-100 border border-dashed border-slate-300 rounded-xl text-slate-700 font-semibold transition text-xs">
+                                <i class="fa-solid fa-file-arrow-up text-pu-blue text-sm"></i>
+                                <span id="label-scan-file">Pilih Berkas / Scan Surat</span>
+                            </label>
+                            <div id="container-preview-scan" class="hidden relative rounded-xl overflow-hidden border border-slate-200 p-2.5 bg-slate-50 flex items-center justify-between">
+                                <div class="flex items-center gap-2 truncate">
+                                    <i class="fa-solid fa-file-lines text-pu-blue text-sm"></i>
+                                    <span id="name-preview-scan" class="font-medium text-slate-700 truncate text-[11px]">file.pdf</span>
+                                </div>
+                                <button type="button" onclick="removeFileUpload('scan')" class="bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-[10px] shadow">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">Foto Lapangan (>1MB Didukung)</label>
+                        <div class="flex flex-col gap-2">
+                            <input type="file" id="input-dok-file" accept="image/*" onchange="handleImageUpload(this, 'preview-dok-img', 'dok')" class="hidden">
+                            <label for="input-dok-file" class="cursor-pointer flex items-center justify-center gap-2 p-3 bg-slate-50 hover:bg-slate-100 border border-dashed border-slate-300 rounded-xl text-slate-700 font-semibold transition text-xs">
+                                <i class="fa-solid fa-images text-emerald-600 text-sm"></i>
+                                <span id="label-dok-file">Ambil Foto / Upload Galeri</span>
+                            </label>
+                            <div id="container-preview-dok" class="hidden relative rounded-xl overflow-hidden border border-slate-200">
+                                <img id="preview-dok-img" src="" alt="Preview Dokumentasi" class="h-28 w-full object-cover">
+                                <button type="button" onclick="removeImageUpload('dok')" class="absolute top-1 right-1 bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs shadow">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-4 flex justify-end gap-3 border-t border-slate-200">
+                    <button type="button" onclick="closeModal('modal-input-surat')" class="px-4 py-2 bg-slate-200 text-slate-700 rounded-xl font-semibold">Batal</button>
+                    <button type="submit" class="px-5 py-2 bg-pu-blue text-white rounded-xl font-bold hover:bg-pu-darkblue">Simpan Data Surat</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal 3: Apps Script Code Copy Guide -->
+    <div id="modal-appscript-code" class="fixed inset-0 z-50 hidden bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] flex flex-col overflow-hidden shadow-2xl border border-slate-200">
+            <div class="bg-slate-900 text-white p-5 flex items-center justify-between border-b border-slate-800">
+                <h3 class="text-base font-bold text-amber-400 flex items-center gap-2">
+                    <i class="fa-solid fa-code"></i> Template Script Google Apps Script (Code.gs)
+                </h3>
+                <button onclick="closeModal('modal-appscript-code')" class="text-slate-300 hover:text-white text-xl">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="p-6 overflow-y-auto custom-scrollbar space-y-4 text-xs">
+                <p class="text-slate-600">Salin kode JavaScript berikut dan tempelkan pada menu <strong>Extensions &gt; Apps Script</strong> di Google Sheets Anda. Kemudian klik <strong>Deploy &gt; New deployment &gt; Web app</strong> (akses: Anyone).</p>
+                
+                <div class="relative">
+                    <button onclick="copyAppsScriptCode()" class="absolute right-3 top-3 px-3 py-1.5 bg-amber-400 text-pu-darkblue rounded-lg font-bold text-xs shadow hover:bg-amber-300 transition">
+                        <i class="fa-regular fa-copy"></i> Salin Kode
+                    </button>
+                    <pre class="bg-slate-900 text-slate-200 p-4 rounded-xl font-mono text-[11px] leading-relaxed overflow-x-auto border border-slate-800" id="apps-script-code-block">
+function doGet(e) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var rows = sheet.getDataRange().getValues();
+  var headers = rows[0];
+  var data = [];
+  
+  for (var i = 1; i < rows.length; i++) {
+    var row = rows[i];
+    var record = {};
+    for (var j = 0; j < headers.length; j++) {
+      record[headers[j]] = row[j];
+    }
+    data.push(record);
+  }
+  
+  return ContentService.createTextOutput(JSON.stringify(data))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+function doPost(e) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var data = JSON.parse(e.postData.contents);
+  
+  sheet.appendRow([
+    data.nomorSurat,
+    data.tanggalSurat,
+    data.asalSurat,
+    data.perihal,
+    data.penanggungJawab,
+    data.status,
+    data.disposisi,
+    data.scanUrl,
+    data.dokumentasiUrl
+  ]);
+  
+  return ContentService.createTextOutput(JSON.stringify({"result": "success"}))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+</pre>
+                </div>
+            </div>
+
+            <div class="bg-slate-50 p-4 border-t border-slate-200 flex justify-end">
+                <button onclick="closeModal('modal-appscript-code')" class="px-5 py-2 bg-slate-800 text-white rounded-xl font-bold">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 4: API Endpoint URL Config -->
+    <div id="modal-config-api" class="fixed inset-0 z-50 hidden bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full overflow-hidden shadow-2xl border border-slate-200">
+            <div class="bg-pu-darkblue text-white p-5 flex items-center justify-between">
+                <h3 class="text-base font-bold text-amber-400 flex items-center gap-2">
+                    <i class="fa-solid fa-file-excel text-emerald-400"></i> Hubungkan Google Sheets
+                </h3>
+                <button onclick="closeModal('modal-config-api')" class="text-slate-300 hover:text-white text-xl">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <form onsubmit="handleSaveApiUrl(event)" class="p-6 space-y-4 text-xs">
+                <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center justify-between text-emerald-900">
+                    <span class="font-medium">Butuh skrip Apps Script?</span>
+                    <button type="button" onclick="closeModal('modal-config-api'); openAppsScriptModal();" class="px-2.5 py-1 bg-emerald-600 text-white rounded-lg font-bold hover:bg-emerald-700 transition">
+                        Salin Kode GS
+                    </button>
+                </div>
+
+                <div>
+                    <label class="block font-bold text-slate-800 mb-1">Web App URL (Apps Script)</label>
+                    <input type="url" id="input-api-url" placeholder="https://script.google.com/macros/s/AKfycbxZQNRx7wYzD-fvqrCttKC0gpMRMTy-_uUTWM8Ng20ztRJUWI9PEjXkTmuYgoqs0uTG/exec" required
+                           class="w-full p-3 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-pu-blue font-mono text-xs">
+                    <p class="text-[11px] text-slate-500 mt-1">Masukkan URL Web App hasil deploy Apps Script untuk menyambungkan data surat secara real-time.</p>
+                </div>
+
+                <div class="pt-2 flex justify-end gap-2 border-t border-slate-200">
+                    <button type="button" onclick="useMockEngine()" class="px-4 py-2 bg-slate-200 text-slate-700 rounded-xl font-semibold">Gunakan Demo Mode</button>
+                    <button type="submit" class="px-5 py-2 bg-emerald-600 text-white rounded-xl font-bold hover:bg-emerald-700">Simpan Koneksi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal 5: Konfirmasi WhatsApp Pengiriman Disposisi -->
+    <div id="modal-whatsapp-preview" class="fixed inset-0 z-50 hidden bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full overflow-hidden shadow-2xl border border-slate-200 animate-in fade-in duration-200">
+            <div class="bg-emerald-600 text-white p-4 flex items-center justify-between">
+                <h3 class="text-base font-bold flex items-center gap-2">
+                    <i class="fa-brands fa-whatsapp text-lg"></i> Kirim Disposisi via WhatsApp
+                </h3>
+                <button onclick="closeModal('modal-whatsapp-preview')" class="text-white hover:text-slate-200 text-xl">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="p-6 space-y-4 text-xs">
+                <p class="text-slate-600">Surat berhasil diperbarui! Pilih tujuan pengiriman pesan WhatsApp untuk staf teknis / penanggung jawab:</p>
+                
+                <div class="space-y-2">
+                    <label class="block font-semibold text-slate-700">Nomor WhatsApp Tujuan (Staf/Penanggung Jawab):</label>
+                    <input type="text" id="wa-target-phone" placeholder="Contoh: 6281234567890" class="w-full p-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-500 font-mono">
+                    <p class="text-[10px] text-slate-400">Gunakan awalan kode negara (misal: 62 tanpa tanda +)</p>
+                </div>
+
+                <div class="space-y-1">
+                    <label class="block font-semibold text-slate-700">Pratinjau Pesan:</label>
+                    <textarea id="wa-preview-message" rows="6" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl font-mono text-[11px] text-slate-700" readonly></textarea>
+                </div>
+
+                <div class="pt-2 flex justify-end gap-2 border-t border-slate-200">
+                    <button type="button" onclick="closeModal('modal-whatsapp-preview')" class="px-4 py-2 bg-slate-200 text-slate-700 rounded-xl font-semibold">Lewati</button>
+                    <button type="button" onclick="sendWhatsAppMessage()" class="px-5 py-2 bg-emerald-600 text-white rounded-xl font-bold hover:bg-emerald-700 flex items-center gap-1.5">
+                        <i class="fa-brands fa-whatsapp"></i> Buka WhatsApp & Kirim
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let iframeLoadCount = 0;
+        function openExternalApp(url, title) {
+            iframeLoadCount = 0;
+            const viewer = document.getElementById('external-app-viewer');
+            const iframe = document.getElementById('external-iframe');
+            
+            iframe.src = url;
+            viewer.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeExternalApp() {
+            const viewer = document.getElementById('external-app-viewer');
+            const iframe = document.getElementById('external-iframe');
+            iframe.src = 'about:blank';
+            viewer.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+            iframeLoadCount = 0;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const iframe = document.getElementById('external-iframe');
+            if (iframe) {
+                iframe.addEventListener('load', () => {
+                    iframeLoadCount++;
+                    if (iframeLoadCount > 1) {
+                        setTimeout(() => {
+                            closeExternalApp();
+                            showToast('Kembali ke Beranda Dashboard Utama PUPR.', 'info');
+                        }, 200);
+                    }
+                });
+            }
+        });
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const user = document.getElementById('login-username').value.trim();
+            const pass = document.getElementById('login-password').value.trim();
+            const errorMsg = document.getElementById('login-error-msg');
+
+            if (user === 'admin' && pass === 'puprambon') {
+                document.getElementById('login-overlay').classList.add('hidden');
+                showToast('Berhasil masuk ke portal Dinas PUPR Kota Ambon!', 'success');
+            } else {
+                errorMsg.classList.remove('hidden');
+            }
+        }
+
+        function handleLogout() {
+            const konfirmasi = confirm("Apakah Anda yakin ingin keluar dari sistem?");
+            if (konfirmasi) {
+                document.getElementById('login-overlay').classList.remove('hidden');
+                document.getElementById('login-username').value = '';
+                document.getElementById('login-password').value = '';
+                showToast('Anda telah berhasil logout.', 'info');
+            }
+        }
+
+        const staffList = [
+            { id: 'staf-1', nama: 'Hermin Taranda, ST', jabatan: 'Staff', whatsapp: '6281247309373', foto: 'Ermin.png', status: 'Aktif' },
+            { id: 'staf-2', nama: 'Rudi Payapo, ST', jabatan: 'Staff', whatsapp: '6282184447636', foto: 'Rudi.png', status: 'Aktif' },
+            { id: 'staf-3', nama: 'Samuel Alfons, ST', jabatan: 'Staff', whatsapp: '6281248782778', foto: 'SM', status: 'Aktif' },
+            { id: 'staf-4', nama: 'Agustinus Coritelu, ST', jabatan: 'Staff', whatsapp: '6282198343608', foto: 'Agus.png', status: 'Aktif' },
+            { id: 'staf-7', nama: 'Gabriela Ovelia Lisatta, ST', jabatan: 'Staff', whatsapp: '6285299232331', foto: 'Gabriela.png', status: 'Aktif' },
+            { id: 'staf-5', nama: 'Arfiani Nurfatiha, ST', jabatan: 'Staff', whatsapp: '6281333856828', foto: 'Ani.png', status: 'Aktif' },
+            { id: 'staf-6', nama: 'Junior Lokollo, ST', jabatan: 'Staff', whatsapp: '6281289368125', foto: 'Junior.png', status: 'Aktif' },
+            { id: 'staf-4', nama: 'Rajiv Kadir Sabban, ST', jabatan: 'Staff', whatsapp: '6282248299990', foto: 'Rajiv.png', status: 'Aktif' },
+            { id: 'staf-5', nama: 'Ryan Wlilliam Manuputty, ST', jabatan: 'Staff', whatsapp: '6282239456160', foto: 'Rian.jpeg', status: 'Aktif' },
+            { id: 'staf-6', nama: 'Hegi Daniel Mulya, ST', jabatan: 'Staff', whatsapp: '6281297987207', foto: 'Egi.jpeg', status: 'Aktif' },
+            { id: 'staf-8', nama: 'Erdin Calvin Leuwol, ST', jabatan: 'Staff', whatsapp: '6285213835259', foto: 'Erdin.png', status: 'Aktif' },
+            { id: 'staf-9', nama: 'Lakam Laitupa, S.Tr. T.K.J.J.', jabatan: 'Staff', whatsapp: '6281314917232', foto: 'Lakam.png', status: 'Aktif' },
+            { id: 'staf-10', nama: 'Yuliana Barbara Persulessy, ST', jabatan: 'Staff', whatsapp: '6282198053316', foto: 'Ulen.jpeg', status: 'Aktif' },
+            { id: 'staf-11', nama: 'Mutiah Zaila Isti Ishak, S.PWK', jabatan: 'Staff', whatsapp: '6285796845794', foto: 'Muti.jpeg', status: 'Aktif' },
+            { id: 'staf-12', nama: 'Regiarta Sampetoding, ST', jabatan: 'Staff', whatsapp: '6285299585501', foto: 'Regiarta.jpeg', status: 'Aktif' },
+            { id: 'staf-13', nama: 'Fandry Lesnussa, ST', jabatan: 'Staff', whatsapp: '6282197587226', foto: 'Fandri.png', status: 'Aktif' },
+            { id: 'staf-14', nama: 'Alfrets Yernunu, ST', jabatan: 'Staff', whatsapp: '6281280373354', foto: 'Aldy.png', status: 'Aktif' },
+            { id: 'staf-15', nama: 'Anugrah Fadillah Muksin, ST', jabatan: 'Staff', whatsapp: '6282219014700', foto: 'Nugi.png', status: 'Aktif' },
+            { id: 'staf-16', nama: 'Shihab Amir Al Hasib, ST', jabatan: 'Staff', whatsapp: '6282123301093', foto: 'Shihab.jpeg', status: 'Aktif' },
+            { id: 'staf-18', nama: 'Ningrum, ST', jabatan: 'Staff', whatsapp: '6282121234665', foto: 'ning.jpeg', status: 'Aktif' },
+            { id: 'staf-19', nama: 'Wanda Kurnia Inri, ST', jabatan: 'Staff', whatsapp: '6281327585696', foto: 'Wanda.png', status: 'Aktif' },
+            { id: 'staf-21', nama: 'Yakob Souissa', jabatan: 'Staff', whatsapp: '6281314917232', foto: 'Yakob.png', status: 'Aktif' },
+            { id: 'staf-23', nama: 'Matheos Paunno, ST', jabatan: 'Staff', whatsapp: '6285282291048', foto: 'Theo.png', status: 'Aktif' },
+        ];
+
+        let initialSuratData = [
+            {
+                nomorSurat: '600/104/PUPR/AMB/2026',
+                tanggalSurat: '2026-03-02',
+                asalSurat: 'Kecamatan Sirimau, Kota Ambon',
+                perihal: 'Permohonan Perbaikan Talud & Drainase Rawan Longsor Batu Gajah',
+                penanggungJawab: 'Hermin Taranda, ST, Rudi Payapo, ST',
+                status: 'Diproses',
+                disposisi: 'Segera lakukan pengukuran debit & verifikasi kondisi lapangan.',
+                scanUrl: 'https://images.unsplash.com/photo-1568667256549-094345857637?q=80&w=800&auto=format&fit=crop',
+                dokumentasiUrl: 'https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?q=80&w=800&auto=format&fit=crop'
+            },
+            {
+                nomorSurat: '503/089/PBG-PUPR/2026',
+                tanggalSurat: '2026-02-28',
+                asalSurat: 'PT. Ambon Manise Hotel & Resort',
+                perihal: 'Permohonan Rekomendasi PBG & Kesesuaian Tata Ruang (KKPR)',
+                penanggungJawab: 'Junior Lokollo, ST',
+                status: 'Selesai Ditindaklanjuti',
+                disposisi: 'Dokumen lengkap. Terbitkan surat rekomendasi kesesuaian ruang.',
+                scanUrl: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?q=80&w=800&auto=format&fit=crop',
+                dokumentasiUrl: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800&auto=format&fit=crop'
+            },
+            {
+                nomorSurat: '602/012/SDA-PUPR/2026',
+                tanggalSurat: '2026-02-25',
+                asalSurat: 'Kelurahan Wayame',
+                perihal: 'Usulan Normalisasi Sungai & Pembersihan Sedimen',
+                penanggungJawab: 'Rajiv Kadir Sabban, ST, Ryan Wlilliam Manuputty, ST',
+                status: 'Disposisi Pimpinan',
+                disposisi: 'Jadwalkan alat berat ke lokasi pada awal minggu depan.',
+                scanUrl: 'https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?q=80&w=800&auto=format&fit=crop',
+                dokumentasiUrl: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=800&auto=format&fit=crop'
+            },
+            {
+                nomorSurat: '600/044/BM-PUPR/2026',
+                tanggalSurat: '2026-02-20',
+                asalSurat: 'Dinas Perhubungan Kota Ambon',
+                perihal: 'Koordinasi Perbaikan Marka & Pengaspalan Jalan Honipopu',
+                penanggungJawab: 'Hegi Daniel Mulya, ST',
+                status: 'Selesai Ditindaklanjuti',
+                disposisi: 'Telah diselesaikannya overlay aspal 250 meter.',
+                scanUrl: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop',
+                dokumentasiUrl: 'https://images.unsplash.com/photo-1517649763962-0c623266010b?q=80&w=800&auto=format&fit=crop'
+            }
+        ];
+
+        // Fungsi helper untuk memastikan data surat selalu diurutkan berdasarkan tanggal surat terbaru di paling atas
+        function sortSuratByNewestDate(list) {
+            return list.sort((a, b) => new Date(b.tanggalSurat) - new Date(a.tanggalSurat));
+        }
+
+        let currentSuratList = sortSuratByNewestDate([...initialSuratData]);
+        let googleAppsScriptUrl = 'https://script.google.com/macros/s/AKfycbxrXPQDepDEz_J_updtvKmlpcVOhxyYp3PwpIAm775qDix4DyUCOXCzmqB15zWHBwkD/exec';
+
+        let uploadedScanUrl = '';
+        let uploadedDokUrl = '';
+        let currentActiveSuratItem = null;
+
+        const heroImages = [
+            "pupr.png",
+            "624c60ba898e4.jpg",
+			"acom.jpg",
+            "images (2).jpg",
+			"monumen-martha-christina-tiahahu.jpeg",
+			"1572330453971-pantai-pintu-kota-di-ambon.jpg",
+			"photo-1688281675104-ac1723dae921.avif",
+        ];
+        let currentHeroIndex = 0;
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedApi = localStorage.getItem('saved_apps_script_url');
+            if (savedApi) {
+                googleAppsScriptUrl = savedApi;
+                document.getElementById('active-api-url').value = savedApi;
+                document.getElementById('current-mode-badge').textContent = 'Mode Google Sheets Connected';
+                document.getElementById('current-mode-badge').className = 'px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-400/20 text-emerald-300 border border-emerald-400/30';
+            }
+
+            const cached = localStorage.getItem('surat_data_cache');
+            if (cached) {
+                try {
+                    currentSuratList = sortSuratByNewestDate(JSON.parse(cached));
+                } catch(e) {}
+            }
+
+            renderStaffGrid();
+            populatePjSelect();
+            populateDetailPjCheckboxes();
+            renderSuratTable(currentSuratList);
+            startHeroSlideshow();
+
+            if (googleAppsScriptUrl) {
+                testConnection();
+            }
+        });
+
+        // Helper untuk memproses dan mengompres file/gambar berukuran > 1MB agar muat di LocalStorage & stabil
+        function processLargeFile(file, callback) {
+            if (file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        let width = img.width;
+                        let height = img.height;
+                        const maxDim = 1200;
+                        if (width > maxDim || height > maxDim) {
+                            if (width > height) {
+                                height = Math.round((height * maxDim) / width);
+                                width = maxDim;
+                            } else {
+                                width = Math.round((width * maxDim) / height);
+                                height = maxDim;
+                            }
+                        }
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+                        const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+                        callback(dataUrl);
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    callback(e.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function startHeroSlideshow() {
+            const bgImageElement = document.getElementById('hero-bg-image');
+            if (!bgImageElement) return;
+
+            bgImageElement.src = heroImages[currentHeroIndex];
+
+            setInterval(() => {
+                bgImageElement.style.opacity = '0';
+                
+                setTimeout(() => {
+                    currentHeroIndex = (currentHeroIndex + 1) % heroImages.length;
+                    bgImageElement.src = heroImages[currentHeroIndex];
+                    bgImageElement.style.opacity = '1';
+                }, 500);
+            }, 5000);
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        function openFullscreenImage(imgUrl, title) {
+            if (!imgUrl) return;
+            if (imgUrl.startsWith('data:')) {
+                fetch(imgUrl)
+                    .then(res => res.blob())
+                    .then(blob => {
+                        const blobUrl = URL.createObjectURL(blob);
+                        window.open(blobUrl, '_blank');
+                    });
+            } else {
+                window.open(imgUrl, '_blank');
+            }
+        }
+
+        function renderStaffGrid() {
+            const container = document.getElementById('staff-grid');
+            container.innerHTML = staffList.map(staf => `
+                <div class="bg-slate-800/80 backdrop-blur-md border border-slate-700 rounded-2xl p-5 text-center hover:shadow-xl transition-all duration-300 group">
+                    <div class="w-24 h-24 mx-auto rounded-full overflow-hidden border-4 border-amber-400/50 mb-4 shadow-md">
+                        <img src="${staf.foto}" alt="${staf.nama}" class="w-full h-full object-cover group-hover:scale-110 transition duration-300" onerror="this.src='https://placehold.co/200x200/0f2c59/ffffff?text=STAF'">
+                    </div>
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-amber-400 bg-amber-950/80 px-2.5 py-0.5 rounded-full border border-amber-500/30">${staf.bidang || 'Staff'}</span>
+                    <h4 class="font-bold text-white text-sm mt-2">${staf.nama}</h4>
+                    <p class="text-xs text-slate-300 mt-1">${staf.jabatan}</p>
+                    
+                    <button onclick="filterByStaff('${staf.nama}')" class="mt-4 w-full py-2 bg-slate-700/80 hover:bg-pu-blue border border-slate-600 rounded-xl text-xs font-semibold text-slate-200 hover:text-white transition">
+                        <i class="fa-solid fa-folder-open mr-1"></i> Lihat Surat Ditangani
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function populatePjSelect() {
+            const container = document.getElementById('input-pj-container');
+            if (!container) return;
+            container.innerHTML = staffList.map(staf => `
+                <label class="flex items-center gap-2.5 p-1.5 hover:bg-slate-100 rounded-lg cursor-pointer text-xs transition">
+                    <input type="checkbox" name="penanggungJawab" value="${staf.nama}" data-whatsapp="${staf.whatsapp || ''}" class="w-4 h-4 rounded border-slate-300 text-pu-blue focus:ring-pu-blue">
+                    <span class="text-slate-700 font-medium">${staf.nama} <span class="text-slate-400 font-normal">(${staf.jabatan})</span></span>
+                </label>
+            `).join('');
+        }
+
+        function populateDetailPjCheckboxes() {
+            const container = document.getElementById('det-pj-checkboxes');
+            if (!container) return;
+            container.innerHTML = staffList.map(staf => `
+                <label class="flex items-center gap-2 px-2 py-1.5 hover:bg-slate-100 rounded-lg cursor-pointer text-xs transition">
+                    <input type="checkbox" name="editPenanggungJawab" value="${staf.nama}" data-whatsapp="${staf.whatsapp || ''}" onchange="updateSelectedDetailPj()" class="w-3.5 h-3.5 rounded border-slate-300 text-pu-blue focus:ring-pu-blue">
+                    <span class="text-slate-700 font-medium">${staf.nama}</span>
+                </label>
+            `).join('');
+        }
+
+        function toggleEditPjDropdown() {
+            const dropdown = document.getElementById('det-pj-dropdown');
+            dropdown.classList.toggle('hidden');
+        }
+
+        function updateSelectedDetailPj() {
+            const checkboxes = document.querySelectorAll('input[name="editPenanggungJawab"]:checked');
+            const selectedNames = Array.from(checkboxes).map(cb => cb.value);
+            const pjText = selectedNames.length > 0 ? selectedNames.join(', ') : 'Belum Ditentukan';
+            
+            document.getElementById('det-pj').innerHTML = `<i class="fa-solid fa-user-check text-emerald-600"></i> ${pjText}`;
+            if (currentActiveSuratItem) {
+                currentActiveSuratItem.penanggungJawab = pjText;
+            }
+        }
+
+        function renderSuratTable(data) {
+            const tbody = document.getElementById('surat-table-body');
+            const showingCount = document.getElementById('showing-count');
+            const totalCount = document.getElementById('total-count');
+
+            // Selalu pastikan data terurut berdasarkan tanggal surat terbaru di paling atas
+            sortSuratByNewestDate(data);
+
+            const limitedData = data.slice(0, 5);
+
+            showingCount.textContent = limitedData.length;
+            totalCount.textContent = currentSuratList.length;
+
+            document.getElementById('counter-total-surat').textContent = currentSuratList.length;
+            document.getElementById('counter-selesai').textContent = currentSuratList.filter(item => item.status === 'Selesai Ditindaklanjuti').length;
+
+            if (limitedData.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="py-8 text-center text-slate-400 text-xs">
+                            <i class="fa-solid fa-folder-open text-3xl mb-2 block text-slate-300"></i>
+                            Tidak ada surat yang sesuai dengan kriteria pencarian.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = limitedData.map((item, index) => {
+                let badgeStyle = 'bg-slate-100 text-slate-700 border-slate-300';
+                if (item.status === 'Diproses') badgeStyle = 'bg-blue-100 text-blue-800 border-blue-200';
+                if (item.status === 'Disposisi Pimpinan') badgeStyle = 'bg-amber-100 text-amber-800 border-amber-200';
+                if (item.status === 'Selesai Ditindaklanjuti') badgeStyle = 'bg-emerald-100 text-emerald-800 border-emerald-200';
+
+                return `
+                    <tr class="hover:bg-slate-50 transition border-b border-slate-100">
+                        <td class="py-4 px-4 sm:px-6">
+                            <span class="font-mono font-bold text-pu-blue block">${item.nomorSurat}</span>
+                            <span class="text-xs text-slate-400"><i class="fa-regular fa-calendar-days mr-1"></i>${item.tanggalSurat}</span>
+                        </td>
+                        <td class="py-4 px-4 sm:px-6 max-w-xs">
+                            <span class="font-semibold text-slate-900 block truncate">${item.perihal}</span>
+                            <span class="text-xs text-slate-500 block truncate"><i class="fa-solid fa-paper-plane mr-1 text-slate-400"></i>${item.asalSurat}</span>
+                        </td>
+                        <td class="py-4 px-4 sm:px-6 font-medium text-slate-700">
+                            <span class="inline-flex items-center gap-1 bg-slate-100 px-2 py-1 rounded text-xs font-semibold">
+                                <i class="fa-solid fa-user-gear text-pu-yellow"></i> ${item.penanggungJawab || 'Belum Ditentukan'}
+                            </span>
+                        </td>
+                        <td class="py-4 px-4 sm:px-6 max-w-xs text-slate-600 text-xs italic">
+                            "${item.disposisi || 'Belum ada disposisi'}"
+                        </td>
+                        <td class="py-4 px-4 sm:px-6">
+                            <span class="px-2.5 py-1 rounded-full text-[11px] font-bold border ${badgeStyle}">
+                                ${item.status}
+                            </span>
+                        </td>
+                        <td class="py-4 px-4 sm:px-6 text-center">
+                            <button onclick='openDetailModal(${JSON.stringify(item)})' 
+                                    class="px-3 py-1.5 rounded-lg bg-pu-blue hover:bg-pu-darkblue text-amber-300 font-bold text-xs shadow-sm transition inline-flex items-center gap-1">
+                                <i class="fa-solid fa-eye"></i> Lihat Surat
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function filterLettersTable() {
+            const query = document.getElementById('search-table-input').value.toLowerCase();
+            const statusFilter = document.getElementById('status-filter-select').value;
+
+            const filtered = currentSuratList.filter(item => {
+                const matchQuery = item.nomorSurat.toLowerCase().includes(query) ||
+                                   item.perihal.toLowerCase().includes(query) ||
+                                   item.asalSurat.toLowerCase().includes(query) ||
+                                   (item.penanggungJawab && item.penanggungJawab.toLowerCase().includes(query));
+
+                const matchStatus = (statusFilter === 'ALL') || (item.status === statusFilter);
+
+                return matchQuery && matchStatus;
+            });
+
+            renderSuratTable(filtered);
+        }
+
+        function filterByStaff(staffName) {
+            document.getElementById('search-table-input').value = staffName;
+            filterLettersTable();
+            window.location.hash = 'layanan-surat';
+        }
+
+        function openDetailModal(item) {
+            currentActiveSuratItem = item;
+            document.getElementById('modal-nomor-surat-badge').textContent = item.nomorSurat;
+            document.getElementById('modal-perihal-title').textContent = item.perihal;
+            document.getElementById('det-nomor').textContent = item.nomorSurat;
+            document.getElementById('det-tanggal').textContent = item.tanggalSurat;
+            document.getElementById('det-asal').textContent = item.asalSurat;
+            document.getElementById('det-pj').innerHTML = `<i class="fa-solid fa-user-check text-emerald-600"></i> ${item.penanggungJawab || 'Belum Ditentukan'}`;
+            document.getElementById('det-disposisi').textContent = item.disposisi || 'Belum ada catatan disposisi.';
+
+            const pjCheckboxes = document.querySelectorAll('input[name="editPenanggungJawab"]');
+            pjCheckboxes.forEach(cb => {
+                if (item.penanggungJawab && item.penanggungJawab.includes(cb.value)) {
+                    cb.checked = true;
+                } else {
+                    cb.checked = false;
+                }
+            });
+            document.getElementById('det-pj-dropdown').classList.add('hidden');
+
+            const statusBadge = document.getElementById('det-status-badge');
+            statusBadge.className = 'px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-300';
+            statusBadge.textContent = item.status;
+
+            const scanPreviewBox = document.getElementById('det-scan-preview-box');
+            const scanUrl = item.scanUrl || '';
+            const scanDownload = document.getElementById('det-scan-download');
+            const dokDownload = document.getElementById('det-dok-download');
+            
+            if (scanUrl.includes('application/pdf') || scanUrl.toLowerCase().endsWith('.pdf') || scanUrl.includes('.pdf?')) {
+                scanPreviewBox.innerHTML = `
+                    <div class="flex flex-col items-center justify-center p-6 text-center h-full w-full bg-red-50 text-red-700">
+                        <i class="fa-solid fa-file-pdf text-5xl mb-2 text-red-500"></i>
+                        <span class="font-bold text-sm">Dokumen PDF Berkas Surat</span>
+                        <span class="text-[11px] text-slate-500 mt-1">Klik untuk membuka atau mengunduh file PDF</span>
+                    </div>
+                    <div class="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                        <span class="bg-blue-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow"><i class="fa-solid fa-expand mr-1"></i> Klik untuk Buka Full PDF</span>
+                    </div>
+                `;
+            } else {
+                scanPreviewBox.innerHTML = `
+                    <img id="det-scan-img" src="${scanUrl || 'https://placehold.co/600x800/e2e8f0/475569?text=Scan+Berkas+Surat+Digital'}" alt="Scan Berkas Surat" 
+                         class="w-full h-full object-cover transition duration-300 group-hover:scale-105"
+                         onerror="this.src='https://placehold.co/600x800/e2e8f0/475569?text=Scan+Berkas+Surat+Digital'">
+                    <div class="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                        <span class="bg-blue-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow"><i class="fa-solid fa-expand mr-1"></i> Klik untuk Buka Full Gambar</span>
+                    </div>
+                `;
+            }
+            
+            scanDownload.onclick = function(e) {
+                e.preventDefault();
+                openFullscreenImage(item.scanUrl, 'Scan Berkas Surat');
+            };
+
+            document.getElementById('det-dok-img').src = item.dokumentasiUrl || 'https://placehold.co/600x800/f1f5f9/64748b?text=Foto+Tindak+Lanjut+Lapangan';
+
+            if (dokDownload) {
+                dokDownload.onclick = function(e) {
+                    e.preventDefault();
+                    openFullscreenImage(item.dokumentasiUrl, 'Dokumentasi Lapangan');
+                };
+            }
+
+            document.getElementById('modal-detail-surat').classList.remove('hidden');
+        }
+
+        function handleEditScanUpload(input) {
+            const file = input.files[0];
+            if (!file || !currentActiveSuratItem) return;
+
+            processLargeFile(file, function(result) {
+                currentActiveSuratItem.scanUrl = result;
+                openDetailModal(currentActiveSuratItem);
+                showToast('File scan (>1MB) berhasil dimuat. Klik "Simpan File" untuk menyimpan.', 'success');
+            });
+        }
+
+        function handleEditDokUpload(input) {
+            const file = input.files[0];
+            if (!file || !currentActiveSuratItem) return;
+
+            processLargeFile(file, function(result) {
+                currentActiveSuratItem.dokumentasiUrl = result;
+                document.getElementById('det-dok-img').src = result;
+                showToast('Foto dokumentasi (>1MB) berhasil dimuat. Klik "Simpan File" untuk menyimpan.', 'success');
+            });
+        }
+
+        function saveCurrentLetterChanges() {
+            if (!currentActiveSuratItem) return;
+
+            const checkedBoxes = Array.from(document.querySelectorAll('input[name="editPenanggungJawab"]:checked'));
+            const checkedPj = checkedBoxes.map(el => el.value);
+            const penanggungJawabStr = checkedPj.length > 0 ? checkedPj.join(', ') : 'Belum Ditentukan';
+
+            currentActiveSuratItem.penanggungJawab = penanggungJawabStr;
+
+            const index = currentSuratList.findIndex(item => item.nomorSurat === currentActiveSuratItem.nomorSurat);
+            if (index !== -1) {
+                currentSuratList[index] = { ...currentActiveSuratItem };
+            } else {
+                currentSuratList.push(currentActiveSuratItem);
+            }
+
+            // Urutkan ulang agar tanggal terbaru tetap di paling atas
+            sortSuratByNewestDate(currentSuratList);
+
+            try {
+                localStorage.setItem('surat_data_cache', JSON.stringify(currentSuratList));
+            } catch (err) {
+                showToast('Peringatan: Kapasitas penyimpanan hampir penuh, namun data tetap diproses.', 'warning');
+            }
+
+            renderSuratTable(currentSuratList);
+            showToast('Perubahan file & penanggung jawab berhasil disimpan!', 'success');
+
+            if (googleAppsScriptUrl) {
+                fetch(googleAppsScriptUrl, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        action: 'update',
+                        nomorSurat: currentActiveSuratItem.nomorSurat,
+                        tanggalSurat: currentActiveSuratItem.tanggalSurat,
+                        asalSurat: currentActiveSuratItem.asalSurat,
+                        perihal: currentActiveSuratItem.perihal,
+                        penanggungJawab: currentActiveSuratItem.penanggungJawab,
+                        status: currentActiveSuratItem.status,
+                        disposisi: currentActiveSuratItem.disposisi,
+                        scanUrl: currentActiveSuratItem.scanUrl,
+                        dokumentasiUrl: currentActiveSuratItem.dokumentasiUrl
+                    })
+                }).then(() => {
+                    showToast('Data berhasil disinkronkan ke Google Spreadsheet!', 'info');
+                }).catch(err => console.error(err));
+            }
+
+            closeModal('modal-detail-surat');
+
+            if (checkedBoxes.length > 0) {
+                window.selectedStaffForWa = checkedBoxes.map(el => ({
+                    nama: el.value,
+                    whatsapp: el.getAttribute('data-whatsapp') || ''
+                }));
+
+                const waMessage = `*NOTIFIKASI UPDATE E-DISPOSISI SURAT PUPR KOTA AMBON*\n\n` +
+                                  `Halo/Yth. Staf Teknis *(${penanggungJawabStr})*,\n\n` +
+                                  `Terdapat pembaruan penugasan/disposisi surat:\n` +
+                                  `• *No. Surat:* ${currentActiveSuratItem.nomorSurat}\n` +
+                                  `• *Tanggal:* ${currentActiveSuratItem.tanggalSurat}\n` +
+                                  `• *Asal:* ${currentActiveSuratItem.asalSurat}\n` +
+                                  `• *Perihal:* ${currentActiveSuratItem.perihal}\n` +
+                                  `• *Disposisi Pimpinan:* ${currentActiveSuratItem.disposisi}\n` +
+                                  `• *Status:* ${currentActiveSuratItem.status}\n\n` +
+                                  `Mohon segera dicek pada portal resmi Dinas PUPR Kota Ambon. Terima kasih.`;
+
+                document.getElementById('wa-target-phone').value = window.selectedStaffForWa.map(s => s.whatsapp).join(', ');
+                document.getElementById('wa-preview-message').value = waMessage;
+                document.getElementById('modal-whatsapp-preview').classList.remove('hidden');
+            }
+        }
+
+        function handleFileUpload(input, type) {
+            const file = input.files[0];
+            if (!file) return;
+
+            processLargeFile(file, function(result) {
+                const container = document.getElementById(`container-preview-${type}`);
+                const nameSpan = document.getElementById(`name-preview-${type}`);
+                const label = document.getElementById(`label-${type}-file`);
+
+                nameSpan.textContent = file.name;
+                container.classList.remove('hidden');
+                label.textContent = 'Ganti Berkas';
+
+                uploadedScanUrl = result;
+                showToast('Berkas (>1MB) berhasil dimuat.', 'success');
+            });
+        }
+
+        function removeFileUpload(type) {
+            document.getElementById(`input-${type}-file`).value = '';
+            document.getElementById(`container-preview-${type}`).classList.add('hidden');
+            document.getElementById(`label-${type}-file`).textContent = 'Pilih Berkas / Scan Surat';
+            uploadedScanUrl = '';
+        }
+
+        function handleImageUpload(input, previewId, type) {
+            const file = input.files[0];
+            if (!file) return;
+
+            processLargeFile(file, function(result) {
+                const previewImg = document.getElementById(previewId);
+                const container = document.getElementById(`container-preview-${type}`);
+                const label = document.getElementById(`label-${type}-file`);
+
+                previewImg.src = result;
+                container.classList.remove('hidden');
+                label.textContent = file.name.length > 20 ? file.name.substring(0, 18) + '...' : file.name;
+
+                uploadedDokUrl = result;
+                showToast('Foto dokumentasi (>1MB) berhasil dimuat.', 'success');
+            });
+        }
+
+        function removeImageUpload(type) {
+            document.getElementById(`input-${type}-file`).value = '';
+            document.getElementById(`container-preview-${type}`).classList.add('hidden');
+            document.getElementById(`label-${type}-file`).textContent = 'Ambil Foto / Upload Galeri';
+            uploadedDokUrl = '';
+        }
+
+        function openNewLetterModal() {
+            removeFileUpload('scan');
+            removeImageUpload('dok');
+            document.querySelectorAll('input[name="penanggungJawab"]').forEach(cb => cb.checked = false);
+            document.getElementById('modal-input-surat').classList.remove('hidden');
+        }
+
+        function openAppsScriptModal() {
+            document.getElementById('modal-appscript-code').classList.remove('hidden');
+        }
+
+        function openConfigApiModal() {
+            document.getElementById('modal-config-api').classList.remove('hidden');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+
+        function handleNewLetterSubmit(e) {
+            if (e) e.preventDefault();
+            
+            const checkedBoxes = Array.from(document.querySelectorAll('input[name="penanggungJawab"]:checked'));
+            const checkedPj = checkedBoxes.map(el => el.value);
+            const penanggungJawabStr = checkedPj.length > 0 ? checkedPj.join(', ') : 'Belum Ditentukan';
+
+            const newSurat = {
+                nomorSurat: document.getElementById('input-nomor').value,
+                tanggalSurat: document.getElementById('input-tanggal').value,
+                asalSurat: document.getElementById('input-asal').value,
+                perihal: document.getElementById('input-perihal').value,
+                penanggungJawab: penanggungJawabStr,
+                status: document.getElementById('input-status').value,
+                disposisi: document.getElementById('input-disposisi').value || 'Belum ada disposisi',
+                scanUrl: uploadedScanUrl || 'https://images.unsplash.com/photo-1568667256549-094345857637?q=80&w=800&auto=format&fit=crop',
+                dokumentasiUrl: uploadedDokUrl || 'https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?q=80&w=800&auto=format&fit=crop'
+            };
+
+            // Masukkan surat baru dan urutkan agar tanggal surat terbaru otomatis berada di posisi paling atas
+            currentSuratList.push(newSurat);
+            sortSuratByNewestDate(currentSuratList);
+
+            try {
+                localStorage.setItem('surat_data_cache', JSON.stringify(currentSuratList));
+            } catch (err) {
+                showToast('Peringatan: Penyimpanan lokal penuh, namun data dikirim.', 'warning');
+            }
+            renderSuratTable(currentSuratList);
+            closeModal('modal-input-surat');
+            showToast('Surat & Berkas (>1MB) berhasil disimpan!', 'success');
+
+            if (checkedBoxes.length > 0) {
+                window.selectedStaffForWa = checkedBoxes.map(el => ({
+                    nama: el.value,
+                    whatsapp: el.getAttribute('data-whatsapp') || ''
+                }));
+
+                const waMessage = `*NOTIFIKASI E-DISPOSISI SURAT PUPR KOTA AMBON*\n\n` +
+                                  `Halo/Yth. Staf Teknis *(${penanggungJawabStr})*,\n\n` +
+                                  `Terdapat surat masuk yang didisposisikan kepada Tim Anda:\n` +
+                                  `• *No. Surat:* ${newSurat.nomorSurat}\n` +
+                                  `• *Tanggal:* ${newSurat.tanggalSurat}\n` +
+                                  `• *Asal:* ${newSurat.asalSurat}\n` +
+                                  `• *Perihal:* ${newSurat.perihal}\n` +
+                                  `• *Disposisi Pimpinan:* ${newSurat.disposisi}\n` +
+                                  `• *Status:* ${newSurat.status}\n\n` +
+                                  `Mohon segera dicek pada portal resmi Dinas PUPR Kota Ambon untuk ditindaklanjuti. Terima kasih.`;
+
+                document.getElementById('wa-target-phone').value = window.selectedStaffForWa.map(s => s.whatsapp).join(', ');
+                document.getElementById('wa-preview-message').value = waMessage;
+                document.getElementById('modal-whatsapp-preview').classList.remove('hidden');
+            }
+
+            uploadedScanUrl = '';
+            uploadedDokUrl = '';
+
+            if (googleAppsScriptUrl) {
+                fetch(googleAppsScriptUrl, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(newSurat)
+                }).then(() => {
+                    showToast('Data dikirim ke Google Sheets!', 'info');
+                }).catch(err => console.error(err));
+            }
+        }
+
+        function sendWhatsAppMessage() {
+            const message = document.getElementById('wa-preview-message').value;
+            
+            if (!window.selectedStaffForWa || window.selectedStaffForWa.length === 0) {
+                showToast('Tidak ada nomor WhatsApp tujuan yang ditemukan!', 'warning');
+                return;
+            }
+
+            window.selectedStaffForWa.forEach((staff, index) => {
+                if (staff.whatsapp) {
+                    const encodedMessage = encodeURIComponent(message);
+                    const waUrl = `https://api.whatsapp.com/send?phone=${staff.whatsapp}&text=${encodedMessage}`;
+                    
+                    setTimeout(() => {
+                        window.open(waUrl, '_blank');
+                    }, index * 800); 
+                }
+            });
+
+            closeModal('modal-whatsapp-preview');
+            showToast('Membuka tab WhatsApp untuk semua penanggung jawab terpilih.', 'success');
+        }
+
+        function copyAppsScriptCode() {
+            const codeText = document.getElementById('apps-script-code-block').innerText;
+            const textarea = document.createElement('textarea');
+            textarea.value = codeText;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            showToast('Kode Google Apps Script berhasil disalin!', 'success');
+        }
+
+        function handleSaveApiUrl(e) {
+            e.preventDefault();
+            const url = document.getElementById('input-api-url').value.trim();
+            if (url) {
+                googleAppsScriptUrl = url;
+                localStorage.setItem('saved_apps_script_url', url);
+
+                document.getElementById('active-api-url').value = url;
+                document.getElementById('current-mode-badge').textContent = 'Mode Google Sheets Connected';
+                document.getElementById('current-mode-badge').className = 'px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-400/20 text-emerald-300 border border-emerald-400/30';
+                document.getElementById('status-log').textContent = '> Connection Endpoint Saved: Ready to fetch remote data.';
+                closeModal('modal-config-api');
+                showToast('URL Web App Google Apps Script berhasil dihubungkan & disimpan permanen!', 'success');
+                testConnection();
+            }
+        }
+
+        function useMockEngine() {
+            googleAppsScriptUrl = '';
+            localStorage.removeItem('saved_apps_script_url');
+
+            document.getElementById('active-api-url').value = 'Menggunakan Mock Engine Internal';
+            document.getElementById('current-mode-badge').textContent = 'Mode Simulasi Lokasi (Demo)';
+            document.getElementById('current-mode-badge').className = 'px-2.5 py-1 rounded-md text-[11px] font-bold bg-amber-400/20 text-amber-300 border border-amber-400/30';
+            closeModal('modal-config-api');
+            showToast('Beralih ke mode simulasi lokal.', 'info');
+        }
+
+        function testConnection() {
+            if (!googleAppsScriptUrl) {
+                showToast('Modul berjalan dalam Mode Simulasi (Local Data)', 'info');
+                return;
+            }
+
+            const log = document.getElementById('status-log');
+            log.textContent = '> Fetching live data from Google Sheets...';
+
+            fetch(googleAppsScriptUrl)
+                .then(res => res.json())
+                .then(data => {
+                    if (Array.isArray(data) && data.length > 0) {
+                        // Mengurutkan data dari Google Sheets berdasarkan tanggal surat terbaru di paling atas
+                        currentSuratList = sortSuratByNewestDate(data);
+                        renderSuratTable(currentSuratList);
+                        log.textContent = `> Sync Successful! Fetched ${data.length} records.`;
+                        showToast(`Berhasil menyinkronkan ${data.length} surat dari Google Sheets!`, 'success');
+                    }
+                })
+                .catch(err => {
+                    log.textContent = '> Sync Failed: Returning to fallback buffer.';
+                    showToast('Gagal terhubung ke URL Google Script (Pastikan opsi Web App Anyone aktif).', 'warning');
+                });
+        }
+
+        function refreshData() {
+            if (googleAppsScriptUrl) {
+                testConnection();
+            } else {
+                renderSuratTable(currentSuratList);
+                showToast('Tampilan data surat diperbarui.', 'info');
+            }
+        }
+
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+
+            let bg = 'bg-slate-900 text-white';
+            if (type === 'success') bg = 'bg-emerald-600 text-white';
+            if (type === 'warning') bg = 'bg-amber-600 text-white';
+            if (type === 'info') bg = 'bg-pu-blue text-white';
+
+            toast.className = `px-4 py-3 rounded-xl shadow-xl text-xs font-semibold flex items-center gap-2 transition-all duration-300 pointer-events-auto transform translate-y-2 opacity-0 ${bg}`;
+            toast.innerHTML = `<i class="fa-solid fa-circle-info"></i> ${message}`;
+            
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.remove('translate-y-2', 'opacity-0');
+            }, 10);
+
+            setTimeout(() => {
+                toast.classList.add('translate-y-2', 'opacity-0');
+                setTimeout(() => {
+                    toast.remove();
+                }, 300);
+            }, 3500);
+        }
+    </script>
+</body>
+</html>
