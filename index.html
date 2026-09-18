@@ -141,6 +141,35 @@
         </div>
     </div>
 
+    <!-- STAF TEKNIS VIEWER (Bagian Khusus Staf Teknis - Terpisah dari Dashboard Utama) -->
+    <div id="staf-teknis-viewer" class="hidden fixed inset-0 z-50 bg-slate-900 flex flex-col overflow-y-auto">
+        <div class="bg-pu-darkblue text-white px-4 py-3 flex items-center justify-between border-b border-slate-700 shadow-md sticky top-0 z-20">
+            <div class="flex items-center space-x-3">
+                <div class="w-9 h-9 bg-darkblue rounded-[8px] flex items-center justify-center overflow-hidden p-1 border border-slate-700">
+                    <img src="Lambang_Ambon.png" alt="Logo Pemkot Ambon" class="w-full h-full object-contain">
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-[10px] font-semibold uppercase tracking-wider text-pu-yellow">Pemerintah Kota Ambon</span>
+                    <span class="text-sm font-bold tracking-tight text-white leading-tight">Dinas PUPR Kota Ambon - Bagian Staf Teknis</span>
+                </div>
+            </div>
+            <button onclick="closeStafTeknisViewer()" class="px-4 py-2 bg-pu-yellow hover:bg-amber-400 text-pu-darkblue font-extrabold rounded-xl text-xs flex items-center gap-2 shadow-md transition transform active:scale-95 cursor-pointer">
+                <i class="fa-solid fa-house text-sm"></i>
+                <span>Kembali ke Beranda</span>
+            </button>
+        </div>
+        <div class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-xs font-bold uppercase tracking-widest text-pu-gold bg-amber-950/80 px-3 py-1 rounded-full border border-amber-500/40">Staf Teknis & Penanggung Jawab</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-3 tracking-tight">Bidang PSDA - IP</h2>
+                <p class="text-slate-300 mt-3 text-base">Penanggung jawab teknis disposisi, survei kelapangan, serta tindak lanjut surat permohonan masyarakat dan instansi.</p>
+            </div>
+
+            <div id="staff-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            </div>
+        </div>
+    </div>
+
     <header class="sticky top-0 z-40 w-full glass-nav text-white border-b border-slate-700/50 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <div class="flex items-center space-x-3">
@@ -168,7 +197,7 @@
                     </span>
                     Tracking Surat
                 </a>
-                <a href="#staf-teknis" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-200 hover:text-white hover:bg-white/10 transition">Staf Teknis</a>
+                <button onclick="openStafTeknisViewer()" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-200 hover:text-white hover:bg-white/10 transition text-left cursor-pointer">Staf Teknis</button>
                 
                 <button onclick="openConfigApiModal()" class="ml-2 px-2.5 py-1.5 rounded-lg text-xs font-semibold text-emerald-300 bg-emerald-950/50 hover:bg-emerald-900/80 border border-emerald-500/40 transition flex items-center gap-1.5 shadow-sm" title="Integrasi Google Sheets">
                     <i class="fa-solid fa-file-excel text-emerald-400"></i>
@@ -200,7 +229,7 @@
                 <i class="fa-solid fa-bullhorn"></i> Pengaduan
             </a>
             <a href="#layanan-surat" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-amber-300 hover:bg-white/10">Tracking Surat & Disposisi</a>
-            <a href="#staf-teknis" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-slate-200 hover:bg-white/10">Staf Teknis</a>
+            <button onclick="openStafTeknisViewer(); toggleMobileMenu();" class="w-full text-left px-3 py-2 rounded-md text-base font-medium text-slate-200 hover:bg-white/10">Staf Teknis</button>
             
             <button onclick="openConfigApiModal(); toggleMobileMenu();" class="w-full text-left px-3 py-2 rounded-md text-sm font-semibold text-emerald-300 hover:bg-white/10 flex items-center gap-2">
                 <i class="fa-solid fa-file-excel text-emerald-400"></i> Google Sheets Sync
@@ -244,10 +273,10 @@
                             <i class="fa-solid fa-bullhorn text-lg"></i>
                             <span>Layanan Pengaduan</span>
                         </a>
-                        <a href="#staf-teknis" class="px-6 py-3.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-white font-semibold text-base border border-slate-600 hover:border-slate-500 transition-all duration-300 backdrop-blur-md flex items-center gap-2.5">
+                        <button onclick="openStafTeknisViewer()" class="px-6 py-3.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-white font-semibold text-base border border-slate-600 hover:border-slate-500 transition-all duration-300 backdrop-blur-md flex items-center gap-2.5 cursor-pointer">
                             <i class="fa-solid fa-users text-amber-400"></i>
                             <span>Staf Teknis</span>
-                        </a>
+                        </button>
                         <a href="#pelayanan-utama" class="px-6 py-3.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-white font-semibold text-base border border-slate-600 hover:border-slate-500 transition-all duration-300 backdrop-blur-md flex items-center gap-2.5">
                             <i class="fa-solid fa-shield-halved text-amber-400"></i>
                             <span>Pelayanan Utama</span>
@@ -422,25 +451,6 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECTION STAF TEKNIS -->
-        <section id="staf-teknis" class="py-20 relative bg-slate-900 text-white border-b border-slate-700">
-            <div class="absolute inset-0 z-0">
-                <img src="pupr.png" alt="Background Dinas PUPR" class="w-full h-full object-cover object-center opacity-300">
-                <div class="absolute inset-0 bg-gradient-to-b from-pu-darkblue/20 via-slate-300/20 to-pu-darkblue/20"></div>
-            </div>
-
-            <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center max-w-3xl mx-auto mb-16">
-                    <span class="text-xs font-bold uppercase tracking-widest text-pu-gold bg-amber-950/80 px-3 py-1 rounded-full border border-amber-500/40">Staf Teknis & Penanggung Jawab</span>
-                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-3 tracking-tight">Bidang PSDA - IP</h2>
-                    <p class="text-slate-300 mt-3 text-base">Penanggung jawab teknis disposisi, survei kelapangan, serta tindak lanjut surat permohonan masyarakat dan instansi.</p>
-                </div>
-
-                <div id="staff-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 </div>
             </div>
         </section>
@@ -869,6 +879,19 @@ function doPost(e) {
             iframeLoadCount = 0;
         }
 
+        function openStafTeknisViewer() {
+            const viewer = document.getElementById('staf-teknis-viewer');
+            renderStaffGrid();
+            viewer.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeStafTeknisViewer() {
+            const viewer = document.getElementById('staf-teknis-viewer');
+            viewer.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             const iframe = document.getElementById('external-iframe');
             if (iframe) {
@@ -981,7 +1004,6 @@ function doPost(e) {
             }
         ];
 
-        // Fungsi helper untuk memastikan data surat selalu diurutkan berdasarkan tanggal surat terbaru di paling atas
         function sortSuratByNewestDate(list) {
             return list.sort((a, b) => new Date(b.tanggalSurat) - new Date(a.tanggalSurat));
         }
@@ -1031,7 +1053,6 @@ function doPost(e) {
             }
         });
 
-        // Helper untuk memproses dan mengompres file/gambar berukuran > 1MB agar muat di LocalStorage & stabil
         function processLargeFile(file, callback) {
             if (file.type.startsWith('image/')) {
                 const reader = new FileReader();
@@ -1108,8 +1129,9 @@ function doPost(e) {
 
         function renderStaffGrid() {
             const container = document.getElementById('staff-grid');
+            if (!container) return;
             container.innerHTML = staffList.map(staf => `
-                <div class="bg-slate-800/80 backdrop-blur-md border border-slate-700 rounded-2xl p-5 text-center hover:shadow-xl transition-all duration-300 group">
+                <div class="bg-slate-800/85 backdrop-blur-md border border-slate-700 rounded-2xl p-5 text-center hover:shadow-xl transition-all duration-300 group">
                     <div class="w-24 h-24 mx-auto rounded-full overflow-hidden border-4 border-amber-400/50 mb-4 shadow-md">
                         <img src="${staf.foto}" alt="${staf.nama}" class="w-full h-full object-cover group-hover:scale-110 transition duration-300" onerror="this.src='https://placehold.co/200x200/0f2c59/ffffff?text=STAF'">
                     </div>
@@ -1117,7 +1139,7 @@ function doPost(e) {
                     <h4 class="font-bold text-white text-sm mt-2">${staf.nama}</h4>
                     <p class="text-xs text-slate-300 mt-1">${staf.jabatan}</p>
                     
-                    <button onclick="filterByStaff('${staf.nama}')" class="mt-4 w-full py-2 bg-slate-700/80 hover:bg-pu-blue border border-slate-600 rounded-xl text-xs font-semibold text-slate-200 hover:text-white transition">
+                    <button onclick="filterByStaff('${staf.nama}')" class="mt-4 w-full py-2 bg-slate-700/80 hover:bg-pu-blue border border-slate-600 rounded-xl text-xs font-semibold text-slate-200 hover:text-white transition cursor-pointer">
                         <i class="fa-solid fa-folder-open mr-1"></i> Lihat Surat Ditangani
                     </button>
                 </div>
@@ -1167,7 +1189,6 @@ function doPost(e) {
             const showingCount = document.getElementById('showing-count');
             const totalCount = document.getElementById('total-count');
 
-            // Selalu pastikan data terurut berdasarkan tanggal surat terbaru di paling atas
             sortSuratByNewestDate(data);
 
             const limitedData = data.slice(0, 5);
@@ -1249,9 +1270,13 @@ function doPost(e) {
         }
 
         function filterByStaff(staffName) {
+            closeStafTeknisViewer();
             document.getElementById('search-table-input').value = staffName;
             filterLettersTable();
-            window.location.hash = 'layanan-surat';
+            const suratSection = document.getElementById('layanan-surat');
+            if (suratSection) {
+                suratSection.scrollIntoView({ behavior: 'smooth' });
+            }
         }
 
         function openDetailModal(item) {
@@ -1360,7 +1385,6 @@ function doPost(e) {
                 currentSuratList.push(currentActiveSuratItem);
             }
 
-            // Urutkan ulang agar tanggal terbaru tetap di paling atas
             sortSuratByNewestDate(currentSuratList);
 
             try {
@@ -1507,7 +1531,6 @@ function doPost(e) {
                 dokumentasiUrl: uploadedDokUrl || 'https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?q=80&w=800&auto=format&fit=crop'
             };
 
-            // Masukkan surat baru dan urutkan agar tanggal surat terbaru otomatis berada di posisi paling atas
             currentSuratList.push(newSurat);
             sortSuratByNewestDate(currentSuratList);
 
@@ -1632,7 +1655,6 @@ function doPost(e) {
                 .then(res => res.json())
                 .then(data => {
                     if (Array.isArray(data) && data.length > 0) {
-                        // Mengurutkan data dari Google Sheets berdasarkan tanggal surat terbaru di paling atas
                         currentSuratList = sortSuratByNewestDate(data);
                         renderSuratTable(currentSuratList);
                         log.textContent = `> Sync Successful! Fetched ${data.length} records.`;
