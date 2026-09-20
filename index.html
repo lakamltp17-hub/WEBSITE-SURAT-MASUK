@@ -141,7 +141,7 @@
         </div>
     </div>
 
-    <!-- STAF TEKNIS VIEWER (Bagian Khusus Staf Teknis - Terpisah dari Dashboard Utama) -->
+    <!-- STAF TEKNIS VIEWER -->
     <div id="staf-teknis-viewer" class="hidden fixed inset-0 z-50 bg-[url('https://cdn.creativefabrica.com/2022/03/08/White-abstract-background-with-squares-Graphics-26660299-1-1-580x387.jpg')] bg-cover bg-center flex flex-col overflow-y-auto">
         <div class="bg-pu-darkblue text-white px-4 py-3 flex items-center justify-between border-b border-slate-700 shadow-md sticky top-0 z-20">
             <div class="flex items-center space-x-3">
@@ -301,14 +301,14 @@
             </div>
         </section>
 
-        <!-- Bagian Pelayanan Utama dengan Tombol Transparan & Tautan Baru -->
+        <!-- Bagian Pelayanan Utama -->
         <section id="pelayanan-utama" class="py-20 bg-gradient-to-b from-amber-50/80 via-yellow-50/50 to-white border-b border-amber-200/60">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center max-w-3xl mx-auto mb-16">
                     <span class="text-xs font-bold uppercase tracking-widest text-pu-gold bg-amber-100/80 px-3.5 py-1.5 rounded-full border border-amber-300 shadow-sm">E-DISPOSISI & TRANSPARANSI PELAYANAN</span>
 
                     <p class="text-pu-darkblue font-bold text-base sm:text-lg mt-6">Integrasi Rekam Informasi dan Monitoring Administrasi Surat Instansi</p>
-                    <p class="text-slate-600 mt-2 text-sm max-w-2xl mx-auto">Klik pada salah satu menu atau tombol transparan di bawah untuk membuka halaman layanan terkait secara interaktif.</p>
+                    <p class="text-slate-600 mt-2 text-sm max-w-2xl mx-auto">Klik pada salah satu menu atau tombol di bawah untuk membuka halaman layanan terkait secara interaktif.</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -676,7 +676,7 @@
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
                     <div>
-                        <label class="block font-semibold text-slate-700 mb-1">Upload Berkas / Scan Surat (>1MB Didukung)</label>
+                        <label class="block font-semibold text-slate-700 mb-1">Upload Berkas / Scan Surat</label>
                         <div class="flex flex-col gap-2">
                             <input type="file" id="input-scan-file" accept="image/*,.pdf,.doc,.docx" onchange="handleFileUpload(this, 'scan')" class="hidden">
                             <label for="input-scan-file" class="cursor-pointer flex items-center justify-center gap-2 p-3 bg-slate-50 hover:bg-slate-100 border border-dashed border-slate-300 rounded-xl text-slate-700 font-semibold transition text-xs">
@@ -695,7 +695,7 @@
                         </div>
                     </div>
                     <div>
-                        <label class="block font-semibold text-slate-700 mb-1">Foto Lapangan (>1MB Didukung)</label>
+                        <label class="block font-semibold text-slate-700 mb-1">Foto Lapangan</label>
                         <div class="flex flex-col gap-2">
                             <input type="file" id="input-dok-file" accept="image/*" onchange="handleImageUpload(this, 'preview-dok-img', 'dok')" class="hidden">
                             <label for="input-dok-file" class="cursor-pointer flex items-center justify-center gap-2 p-3 bg-slate-50 hover:bg-slate-100 border border-dashed border-slate-300 rounded-xl text-slate-700 font-semibold transition text-xs">
@@ -725,7 +725,7 @@
         <div class="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] flex flex-col overflow-hidden shadow-2xl border border-slate-200">
             <div class="bg-slate-900 text-white p-5 flex items-center justify-between border-b border-slate-800">
                 <h3 class="text-base font-bold text-amber-400 flex items-center gap-2">
-                    <i class="fa-solid fa-code"></i> Template Script Google Apps Script (Code.gs)
+                    <i class="fa-solid fa-code"></i> Template Script Google Apps Script (Code.gs) - Update by Code
                 </h3>
                 <button onclick="closeModal('modal-appscript-code')" class="text-slate-300 hover:text-white text-xl">
                     <i class="fa-solid fa-xmark"></i>
@@ -733,7 +733,7 @@
             </div>
 
             <div class="p-6 overflow-y-auto custom-scrollbar space-y-4 text-xs">
-                <p class="text-slate-600">Salin kode JavaScript berikut dan tempelkan pada menu <strong>Extensions &gt; Apps Script</strong> di Google Sheets Anda. Kemudian klik <strong>Deploy &gt; New deployment &gt; Web app</strong> (akses: Anyone).</p>
+                <p class="text-slate-600">Salin kode JavaScript berikut dan tempelkan pada Google Sheets (Extensions > Apps Script). Skrip ini telah dioptimalkan agar saat surat diedit, baris yang sesuai dengan nomor surat akan diperbarui tanpa menambah jumlah data baru.</p>
                 
                 <div class="relative">
                     <button onclick="copyAppsScriptCode()" class="absolute right-3 top-3 px-3 py-1.5 bg-amber-400 text-pu-darkblue rounded-lg font-bold text-xs shadow hover:bg-amber-300 transition">
@@ -763,17 +763,44 @@ function doPost(e) {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
   var data = JSON.parse(e.postData.contents);
   
-  sheet.appendRow([
-    data.nomorSurat,
-    data.tanggalSurat,
-    data.asalSurat,
-    data.perihal,
-    data.penanggungJawab,
-    data.status,
-    data.disposisi,
-    data.scanUrl,
-    data.dokumentasiUrl
-  ]);
+  var rows = sheet.getDataRange().getValues();
+  var rowIndex = -1;
+  
+  // Mencari baris berdasarkan nomor surat (Kolom 1 / index 0)
+  for (var i = 1; i < rows.length; i++) {
+    if (rows[i][0] === data.nomorSurat) {
+      rowIndex = i + 1; // Baris spreadsheet mulai dari 1
+      break;
+    }
+  }
+  
+  if (rowIndex > 0) {
+    // Update baris yang sudah ada berdasarkan kode nomor surat tanpa menambah baris baru
+    sheet.getRange(rowIndex, 1, 1, 9).setValues([[
+      data.nomorSurat,
+      data.tanggalSurat,
+      data.asalSurat,
+      data.perihal,
+      data.penanggungJawab,
+      data.status,
+      data.disposisi,
+      data.scanUrl,
+      data.dokumentasiUrl
+    ]]);
+  } else {
+    // Tambah baru jika nomor surat belum terdaftar
+    sheet.appendRow([
+      data.nomorSurat,
+      data.tanggalSurat,
+      data.asalSurat,
+      data.perihal,
+      data.penanggungJawab,
+      data.status,
+      data.disposisi,
+      data.scanUrl,
+      data.dokumentasiUrl
+    ]);
+  }
   
   return ContentService.createTextOutput(JSON.stringify({"result": "success"}))
     .setMimeType(ContentService.MimeType.JSON);
@@ -810,7 +837,7 @@ function doPost(e) {
 
                 <div>
                     <label class="block font-bold text-slate-800 mb-1">Web App URL (Apps Script)</label>
-                    <input type="url" id="input-api-url" placeholder="https://script.google.com/macros/s/AKfycbxZQNRx7wYzD-fvqrCttKC0gpMRMTy-_uUTWM8Ng20ztRJUWI9PEjXkTmuYgoqs0uTG/exec" required
+                    <input type="url" id="input-api-url" placeholder="https://script.google.com/macros/s/.../exec" required
                            class="w-full p-3 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-pu-blue font-mono text-xs">
                     <p class="text-[11px] text-slate-500 mt-1">Masukkan URL Web App hasil deploy Apps Script untuk menyambungkan data surat secara real-time.</p>
                 </div>
@@ -1354,7 +1381,7 @@ function doPost(e) {
             processLargeFile(file, function(result) {
                 currentActiveSuratItem.scanUrl = result;
                 openDetailModal(currentActiveSuratItem);
-                showToast('File scan (>1MB) berhasil dimuat. Klik "Simpan File" untuk menyimpan.', 'success');
+                showToast('File scan berhasil dimuat. Klik "Simpan File" untuk memperbarui.', 'success');
             });
         }
 
@@ -1365,7 +1392,7 @@ function doPost(e) {
             processLargeFile(file, function(result) {
                 currentActiveSuratItem.dokumentasiUrl = result;
                 document.getElementById('det-dok-img').src = result;
-                showToast('Foto dokumentasi (>1MB) berhasil dimuat. Klik "Simpan File" untuk menyimpan.', 'success');
+                showToast('Foto dokumentasi berhasil dimuat. Klik "Simpan File" untuk memperbarui.', 'success');
             });
         }
 
@@ -1378,6 +1405,7 @@ function doPost(e) {
 
             currentActiveSuratItem.penanggungJawab = penanggungJawabStr;
 
+            // Logika memastikan surat diperbarui berdasarkan kode nomor surat (tidak menambah data baru)
             const index = currentSuratList.findIndex(item => item.nomorSurat === currentActiveSuratItem.nomorSurat);
             if (index !== -1) {
                 currentSuratList[index] = { ...currentActiveSuratItem };
@@ -1390,11 +1418,11 @@ function doPost(e) {
             try {
                 localStorage.setItem('surat_data_cache', JSON.stringify(currentSuratList));
             } catch (err) {
-                showToast('Peringatan: Kapasitas penyimpanan hampir penuh, namun data tetap diproses.', 'warning');
+                showToast('Peringatan: Kapasitas penyimpanan penuh.', 'warning');
             }
 
             renderSuratTable(currentSuratList);
-            showToast('Perubahan file & penanggung jawab berhasil disimpan!', 'success');
+            showToast('Surat berhasil dikonfirmasi & diperbarui berdasarkan kode!', 'success');
 
             if (googleAppsScriptUrl) {
                 fetch(googleAppsScriptUrl, {
@@ -1457,7 +1485,7 @@ function doPost(e) {
                 label.textContent = 'Ganti Berkas';
 
                 uploadedScanUrl = result;
-                showToast('Berkas (>1MB) berhasil dimuat.', 'success');
+                showToast('Berkas berhasil dimuat.', 'success');
             });
         }
 
@@ -1482,7 +1510,7 @@ function doPost(e) {
                 label.textContent = file.name.length > 20 ? file.name.substring(0, 18) + '...' : file.name;
 
                 uploadedDokUrl = result;
-                showToast('Foto dokumentasi (>1MB) berhasil dimuat.', 'success');
+                showToast('Foto dokumentasi berhasil dimuat.', 'success');
             });
         }
 
@@ -1536,12 +1564,10 @@ function doPost(e) {
 
             try {
                 localStorage.setItem('surat_data_cache', JSON.stringify(currentSuratList));
-            } catch (err) {
-                showToast('Peringatan: Penyimpanan lokal penuh, namun data dikirim.', 'warning');
-            }
+            } catch (err) {}
             renderSuratTable(currentSuratList);
             closeModal('modal-input-surat');
-            showToast('Surat & Berkas (>1MB) berhasil disimpan!', 'success');
+            showToast('Surat & Berkas berhasil disimpan!', 'success');
 
             if (checkedBoxes.length > 0) {
                 window.selectedStaffForWa = checkedBoxes.map(el => ({
@@ -1663,7 +1689,7 @@ function doPost(e) {
                 })
                 .catch(err => {
                     log.textContent = '> Sync Failed: Returning to fallback buffer.';
-                    showToast('Gagal terhubung ke URL Google Script (Pastikan opsi Web App Anyone aktif).', 'warning');
+                    showToast('Gagal terhubung ke URL Google Script.', 'warning');
                 });
         }
 
