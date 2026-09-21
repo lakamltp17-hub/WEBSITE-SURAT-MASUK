@@ -1405,7 +1405,6 @@ function doPost(e) {
 
             currentActiveSuratItem.penanggungJawab = penanggungJawabStr;
 
-            // Logika memastikan surat diperbarui berdasarkan kode nomor surat (tidak menambah data baru)
             const index = currentSuratList.findIndex(item => item.nomorSurat === currentActiveSuratItem.nomorSurat);
             if (index !== -1) {
                 currentSuratList[index] = { ...currentActiveSuratItem };
