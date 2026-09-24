@@ -568,42 +568,31 @@
                     <div class="space-y-2">
                         <div class="flex items-center justify-between">
                             <h4 class="font-bold text-sm text-slate-900 flex items-center gap-2">
-                                <i class="fa-solid fa-file-pdf text-red-500"></i> Berkas / Scan Surat Masuk
+                                <i class="fa-solid fa-file-pdf text-red-500"></i> Berkas / Scan Surat Masuk (Bisa Banyak PDF/File)
                             </h4>
                             <div class="flex items-center gap-2">
-                                <label for="edit-scan-file-input" class="cursor-pointer text-xs bg-pu-blue hover:bg-pu-darkblue text-white px-2 py-1 rounded font-semibold transition flex items-center gap-1" title="Edit Scan Surat">
-                                    <i class="fa-solid fa-pen-to-square"></i> Edit Scan
+                                <label for="edit-scan-file-input" class="cursor-pointer text-xs bg-pu-blue hover:bg-pu-darkblue text-white px-2 py-1 rounded font-semibold transition flex items-center gap-1" title="Tambah Scan Surat">
+                                    <i class="fa-solid fa-plus"></i> Tambah Berkas
                                 </label>
-                                <input type="file" id="edit-scan-file-input" accept="image/*,.pdf,.doc,.docx" class="hidden" onchange="handleEditScanUpload(this)">
-                                <a id="det-scan-download" href="#" target="_blank" class="text-xs text-pu-blue hover:underline font-semibold flex items-center gap-1">
-                                    <i class="fa-solid fa-expand"></i> Buka Full Berkas
-                                </a>
+                                <input type="file" id="edit-scan-file-input" accept="image/*,.pdf,.doc,.docx" multiple class="hidden" onchange="handleEditScanUpload(this)">
                             </div>
                         </div>
-                        <div id="det-scan-preview-box" onclick="openFullscreenImage(currentActiveSuratItem?.scanUrl, 'Scan Berkas Surat')" class="h-64 rounded-xl border border-slate-300 bg-slate-100 overflow-hidden relative flex items-center justify-center group cursor-pointer"></div>
+                        <div id="det-scan-preview-box" class="h-64 rounded-xl border border-slate-300 bg-slate-100 p-2 overflow-y-auto custom-scrollbar flex flex-col gap-2"></div>
                     </div>
 
                     <div class="space-y-2">
                         <div class="flex items-center justify-between">
                             <h4 class="font-bold text-sm text-slate-900 flex items-center gap-2">
-                                <i class="fa-solid fa-camera text-emerald-600"></i> Dokumentasi Setelah Ditindaklanjuti
+                                <i class="fa-solid fa-camera text-emerald-600"></i> Dokumentasi Lapangan (Bisa Beberapa Gambar)
                             </h4>
                             <div class="flex items-center gap-2">
-                                <label for="edit-dok-file-input" class="cursor-pointer text-xs bg-emerald-600 hover:bg-emerald-700 text-white px-2 py-1 rounded font-semibold transition flex items-center gap-1" title="Edit Dokumentasi Lapangan">
-                                    <i class="fa-solid fa-pen-to-square"></i> Edit Dok
+                                <label for="edit-dok-file-input" class="cursor-pointer text-xs bg-emerald-600 hover:bg-emerald-700 text-white px-2 py-1 rounded font-semibold transition flex items-center gap-1" title="Tambah Dokumentasi">
+                                    <i class="fa-solid fa-plus"></i> Tambah Foto
                                 </label>
-                                <input type="file" id="edit-dok-file-input" accept="image/*" class="hidden" onchange="handleEditDokUpload(this)">
-                                <button id="det-dok-download" type="button" class="text-xs text-emerald-600 hover:underline font-semibold flex items-center gap-1">
-                                    <i class="fa-solid fa-expand"></i> Buka Full Gambar
-                                </button>
+                                <input type="file" id="edit-dok-file-input" accept="image/*" multiple class="hidden" onchange="handleEditDokUpload(this)">
                             </div>
                         </div>
-                        <div onclick="openFullscreenImage(document.getElementById('det-dok-img').src, 'Dokumentasi Lapangan')" class="h-64 rounded-xl border border-slate-300 bg-slate-100 overflow-hidden relative flex items-center justify-center group cursor-pointer">
-                            <img id="det-dok-img" src="" alt="Dokumentasi Tindak Lanjut" class="w-full h-full object-cover transition duration-300 group-hover:scale-105" onerror="this.src='https://placehold.co/600x800/f1f5f9/64748b?text=Foto+Tindak+Lanjut+Lapangan'">
-                            <div class="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
-                                <span class="bg-emerald-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow"><i class="fa-solid fa-expand mr-1"></i> Klik untuk Buka Full Gambar</span>
-                            </div>
-                        </div>
+                        <div id="det-dok-preview-box" class="h-64 rounded-xl border border-slate-300 bg-slate-100 p-2 overflow-y-auto custom-scrollbar grid grid-cols-2 gap-2 content-start"></div>
                     </div>
                 </div>
             </div>
@@ -676,38 +665,25 @@
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
                     <div>
-                        <label class="block font-semibold text-slate-700 mb-1">Upload Berkas / Scan Surat</label>
+                        <label class="block font-semibold text-slate-700 mb-1">Upload Berkas / Scan (Bisa Banyak)</label>
                         <div class="flex flex-col gap-2">
-                            <input type="file" id="input-scan-file" accept="image/*,.pdf,.doc,.docx" onchange="handleFileUpload(this, 'scan')" class="hidden">
+                            <input type="file" id="input-scan-file" accept="image/*,.pdf,.doc,.docx" multiple class="hidden" onchange="handleFileUpload(this, 'scan')">
                             <label for="input-scan-file" class="cursor-pointer flex items-center justify-center gap-2 p-3 bg-slate-50 hover:bg-slate-100 border border-dashed border-slate-300 rounded-xl text-slate-700 font-semibold transition text-xs">
                                 <i class="fa-solid fa-file-arrow-up text-pu-blue text-sm"></i>
-                                <span id="label-scan-file">Pilih Berkas / Scan Surat</span>
+                                <span id="label-scan-file">Pilih Berkas / PDF (Bisa Banyak)</span>
                             </label>
-                            <div id="container-preview-scan" class="hidden relative rounded-xl overflow-hidden border border-slate-200 p-2.5 bg-slate-50 flex items-center justify-between">
-                                <div class="flex items-center gap-2 truncate">
-                                    <i class="fa-solid fa-file-lines text-pu-blue text-sm"></i>
-                                    <span id="name-preview-scan" class="font-medium text-slate-700 truncate text-[11px]">file.pdf</span>
-                                </div>
-                                <button type="button" onclick="removeFileUpload('scan')" class="bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-[10px] shadow">
-                                    <i class="fa-solid fa-xmark"></i>
-                                </button>
-                            </div>
+                            <div id="container-preview-scan" class="hidden flex flex-col gap-2 max-h-36 overflow-y-auto custom-scrollbar p-2 bg-slate-50 border border-slate-200 rounded-xl"></div>
                         </div>
                     </div>
                     <div>
-                        <label class="block font-semibold text-slate-700 mb-1">Foto Lapangan</label>
+                        <label class="block font-semibold text-slate-700 mb-1">Foto Lapangan (Bisa Beberapa)</label>
                         <div class="flex flex-col gap-2">
-                            <input type="file" id="input-dok-file" accept="image/*" onchange="handleImageUpload(this, 'preview-dok-img', 'dok')" class="hidden">
+                            <input type="file" id="input-dok-file" accept="image/*" multiple class="hidden" onchange="handleImageUpload(this, 'dok')">
                             <label for="input-dok-file" class="cursor-pointer flex items-center justify-center gap-2 p-3 bg-slate-50 hover:bg-slate-100 border border-dashed border-slate-300 rounded-xl text-slate-700 font-semibold transition text-xs">
                                 <i class="fa-solid fa-images text-emerald-600 text-sm"></i>
-                                <span id="label-dok-file">Ambil Foto / Upload Galeri</span>
+                                <span id="label-dok-file">Upload Beberapa Foto</span>
                             </label>
-                            <div id="container-preview-dok" class="hidden relative rounded-xl overflow-hidden border border-slate-200">
-                                <img id="preview-dok-img" src="" alt="Preview Dokumentasi" class="h-28 w-full object-cover">
-                                <button type="button" onclick="removeImageUpload('dok')" class="absolute top-1 right-1 bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs shadow">
-                                    <i class="fa-solid fa-xmark"></i>
-                                </button>
-                            </div>
+                            <div id="container-preview-dok" class="hidden grid grid-cols-3 gap-2 max-h-36 overflow-y-auto custom-scrollbar p-2 bg-slate-50 border border-slate-200 rounded-xl"></div>
                         </div>
                     </div>
                 </div>
@@ -766,16 +742,14 @@ function doPost(e) {
   var rows = sheet.getDataRange().getValues();
   var rowIndex = -1;
   
-  // Mencari baris berdasarkan nomor surat (Kolom 1 / index 0)
   for (var i = 1; i < rows.length; i++) {
     if (rows[i][0] === data.nomorSurat) {
-      rowIndex = i + 1; // Baris spreadsheet mulai dari 1
+      rowIndex = i + 1;
       break;
     }
   }
   
   if (rowIndex > 0) {
-    // Update baris yang sudah ada berdasarkan kode nomor surat tanpa menambah baris baru
     sheet.getRange(rowIndex, 1, 1, 9).setValues([[
       data.nomorSurat,
       data.tanggalSurat,
@@ -788,7 +762,6 @@ function doPost(e) {
       data.dokumentasiUrl
     ]]);
   } else {
-    // Tambah baru jika nomor surat belum terdaftar
     sheet.appendRow([
       data.nomorSurat,
       data.tanggalSurat,
@@ -993,8 +966,8 @@ function doPost(e) {
                 penanggungJawab: 'Hermin Taranda, ST, Rudi Payapo, ST',
                 status: 'Diproses',
                 disposisi: 'Segera lakukan pengukuran debit & verifikasi kondisi lapangan.',
-                scanUrl: 'https://images.unsplash.com/photo-1568667256549-094345857637?q=80&w=800&auto=format&fit=crop',
-                dokumentasiUrl: 'https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?q=80&w=800&auto=format&fit=crop'
+                scanUrls: ['https://images.unsplash.com/photo-1568667256549-094345857637?q=80&w=800&auto=format&fit=crop'],
+                dokumentasiUrls: ['https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?q=80&w=800&auto=format&fit=crop']
             },
             {
                 nomorSurat: '503/089/PBG-PUPR/2026',
@@ -1004,8 +977,8 @@ function doPost(e) {
                 penanggungJawab: 'Junior Lokollo, ST',
                 status: 'Selesai Ditindaklanjuti',
                 disposisi: 'Dokumen lengkap. Terbitkan surat rekomendasi kesesuaian ruang.',
-                scanUrl: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?q=80&w=800&auto=format&fit=crop',
-                dokumentasiUrl: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800&auto=format&fit=crop'
+                scanUrls: ['https://images.unsplash.com/photo-1586281380349-632531db7ed4?q=80&w=800&auto=format&fit=crop'],
+                dokumentasiUrls: ['https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800&auto=format&fit=crop']
             },
             {
                 nomorSurat: '602/012/SDA-PUPR/2026',
@@ -1015,8 +988,8 @@ function doPost(e) {
                 penanggungJawab: 'Rajiv Kadir Sabban, ST, Ryan Wlilliam Manuputty, ST',
                 status: 'Disposisi Pimpinan',
                 disposisi: 'Jadwalkan alat berat ke lokasi pada awal minggu depan.',
-                scanUrl: 'https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?q=80&w=800&auto=format&fit=crop',
-                dokumentasiUrl: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=800&auto=format&fit=crop'
+                scanUrls: ['https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?q=80&w=800&auto=format&fit=crop'],
+                dokumentasiUrls: ['https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=800&auto=format&fit=crop']
             },
             {
                 nomorSurat: '600/044/BM-PUPR/2026',
@@ -1026,8 +999,8 @@ function doPost(e) {
                 penanggungJawab: 'Hegi Daniel Mulya, ST',
                 status: 'Selesai Ditindaklanjuti',
                 disposisi: 'Telah diselesaikannya overlay aspal 250 meter.',
-                scanUrl: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop',
-                dokumentasiUrl: 'https://images.unsplash.com/photo-1517649763962-0c623266010b?q=80&w=800&auto=format&fit=crop'
+                scanUrls: ['https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop'],
+                dokumentasiUrls: ['https://images.unsplash.com/photo-1517649763962-0c623266010b?q=80&w=800&auto=format&fit=crop']
             }
         ];
 
@@ -1038,8 +1011,9 @@ function doPost(e) {
         let currentSuratList = sortSuratByNewestDate([...initialSuratData]);
         let googleAppsScriptUrl = 'https://script.google.com/macros/s/AKfycbxrXPQDepDEz_J_updtvKmlpcVOhxyYp3PwpIAm775qDix4DyUCOXCzmqB15zWHBwkD/exec';
 
-        let uploadedScanUrl = '';
-        let uploadedDokUrl = '';
+        // Multi-file state arrays for new entries
+        let uploadedScanFiles = []; // Array of {name, url}
+        let uploadedDokFiles = [];  // Array of {name, url}
         let currentActiveSuratItem = null;
 
         const heroImages = [
@@ -1065,9 +1039,23 @@ function doPost(e) {
             const cached = localStorage.getItem('surat_data_cache');
             if (cached) {
                 try {
-                    currentSuratList = sortSuratByNewestDate(JSON.parse(cached));
+                    let parsed = JSON.parse(cached);
+                    // Backward compatibility support for old string URLs
+                    parsed = parsed.map(item => {
+                        if (!item.scanUrls && item.scanUrl) item.scanUrls = [item.scanUrl];
+                        if (!item.dokumentasiUrls && item.dokumentasiUrl) item.dokumentasiUrls = [item.dokumentasiUrl];
+                        return item;
+                    });
+                    currentSuratList = sortSuratByNewestDate(parsed);
                 } catch(e) {}
             }
+
+            // Also normalize initial data fields
+            currentSuratList = currentSuratList.map(item => {
+                if (!item.scanUrls && item.scanUrl) item.scanUrls = [item.scanUrl];
+                if (!item.dokumentasiUrls && item.dokumentasiUrl) item.dokumentasiUrls = [item.dokumentasiUrl];
+                return item;
+            });
 
             renderStaffGrid();
             populatePjSelect();
@@ -1307,6 +1295,10 @@ function doPost(e) {
         }
 
         function openDetailModal(item) {
+            // Normalize item arrays if missing
+            if (!item.scanUrls) item.scanUrls = item.scanUrl ? [item.scanUrl] : [];
+            if (!item.dokumentasiUrls) item.dokumentasiUrls = item.dokumentasiUrl ? [item.dokumentasiUrl] : [];
+
             currentActiveSuratItem = item;
             document.getElementById('modal-nomor-surat-badge').textContent = item.nomorSurat;
             document.getElementById('modal-perihal-title').textContent = item.perihal;
@@ -1330,70 +1322,86 @@ function doPost(e) {
             statusBadge.className = 'px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-300';
             statusBadge.textContent = item.status;
 
-            const scanPreviewBox = document.getElementById('det-scan-preview-box');
-            const scanUrl = item.scanUrl || '';
-            const scanDownload = document.getElementById('det-scan-download');
-            const dokDownload = document.getElementById('det-dok-download');
-            
-            if (scanUrl.includes('application/pdf') || scanUrl.toLowerCase().endsWith('.pdf') || scanUrl.includes('.pdf?')) {
-                scanPreviewBox.innerHTML = `
-                    <div class="flex flex-col items-center justify-center p-6 text-center h-full w-full bg-red-50 text-red-700">
-                        <i class="fa-solid fa-file-pdf text-5xl mb-2 text-red-500"></i>
-                        <span class="font-bold text-sm">Dokumen PDF Berkas Surat</span>
-                        <span class="text-[11px] text-slate-500 mt-1">Klik untuk membuka atau mengunduh file PDF</span>
-                    </div>
-                    <div class="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
-                        <span class="bg-blue-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow"><i class="fa-solid fa-expand mr-1"></i> Klik untuk Buka Full PDF</span>
-                    </div>
-                `;
-            } else {
-                scanPreviewBox.innerHTML = `
-                    <img id="det-scan-img" src="${scanUrl || 'https://placehold.co/600x800/e2e8f0/475569?text=Scan+Berkas+Surat+Digital'}" alt="Scan Berkas Surat" 
-                         class="w-full h-full object-cover transition duration-300 group-hover:scale-105"
-                         onerror="this.src='https://placehold.co/600x800/e2e8f0/475569?text=Scan+Berkas+Surat+Digital'">
-                    <div class="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
-                        <span class="bg-blue-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow"><i class="fa-solid fa-expand mr-1"></i> Klik untuk Buka Full Gambar</span>
-                    </div>
-                `;
-            }
-            
-            scanDownload.onclick = function(e) {
-                e.preventDefault();
-                openFullscreenImage(item.scanUrl, 'Scan Berkas Surat');
-            };
-
-            document.getElementById('det-dok-img').src = item.dokumentasiUrl || 'https://placehold.co/600x800/f1f5f9/64748b?text=Foto+Tindak+Lanjut+Lapangan';
-
-            if (dokDownload) {
-                dokDownload.onclick = function(e) {
-                    e.preventDefault();
-                    openFullscreenImage(item.dokumentasiUrl, 'Dokumentasi Lapangan');
-                };
-            }
-
+            renderDetailGalleries();
             document.getElementById('modal-detail-surat').classList.remove('hidden');
         }
 
-        function handleEditScanUpload(input) {
-            const file = input.files[0];
-            if (!file || !currentActiveSuratItem) return;
+        function renderDetailGalleries() {
+            // Render Scan/PDF files list in Detail Modal
+            const scanBox = document.getElementById('det-scan-preview-box');
+            if (currentActiveSuratItem.scanUrls && currentActiveSuratItem.scanUrls.length > 0) {
+                scanBox.innerHTML = currentActiveSuratItem.scanUrls.map((url, idx) => `
+                    <div class="flex items-center justify-between p-2.5 bg-white border border-slate-200 rounded-xl shadow-sm text-xs">
+                        <div class="flex items-center gap-2 truncate cursor-pointer" onclick="openFullscreenImage('${url}', 'Berkas Surat')">
+                            <i class="fa-solid fa-file-lines text-pu-blue text-base"></i>
+                            <span class="font-semibold text-slate-700 truncate">Berkas Dokumen #${idx + 1}</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button type="button" onclick="openFullscreenImage('${url}', 'Berkas Surat')" class="px-2.5 py-1 bg-pu-blue text-white rounded-lg text-[11px] font-semibold hover:bg-pu-darkblue">Buka</button>
+                            <button type="button" onclick="removeDetailScanItem(${idx})" class="w-6 h-6 bg-red-100 text-red-600 hover:bg-red-200 rounded-full flex items-center justify-center"><i class="fa-solid fa-xmark text-xs"></i></button>
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                scanBox.innerHTML = `<div class="flex items-center justify-center h-full text-slate-400 text-xs">Belum ada berkas scan/PDF.</div>`;
+            }
 
-            processLargeFile(file, function(result) {
-                currentActiveSuratItem.scanUrl = result;
-                openDetailModal(currentActiveSuratItem);
-                showToast('File scan berhasil dimuat. Klik "Simpan File" untuk memperbarui.', 'success');
+            // Render Dokumentasi images grid in Detail Modal
+            const dokBox = document.getElementById('det-dok-preview-box');
+            if (currentActiveSuratItem.dokumentasiUrls && currentActiveSuratItem.dokumentasiUrls.length > 0) {
+                dokBox.innerHTML = currentActiveSuratItem.dokumentasiUrls.map((url, idx) => `
+                    <div class="relative rounded-xl overflow-hidden border border-slate-300 h-28 group bg-slate-900">
+                        <img src="${url}" alt="Dokumentasi" class="w-full h-full object-cover group-hover:scale-105 transition cursor-pointer" onclick="openFullscreenImage('${url}', 'Dokumentasi Lapangan')">
+                        <button type="button" onclick="removeDetailDokItem(${idx})" class="absolute top-1 right-1 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-[10px] shadow hover:bg-red-700"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                `).join('');
+            } else {
+                dokBox.innerHTML = `<div class="col-span-2 flex items-center justify-center h-full text-slate-400 text-xs">Belum ada foto dokumentasi lapangan.</div>`;
+            }
+        }
+
+        function handleEditScanUpload(input) {
+            const files = Array.from(input.files);
+            if (files.length === 0 || !currentActiveSuratItem) return;
+
+            files.forEach(file => {
+                processLargeFile(file, function(result) {
+                    if (!currentActiveSuratItem.scanUrls) currentActiveSuratItem.scanUrls = [];
+                    currentActiveSuratItem.scanUrls.push(result);
+                    renderDetailGalleries();
+                    showToast('Berkas baru ditambahkan.', 'success');
+                });
             });
+            input.value = '';
+        }
+
+        function removeDetailScanItem(idx) {
+            if (!currentActiveSuratItem || !currentActiveSuratItem.scanUrls) return;
+            currentActiveSuratItem.scanUrls.splice(idx, 1);
+            renderDetailGalleries();
+            showToast('Berkas dihapus.', 'info');
         }
 
         function handleEditDokUpload(input) {
-            const file = input.files[0];
-            if (!file || !currentActiveSuratItem) return;
+            const files = Array.from(input.files);
+            if (files.length === 0 || !currentActiveSuratItem) return;
 
-            processLargeFile(file, function(result) {
-                currentActiveSuratItem.dokumentasiUrl = result;
-                document.getElementById('det-dok-img').src = result;
-                showToast('Foto dokumentasi berhasil dimuat. Klik "Simpan File" untuk memperbarui.', 'success');
+            files.forEach(file => {
+                processLargeFile(file, function(result) {
+                    if (!currentActiveSuratItem.dokumentasiUrls) currentActiveSuratItem.dokumentasiUrls = [];
+                    currentActiveSuratItem.dokumentasiUrls.push(result);
+                    renderDetailGalleries();
+                    showToast('Foto dokumentasi baru ditambahkan.', 'success');
+                });
             });
+            input.value = '';
+        }
+
+        function removeDetailDokItem(idx) {
+            if (!currentActiveSuratItem || !currentActiveSuratItem.dokumentasiUrls) return;
+            currentActiveSuratItem.dokumentasiUrls.splice(idx, 1);
+            renderDetailGalleries();
+            showToast('Foto dokumentasi dihapus.', 'info');
         }
 
         function saveCurrentLetterChanges() {
@@ -1404,6 +1412,9 @@ function doPost(e) {
             const penanggungJawabStr = checkedPj.length > 0 ? checkedPj.join(', ') : 'Belum Ditentukan';
 
             currentActiveSuratItem.penanggungJawab = penanggungJawabStr;
+            // For backward compatibility matching string properties
+            currentActiveSuratItem.scanUrl = currentActiveSuratItem.scanUrls?.[0] || '';
+            currentActiveSuratItem.dokumentasiUrl = currentActiveSuratItem.dokumentasiUrls?.[0] || '';
 
             const index = currentSuratList.findIndex(item => item.nomorSurat === currentActiveSuratItem.nomorSurat);
             if (index !== -1) {
@@ -1471,58 +1482,83 @@ function doPost(e) {
         }
 
         function handleFileUpload(input, type) {
-            const file = input.files[0];
-            if (!file) return;
+            const files = Array.from(input.files);
+            if (files.length === 0) return;
 
-            processLargeFile(file, function(result) {
-                const container = document.getElementById(`container-preview-${type}`);
-                const nameSpan = document.getElementById(`name-preview-${type}`);
-                const label = document.getElementById(`label-${type}-file`);
-
-                nameSpan.textContent = file.name;
-                container.classList.remove('hidden');
-                label.textContent = 'Ganti Berkas';
-
-                uploadedScanUrl = result;
-                showToast('Berkas berhasil dimuat.', 'success');
+            files.forEach(file => {
+                processLargeFile(file, function(result) {
+                    uploadedScanFiles.push({ name: file.name, url: result });
+                    renderNewLetterPreviews('scan');
+                });
             });
+            showToast('Berkas berhasil ditambahkan.', 'success');
         }
 
-        function removeFileUpload(type) {
-            document.getElementById(`input-${type}-file`).value = '';
-            document.getElementById(`container-preview-${type}`).classList.add('hidden');
-            document.getElementById(`label-${type}-file`).textContent = 'Pilih Berkas / Scan Surat';
-            uploadedScanUrl = '';
+        function removeNewScanFile(index) {
+            uploadedScanFiles.splice(index, 1);
+            renderNewLetterPreviews('scan');
         }
 
-        function handleImageUpload(input, previewId, type) {
-            const file = input.files[0];
-            if (!file) return;
+        function handleImageUpload(input, type) {
+            const files = Array.from(input.files);
+            if (files.length === 0) return;
 
-            processLargeFile(file, function(result) {
-                const previewImg = document.getElementById(previewId);
-                const container = document.getElementById(`container-preview-${type}`);
-                const label = document.getElementById(`label-${type}-file`);
-
-                previewImg.src = result;
-                container.classList.remove('hidden');
-                label.textContent = file.name.length > 20 ? file.name.substring(0, 18) + '...' : file.name;
-
-                uploadedDokUrl = result;
-                showToast('Foto dokumentasi berhasil dimuat.', 'success');
+            files.forEach(file => {
+                processLargeFile(file, function(result) {
+                    uploadedDokFiles.push({ name: file.name, url: result });
+                    renderNewLetterPreviews('dok');
+                });
             });
+            showToast('Foto dokumentasi berhasil ditambahkan.', 'success');
         }
 
-        function removeImageUpload(type) {
-            document.getElementById(`input-${type}-file`).value = '';
-            document.getElementById(`container-preview-${type}`).classList.add('hidden');
-            document.getElementById(`label-${type}-file`).textContent = 'Ambil Foto / Upload Galeri';
-            uploadedDokUrl = '';
+        function removeNewDokFile(index) {
+            uploadedDokFiles.splice(index, 1);
+            renderNewLetterPreviews('dok');
+        }
+
+        function renderNewLetterPreviews(type) {
+            if (type === 'scan') {
+                const container = document.getElementById('container-preview-scan');
+                const label = document.getElementById('label-scan-file');
+                if (uploadedScanFiles.length > 0) {
+                    container.classList.remove('hidden');
+                    label.textContent = `${uploadedScanFiles.length} berkas dipilih`;
+                    container.innerHTML = uploadedScanFiles.map((file, idx) => `
+                        <div class="flex items-center justify-between bg-white p-2 rounded-lg border border-slate-200 text-xs">
+                            <span class="truncate font-medium text-slate-700"><i class="fa-solid fa-file-lines text-pu-blue mr-1"></i> ${file.name}</span>
+                            <button type="button" onclick="removeNewScanFile(${idx})" class="text-red-600 hover:text-red-800"><i class="fa-solid fa-xmark"></i></button>
+                        </div>
+                    `).join('');
+                } else {
+                    container.classList.add('hidden');
+                    label.textContent = 'Pilih Berkas / PDF (Bisa Banyak)';
+                }
+            } else if (type === 'dok') {
+                const container = document.getElementById('container-preview-dok');
+                const label = document.getElementById('label-dok-file');
+                if (uploadedDokFiles.length > 0) {
+                    container.classList.remove('hidden');
+                    label.textContent = `${uploadedDokFiles.length} foto dipilih`;
+                    container.innerHTML = uploadedDokFiles.map((file, idx) => `
+                        <div class="relative rounded-lg overflow-hidden border border-slate-200 h-20 bg-slate-900">
+                            <img src="${file.url}" class="w-full h-full object-cover">
+                            <button type="button" onclick="removeNewDokFile(${idx})" class="absolute top-1 right-1 bg-red-600 text-white rounded-full w-4 h-4 flex items-center justify-center text-[9px]"><i class="fa-solid fa-xmark"></i></button>
+                        </div>
+                    `).join('');
+                } else {
+                    container.classList.add('hidden');
+                    label.textContent = 'Upload Beberapa Foto';
+                }
+            }
         }
 
         function openNewLetterModal() {
-            removeFileUpload('scan');
-            removeImageUpload('dok');
+            uploadedScanFiles = [];
+            uploadedDokFiles = [];
+            renderNewLetterPreviews('scan');
+            renderNewLetterPreviews('dok');
+            document.getElementById('form-input-surat').reset();
             document.querySelectorAll('input[name="penanggungJawab"]').forEach(cb => cb.checked = false);
             document.getElementById('modal-input-surat').classList.remove('hidden');
         }
@@ -1546,6 +1582,9 @@ function doPost(e) {
             const checkedPj = checkedBoxes.map(el => el.value);
             const penanggungJawabStr = checkedPj.length > 0 ? checkedPj.join(', ') : 'Belum Ditentukan';
 
+            const scanUrlsArr = uploadedScanFiles.length > 0 ? uploadedScanFiles.map(f => f.url) : ['https://images.unsplash.com/photo-1568667256549-094345857637?q=80&w=800&auto=format&fit=crop'];
+            const dokUrlsArr = uploadedDokFiles.length > 0 ? uploadedDokFiles.map(f => f.url) : ['https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?q=80&w=800&auto=format&fit=crop'];
+
             const newSurat = {
                 nomorSurat: document.getElementById('input-nomor').value,
                 tanggalSurat: document.getElementById('input-tanggal').value,
@@ -1554,11 +1593,18 @@ function doPost(e) {
                 penanggungJawab: penanggungJawabStr,
                 status: document.getElementById('input-status').value,
                 disposisi: document.getElementById('input-disposisi').value || 'Belum ada disposisi',
-                scanUrl: uploadedScanUrl || 'https://images.unsplash.com/photo-1568667256549-094345857637?q=80&w=800&auto=format&fit=crop',
-                dokumentasiUrl: uploadedDokUrl || 'https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?q=80&w=800&auto=format&fit=crop'
+                scanUrls: scanUrlsArr,
+                dokumentasiUrls: dokUrlsArr,
+                scanUrl: scanUrlsArr[0],
+                dokumentasiUrl: dokUrlsArr[0]
             };
 
-            currentSuratList.push(newSurat);
+            const existingIndex = currentSuratList.findIndex(item => item.nomorSurat === newSurat.nomorSurat);
+            if (existingIndex !== -1) {
+                currentSuratList[existingIndex] = newSurat;
+            } else {
+                currentSuratList.push(newSurat);
+            }
             sortSuratByNewestDate(currentSuratList);
 
             try {
@@ -1590,8 +1636,8 @@ function doPost(e) {
                 document.getElementById('modal-whatsapp-preview').classList.remove('hidden');
             }
 
-            uploadedScanUrl = '';
-            uploadedDokUrl = '';
+            uploadedScanFiles = [];
+            uploadedDokFiles = [];
 
             if (googleAppsScriptUrl) {
                 fetch(googleAppsScriptUrl, {
