@@ -272,12 +272,14 @@
                         <a href="https://script.google.com/macros/s/AKfycbwz_FYlaswk4lzTY2bJFEKtLZ-OmIA3cgQ9BAzqniP0MDrUyt2bGwj7Imd3BUkmmCbJ/exec" target="_blank" class="px-6 py-3.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-extrabold text-base shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex items-center gap-2.5">
                             <i class="fa-solid fa-bullhorn text-lg"></i>
                             <span>Layanan Pengaduan</span>
-                        </a>
-                        <button onclick="openStafTeknisViewer()" class="px-6 py-3.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-white font-semibold text-base border border-slate-600 hover:border-slate-500 transition-all duration-300 backdrop-blur-md flex items-center gap-2.5 cursor-pointer">
+                        ]</a>
+                        <!-- Tombol Staf Teknis dengan efek gerak hover -->
+                        <button onclick="openStafTeknisViewer()" class="px-6 py-3.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-white font-semibold text-base border border-slate-600 hover:border-slate-500 transition-all duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-xl backdrop-blur-md flex items-center gap-2.5 cursor-pointer">
                             <i class="fa-solid fa-users text-amber-400"></i>
                             <span>Staf Teknis</span>
                         </button>
-                        <a href="#pelayanan-utama" class="px-6 py-3.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-white font-semibold text-base border border-slate-600 hover:border-slate-500 transition-all duration-300 backdrop-blur-md flex items-center gap-2.5">
+                        <!-- Tombol Pelayanan Utama dengan efek gerak hover -->
+                        <a href="#pelayanan-utama" class="px-6 py-3.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-white font-semibold text-base border border-slate-600 hover:border-slate-500 transition-all duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-xl backdrop-blur-md flex items-center gap-2.5">
                             <i class="fa-solid fa-shield-halved text-amber-400"></i>
                             <span>Pelayanan Utama</span>
                         </a>
@@ -990,6 +992,16 @@ function doPost(e) {
             return list.sort((a, b) => new Date(b.tanggalSurat) - new Date(a.tanggalSurat));
         }
 
+        // Fungsi helper untuk memformat tanggal ke format Indonesia (Contoh: 21 Oktober 2026)
+        function formatTanggalIndo(dateStr) {
+            if (!dateStr) return '-';
+            if (isNaN(new Date(dateStr).getTime())) return dateStr;
+            
+            const d = new Date(dateStr);
+            const options = { day: 'numeric', month: 'long', year: 'numeric' };
+            return d.toLocaleDateString('id-ID', options);
+        }
+
         let cachedData = null;
         try {
             const cached = localStorage.getItem('surat_data_cache');
@@ -1233,11 +1245,13 @@ function doPost(e) {
                 if (item.status === 'Disposisi Pimpinan') badgeStyle = 'bg-amber-100 text-amber-800 border-amber-200';
                 if (item.status === 'Selesai Ditindaklanjuti') badgeStyle = 'bg-emerald-100 text-emerald-800 border-emerald-200';
 
+                const formattedTanggal = formatTanggalIndo(item.tanggalSurat);
+
                 return `
                     <tr class="hover:bg-slate-50 transition border-b border-slate-100">
                         <td class="py-4 px-4 sm:px-6">
                             <span class="font-mono font-bold text-pu-blue block">${item.nomorSurat || '-'}</span>
-                            <span class="text-xs text-slate-400"><i class="fa-regular fa-calendar-days mr-1"></i>${item.tanggalSurat || '-'}</span>
+                            <span class="text-xs text-slate-400"><i class="fa-regular fa-calendar-days mr-1"></i>${formattedTanggal}</span>
                         </td>
                         <td class="py-4 px-4 sm:px-6 max-w-xs">
                             <span class="font-semibold text-slate-900 block truncate">${item.perihal || '-'}</span>
@@ -1303,7 +1317,7 @@ function doPost(e) {
             document.getElementById('modal-nomor-surat-badge').textContent = item.nomorSurat || '-';
             document.getElementById('modal-perihal-title').textContent = item.perihal || '-';
             document.getElementById('det-nomor').textContent = item.nomorSurat || '-';
-            document.getElementById('det-tanggal').textContent = item.tanggalSurat || '-';
+            document.getElementById('det-tanggal').textContent = formatTanggalIndo(item.tanggalSurat) || '-';
             document.getElementById('det-asal').textContent = item.asalSurat || '-';
             document.getElementById('det-pj').innerHTML = `<i class="fa-solid fa-user-check text-emerald-600"></i> ${item.penanggungJawab || 'Belum Ditentukan'}`;
             
@@ -1500,7 +1514,7 @@ function doPost(e) {
                                         `Halo/Yth. *${firstStaff.nama}*,\n\n` +
                                         `Terdapat pembaruan penugasan/disposisi surat:\n` +
                                         `• *No. Surat:* ${currentActiveSuratItem.nomorSurat}\n` +
-                                        `• *Tanggal:* ${currentActiveSuratItem.tanggalSurat}\n` +
+                                        `• *Tanggal:* ${formatTanggalIndo(currentActiveSuratItem.tanggalSurat)}\n` +
                                         `• *Asal:* ${currentActiveSuratItem.asalSurat}\n` +
                                         `• *Perihal:* ${currentActiveSuratItem.perihal}\n` +
                                         `• *Disposisi Pimpinan:* ${currentActiveSuratItem.disposisi}\n` +
@@ -1681,7 +1695,7 @@ function doPost(e) {
                                         `Halo/Yth. *${firstStaff.nama}*,\n\n` +
                                         `Terdapat surat masuk yang didisposisikan kepada Tim Anda:\n` +
                                         `• *No. Surat:* ${newSurat.nomorSurat}\n` +
-                                        `• *Tanggal:* ${newSurat.tanggalSurat}\n` +
+                                        `• *Tanggal:* ${formatTanggalIndo(newSurat.tanggalSurat)}\n` +
                                         `• *Asal:* ${newSurat.asalSurat}\n` +
                                         `• *Perihal:* ${newSurat.perihal}\n` +
                                         `• *Disposisi Pimpinan:* ${newSurat.disposisi}\n` +
@@ -1715,7 +1729,7 @@ function doPost(e) {
 
             const activeSurat = currentActiveSuratItem || {};
             const nomorSurat = activeSurat.nomorSurat || document.getElementById('input-nomor')?.value.trim() || '-';
-            const tanggalSurat = activeSurat.tanggalSurat || document.getElementById('input-tanggal')?.value || '-';
+            const tanggalSurat = formatTanggalIndo(activeSurat.tanggalSurat || document.getElementById('input-tanggal')?.value || '-');
             const asalSurat = activeSurat.asalSurat || document.getElementById('input-asal')?.value || '-';
             const perihal = activeSurat.perihal || document.getElementById('input-perihal')?.value || '-';
             const disposisi = activeSurat.disposisi || document.getElementById('input-disposisi')?.value || '-';
