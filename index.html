@@ -560,15 +560,15 @@
                     </div>
                     <div>
                         <span class="text-slate-400 uppercase font-semibold block text-[10px]">Instruksi Disposisi Pimpinan</span>
-                        <select id="det-disposisi-select" onchange="updateSelectedDetailDisposisi()" class="mt-1 w-full p-2 bg-amber-50 border border-amber-200 rounded-lg text-xs font-semibold text-amber-800 focus:ring-2 focus:ring-pu-blue shadow-sm">
-                            <option value="">-- Pilih Instruksi Disposisi Pimpinan --</option>
-                            <option value="Segera lakukan pengukuran debit & verifikasi kondisi lapangan.">Segera lakukan pengukuran debit & verifikasi kondisi lapangan.</option>
-                            <option value="Tindak lanjuti dan koordinasikan dengan bidang terkait.">Tindak lanjuti dan koordinasikan dengan bidang terkait.</option>
-                            <option value="Jadwalkan peninjauan lapangan bersama tim teknis.">Jadwalkan peninjauan lapangan bersama tim teknis.</option>
-                            <option value="Dokumen lengkap. Terbitkan surat rekomendasi kesesuaian ruang.">Dokumen lengkap. Terbitkan surat rekomendasi kesesuaian ruang.</option>
-                            <option value="Monitor perkembangan pelaksanaan di lapangan.">Monitor perkembangan pelaksanaan di lapangan.</option>
-                            <option value="Arsipkan dan jadikan bahan monitoring.">Arsipkan dan jadikan bahan monitoring.</option>
-                        </select>
+                        <input list="disposisi-options" id="det-disposisi-select" oninput="updateSelectedDetailDisposisi()" onchange="updateSelectedDetailDisposisi()" placeholder="-- Pilih atau Isi Instruksi Disposisi Pimpinan --" class="mt-1 w-full p-2 bg-amber-50 border border-amber-200 rounded-lg text-xs font-semibold text-amber-900 focus:ring-2 focus:ring-pu-blue shadow-sm">
+                        <datalist id="disposisi-options">
+                            <option value="Segera lakukan pengukuran debit & verifikasi kondisi lapangan.">
+                            <option value="Tindak lanjuti dan koordinasikan dengan bidang terkait.">
+                            <option value="Jadwalkan peninjauan lapangan bersama tim teknis.">
+                            <option value="Dokumen lengkap. Terbitkan surat rekomendasi kesesuaian ruang.">
+                            <option value="Monitor perkembangan pelaksanaan di lapangan.">
+                            <option value="Arsipkan dan jadikan bahan monitoring.">
+                        </datalist>
                     </div>
                 </div>
 
