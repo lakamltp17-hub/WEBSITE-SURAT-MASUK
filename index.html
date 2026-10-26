@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dinas PUPR Kota Ambon - Portal Resmi & E-Disposisi Surat</title>
-  <meta property="og:title" content="Dinas PUPR Kota Ambon - Portal Resmi & E-Disposisi Surat" />
-  <meta property="og:description" content="Portal resmi dan sistem monitoring e-disposisi surat Dinas PUPR Kota Ambon." />
-  <meta property="og:image" content="https://i-rigasi-rauk.vercel.app/gambar-thumbnail.png" />
-  <meta property="og:url" content="https://i-rigasi-rauk.vercel.app" />
-  <meta property="og:type" content="website" />
+    <meta property="og:title" content="Dinas PUPR Kota Ambon - Portal Resmi & E-Disposisi Surat" />
+    <meta property="og:description" content="Portal resmi dan sistem monitoring e-disposisi surat Dinas PUPR Kota Ambon." />
+    <meta property="og:image" content="https://i-rigasi-rauk.vercel.app/gambar-thumbnail.png" />
+    <meta property="og:url" content="https://i-rigasi-rauk.vercel.app" />
+    <meta property="og:type" content="website" />
 
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts: Plus Jakarta Sans -->
@@ -174,10 +174,10 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <div class="flex items-center space-x-3">
                 <div class="relative group cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
-				<div class="w-12 h-12 bg-darkblue rounded-[10px] flex items-center justify-center overflow-hidden p-1">
-				<img src="Lambang_Ambon.png" alt="Logo Pemkot Ambon" class="w-full h-full object-contain">
-				</div>
-			</div>                  
+                    <div class="w-12 h-12 bg-darkblue rounded-[10px] flex items-center justify-center overflow-hidden p-1">
+                        <img src="Lambang_Ambon.png" alt="Logo Pemkot Ambon" class="w-full h-full object-contain">
+                    </div>
+                </div>                  
                 <div class="flex flex-col">
                     <span class="text-xs font-semibold uppercase tracking-wider text-pu-yellow">Pemerintah Kota Ambon</span>
                     <span class="text-base sm:text-lg font-bold tracking-tight text-white leading-tight">Dinas PUPR Kota Ambon</span>
@@ -430,7 +430,7 @@
 
                 <div class="hidden">
                     <input type="hidden" id="active-api-url" value="">
-                    <span id="current-mode-badge">Mode Simulasi</span>
+                    <span id="current-mode-badge">Mode Google Sheets Connected</span>
                     <span id="status-log">> Ready</span>
                 </div>
 
@@ -560,7 +560,15 @@
                     </div>
                     <div>
                         <span class="text-slate-400 uppercase font-semibold block text-[10px]">Instruksi Disposisi Pimpinan</span>
-                        <span id="det-disposisi" class="font-semibold text-amber-700 block mt-1 bg-amber-50 p-1.5 rounded border border-amber-200">-</span>
+                        <select id="det-disposisi-select" onchange="updateSelectedDetailDisposisi()" class="mt-1 w-full p-2 bg-amber-50 border border-amber-200 rounded-lg text-xs font-semibold text-amber-800 focus:ring-2 focus:ring-pu-blue shadow-sm">
+                            <option value="">-- Pilih Instruksi Disposisi Pimpinan --</option>
+                            <option value="Segera lakukan pengukuran debit & verifikasi kondisi lapangan.">Segera lakukan pengukuran debit & verifikasi kondisi lapangan.</option>
+                            <option value="Tindak lanjuti dan koordinasikan dengan bidang terkait.">Tindak lanjuti dan koordinasikan dengan bidang terkait.</option>
+                            <option value="Jadwalkan peninjauan lapangan bersama tim teknis.">Jadwalkan peninjauan lapangan bersama tim teknis.</option>
+                            <option value="Dokumen lengkap. Terbitkan surat rekomendasi kesesuaian ruang.">Dokumen lengkap. Terbitkan surat rekomendasi kesesuaian ruang.</option>
+                            <option value="Monitor perkembangan pelaksanaan di lapangan.">Monitor perkembangan pelaksanaan di lapangan.</option>
+                            <option value="Arsipkan dan jadikan bahan monitoring.">Arsipkan dan jadikan bahan monitoring.</option>
+                        </select>
                     </div>
                 </div>
 
@@ -663,9 +671,18 @@
                     </div>
                 </div>
 
+                <!-- Input Link/URL File Berkas Surat -->
+                <div class="p-3 bg-blue-50/60 border border-blue-200 rounded-xl space-y-1">
+                    <label class="block font-semibold text-slate-800">Link URL File Surat (Google Drive, Dropbox, dll)</label>
+                    <input type="url" id="input-file-url" placeholder="https://drive.google.com/file/d/.../view" class="w-full p-2.5 bg-white border border-slate-300 rounded-xl focus:ring-2 focus:ring-pu-blue">
+                    <p class="text-[10px] text-slate-600 mt-1 leading-relaxed">
+                        <i class="fa-solid fa-lock-open text-emerald-600 mr-1"></i> <b>Tips Google Drive Publik:</b> Di Google Drive, pastikan izin file diatur ke <span class="text-blue-700 font-bold">"Siapa saja yang memiliki link" (Anyone with the link)</span> agar penerima notifikasi WhatsApp tidak perlu meminta akses email.
+                    </p>
+                </div>
+
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
                     <div>
-                        <label class="block font-semibold text-slate-700 mb-1">Upload Berkas / Scan (Bisa Banyak)</label>
+                        <label class="block font-semibold text-slate-700 mb-1">Upload Berkas / Scan Local File</label>
                         <div class="flex flex-col gap-2">
                             <input type="file" id="input-scan-file" accept="image/*,.pdf,.doc,.docx" multiple class="hidden" onchange="handleFileUpload(this, 'scan')">
                             <label for="input-scan-file" class="cursor-pointer flex items-center justify-center gap-2 p-3 bg-slate-50 hover:bg-slate-100 border border-dashed border-slate-300 rounded-xl text-slate-700 font-semibold transition text-xs">
@@ -743,7 +760,7 @@ function doPost(e) {
   var rowIndex = -1;
   
   for (var i = 1; i < rows.length; i++) {
-    if (rows[i][0] === data.nomorSurat) {
+    if (rows[i][0].toString().trim() === data.nomorSurat.toString().trim()) {
       rowIndex = i + 1;
       break;
     }
@@ -835,23 +852,23 @@ function doPost(e) {
                 </button>
             </div>
             <div class="p-6 space-y-4 text-xs">
-                <p class="text-slate-600">Surat berhasil diperbarui! Pilih tujuan pengiriman pesan WhatsApp untuk staf teknis / penanggung jawab:</p>
+                <p class="text-slate-600">Surat berhasil diperbarui! Pesan WhatsApp akan dikirimkan secara otomatis dan terpisah kepada masing-masing staf/penanggung jawab yang dipilih:</p>
                 
                 <div class="space-y-2">
-                    <label class="block font-semibold text-slate-700">Nomor WhatsApp Tujuan (Staf/Penanggung Jawab):</label>
-                    <input type="text" id="wa-target-phone" placeholder="Contoh: 6281234567890" class="w-full p-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-500 font-mono">
-                    <p class="text-[10px] text-slate-400">Gunakan awalan kode negara (misal: 62 tanpa tanda +)</p>
+                    <label class="block font-semibold text-slate-700">Daftar Nomor WhatsApp Tujuan:</label>
+                    <input type="text" id="wa-target-phone" placeholder="Nomor staf..." class="w-full p-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-500 font-mono text-slate-600 bg-slate-50" readonly>
+                    <p class="text-[10px] text-slate-400">Setiap staf yang dicentang akan menerima pesan personalnya masing-masing.</p>
                 </div>
 
                 <div class="space-y-1">
-                    <label class="block font-semibold text-slate-700">Pratinjau Pesan:</label>
+                    <label class="block font-semibold text-slate-700">Pratinjau Pesan (Contoh untuk Staf):</label>
                     <textarea id="wa-preview-message" rows="6" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl font-mono text-[11px] text-slate-700" readonly></textarea>
                 </div>
 
                 <div class="pt-2 flex justify-end gap-2 border-t border-slate-200">
                     <button type="button" onclick="closeModal('modal-whatsapp-preview')" class="px-4 py-2 bg-slate-200 text-slate-700 rounded-xl font-semibold">Lewati</button>
                     <button type="button" onclick="sendWhatsAppMessage()" class="px-5 py-2 bg-emerald-600 text-white rounded-xl font-bold hover:bg-emerald-700 flex items-center gap-1.5">
-                        <i class="fa-brands fa-whatsapp"></i> Buka WhatsApp & Kirim
+                        <i class="fa-brands fa-whatsapp"></i> Buka WhatsApp & Kirim ke Semua Staf
                     </button>
                 </div>
             </div>
@@ -957,73 +974,52 @@ function doPost(e) {
             { id: 'staf-23', nama: 'Matheos Paunno, ST', jabatan: 'Staff', whatsapp: '6285282291048', foto: 'Theo.png', status: 'Aktif' },
         ];
 
-        let initialSuratData = [
-            {
-                nomorSurat: '600/104/PUPR/AMB/2026',
-                tanggalSurat: '2026-03-02',
-                asalSurat: 'Kecamatan Sirimau, Kota Ambon',
-                perihal: 'Permohonan Perbaikan Talud & Drainase Rawan Longsor Batu Gajah',
-                penanggungJawab: 'Hermin Taranda, ST, Rudi Payapo, ST',
-                status: 'Diproses',
-                disposisi: 'Segera lakukan pengukuran debit & verifikasi kondisi lapangan.',
-                scanUrls: ['https://images.unsplash.com/photo-1568667256549-094345857637?q=80&w=800&auto=format&fit=crop'],
-                dokumentasiUrls: ['https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?q=80&w=800&auto=format&fit=crop']
-            },
-            {
-                nomorSurat: '503/089/PBG-PUPR/2026',
-                tanggalSurat: '2026-02-28',
-                asalSurat: 'PT. Ambon Manise Hotel & Resort',
-                perihal: 'Permohonan Rekomendasi PBG & Kesesuaian Tata Ruang (KKPR)',
-                penanggungJawab: 'Junior Lokollo, ST',
-                status: 'Selesai Ditindaklanjuti',
-                disposisi: 'Dokumen lengkap. Terbitkan surat rekomendasi kesesuaian ruang.',
-                scanUrls: ['https://images.unsplash.com/photo-1586281380349-632531db7ed4?q=80&w=800&auto=format&fit=crop'],
-                dokumentasiUrls: ['https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800&auto=format&fit=crop']
-            },
-            {
-                nomorSurat: '602/012/SDA-PUPR/2026',
-                tanggalSurat: '2026-02-25',
-                asalSurat: 'Kelurahan Wayame',
-                perihal: 'Usulan Normalisasi Sungai & Pembersihan Sedimen',
-                penanggungJawab: 'Rajiv Kadir Sabban, ST, Ryan Wlilliam Manuputty, ST',
-                status: 'Disposisi Pimpinan',
-                disposisi: 'Jadwalkan alat berat ke lokasi pada awal minggu depan.',
-                scanUrls: ['https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?q=80&w=800&auto=format&fit=crop'],
-                dokumentasiUrls: ['https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=800&auto=format&fit=crop']
-            },
-            {
-                nomorSurat: '600/044/BM-PUPR/2026',
-                tanggalSurat: '2026-02-20',
-                asalSurat: 'Dinas Perhubungan Kota Ambon',
-                perihal: 'Koordinasi Perbaikan Marka & Pengaspalan Jalan Honipopu',
-                penanggungJawab: 'Hegi Daniel Mulya, ST',
-                status: 'Selesai Ditindaklanjuti',
-                disposisi: 'Telah diselesaikannya overlay aspal 250 meter.',
-                scanUrls: ['https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop'],
-                dokumentasiUrls: ['https://images.unsplash.com/photo-1517649763962-0c623266010b?q=80&w=800&auto=format&fit=crop']
-            }
-        ];
+        let initialSuratData = [];
+
+        function deduplicateSurat(list) {
+            const map = new Map();
+            list.forEach(item => {
+                if (item && item.nomorSurat) {
+                    map.set(item.nomorSurat.toString().trim(), item);
+                }
+            });
+            return Array.from(map.values());
+        }
 
         function sortSuratByNewestDate(list) {
             return list.sort((a, b) => new Date(b.tanggalSurat) - new Date(a.tanggalSurat));
         }
 
-        let currentSuratList = sortSuratByNewestDate([...initialSuratData]);
+        let cachedData = null;
+        try {
+            const cached = localStorage.getItem('surat_data_cache');
+            if (cached) {
+                let parsed = JSON.parse(cached);
+                parsed = parsed.map(item => {
+                    if (!item.scanUrls && item.scanUrl) item.scanUrls = [item.scanUrl];
+                    if (!item.dokumentasiUrls && item.dokumentasiUrl) item.dokumentasiUrls = [item.dokumentasiUrl];
+                    if (item.nomorSurat) item.nomorSurat = item.nomorSurat.toString().trim();
+                    return item;
+                });
+                cachedData = parsed;
+            }
+        } catch(e) {}
+
+        let currentSuratList = sortSuratByNewestDate(deduplicateSurat(cachedData || initialSuratData));
         let googleAppsScriptUrl = 'https://script.google.com/macros/s/AKfycbxrXPQDepDEz_J_updtvKmlpcVOhxyYp3PwpIAm775qDix4DyUCOXCzmqB15zWHBwkD/exec';
 
-        // Multi-file state arrays for new entries
-        let uploadedScanFiles = []; // Array of {name, url}
-        let uploadedDokFiles = [];  // Array of {name, url}
+        let uploadedScanFiles = [];
+        let uploadedDokFiles = [];
         let currentActiveSuratItem = null;
 
         const heroImages = [
             "pupr.png",
             "624c60ba898e4.jpg",
-			"acom.jpg",
+            "acom.jpg",
             "images (2).jpg",
-			"monumen-martha-christina-tiahahu.jpeg",
-			"1572330453971-pantai-pintu-kota-di-ambon.jpg",
-			"photo-1688281675104-ac1723dae921.avif",
+            "monumen-martha-christina-tiahahu.jpeg",
+            "1572330453971-pantai-pintu-kota-di-ambon.jpg",
+            "photo-1688281675104-ac1723dae921.avif",
         ];
         let currentHeroIndex = 0;
 
@@ -1031,40 +1027,34 @@ function doPost(e) {
             const savedApi = localStorage.getItem('saved_apps_script_url');
             if (savedApi) {
                 googleAppsScriptUrl = savedApi;
-                document.getElementById('active-api-url').value = savedApi;
-                document.getElementById('current-mode-badge').textContent = 'Mode Google Sheets Connected';
-                document.getElementById('current-mode-badge').className = 'px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-400/20 text-emerald-300 border border-emerald-400/30';
             }
 
-            const cached = localStorage.getItem('surat_data_cache');
-            if (cached) {
-                try {
-                    let parsed = JSON.parse(cached);
-                    // Backward compatibility support for old string URLs
-                    parsed = parsed.map(item => {
-                        if (!item.scanUrls && item.scanUrl) item.scanUrls = [item.scanUrl];
-                        if (!item.dokumentasiUrls && item.dokumentasiUrl) item.dokumentasiUrls = [item.dokumentasiUrl];
-                        return item;
-                    });
-                    currentSuratList = sortSuratByNewestDate(parsed);
-                } catch(e) {}
-            }
-
-            // Also normalize initial data fields
-            currentSuratList = currentSuratList.map(item => {
-                if (!item.scanUrls && item.scanUrl) item.scanUrls = [item.scanUrl];
-                if (!item.dokumentasiUrls && item.dokumentasiUrl) item.dokumentasiUrls = [item.dokumentasiUrl];
-                return item;
-            });
+            document.getElementById('active-api-url').value = googleAppsScriptUrl;
+            document.getElementById('current-mode-badge').textContent = 'Mode Google Sheets Connected';
+            document.getElementById('current-mode-badge').className = 'px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-400/20 text-emerald-300 border border-emerald-400/30';
 
             renderStaffGrid();
             populatePjSelect();
             populateDetailPjCheckboxes();
+            
             renderSuratTable(currentSuratList);
             startHeroSlideshow();
 
+            const urlParams = new URLSearchParams(window.location.search);
+            const cariNo = urlParams.get('cari');
+            if (cariNo) {
+                document.getElementById('search-table-input').value = cariNo;
+                filterLettersTable();
+                const found = currentSuratList.find(s => s.nomorSurat && s.nomorSurat.toString().trim() === cariNo.trim());
+                if (found) {
+                    setTimeout(() => {
+                        openDetailModal(found);
+                    }, 500);
+                }
+            }
+
             if (googleAppsScriptUrl) {
-                testConnection();
+                testConnectionBackground();
             }
         });
 
@@ -1199,14 +1189,25 @@ function doPost(e) {
             }
         }
 
+        function updateSelectedDetailDisposisi() {
+            const dispSelect = document.getElementById('det-disposisi-select');
+            if (dispSelect && currentActiveSuratItem) {
+                currentActiveSuratItem.disposisi = dispSelect.value;
+            }
+        }
+
         function renderSuratTable(data) {
             const tbody = document.getElementById('surat-table-body');
             const showingCount = document.getElementById('showing-count');
             const totalCount = document.getElementById('total-count');
 
-            sortSuratByNewestDate(data);
+            const uniqueData = deduplicateSurat(data);
+            
+            // Urutkan berdasarkan tanggal terbaru paling atas
+            sortSuratByNewestDate(uniqueData);
 
-            const limitedData = data.slice(0, 5);
+            // Batasi tampilan hanya 5 surat terbaru pada halaman awal
+            const limitedData = uniqueData.slice(0, 5);
 
             showingCount.textContent = limitedData.length;
             totalCount.textContent = currentSuratList.length;
@@ -1226,7 +1227,7 @@ function doPost(e) {
                 return;
             }
 
-            tbody.innerHTML = limitedData.map((item, index) => {
+            tbody.innerHTML = limitedData.map((item) => {
                 let badgeStyle = 'bg-slate-100 text-slate-700 border-slate-300';
                 if (item.status === 'Diproses') badgeStyle = 'bg-blue-100 text-blue-800 border-blue-200';
                 if (item.status === 'Disposisi Pimpinan') badgeStyle = 'bg-amber-100 text-amber-800 border-amber-200';
@@ -1235,12 +1236,12 @@ function doPost(e) {
                 return `
                     <tr class="hover:bg-slate-50 transition border-b border-slate-100">
                         <td class="py-4 px-4 sm:px-6">
-                            <span class="font-mono font-bold text-pu-blue block">${item.nomorSurat}</span>
-                            <span class="text-xs text-slate-400"><i class="fa-regular fa-calendar-days mr-1"></i>${item.tanggalSurat}</span>
+                            <span class="font-mono font-bold text-pu-blue block">${item.nomorSurat || '-'}</span>
+                            <span class="text-xs text-slate-400"><i class="fa-regular fa-calendar-days mr-1"></i>${item.tanggalSurat || '-'}</span>
                         </td>
                         <td class="py-4 px-4 sm:px-6 max-w-xs">
-                            <span class="font-semibold text-slate-900 block truncate">${item.perihal}</span>
-                            <span class="text-xs text-slate-500 block truncate"><i class="fa-solid fa-paper-plane mr-1 text-slate-400"></i>${item.asalSurat}</span>
+                            <span class="font-semibold text-slate-900 block truncate">${item.perihal || '-'}</span>
+                            <span class="text-xs text-slate-500 block truncate"><i class="fa-solid fa-paper-plane mr-1 text-slate-400"></i>${item.asalSurat || '-'}</span>
                         </td>
                         <td class="py-4 px-4 sm:px-6 font-medium text-slate-700">
                             <span class="inline-flex items-center gap-1 bg-slate-100 px-2 py-1 rounded text-xs font-semibold">
@@ -1252,7 +1253,7 @@ function doPost(e) {
                         </td>
                         <td class="py-4 px-4 sm:px-6">
                             <span class="px-2.5 py-1 rounded-full text-[11px] font-bold border ${badgeStyle}">
-                                ${item.status}
+                                ${item.status || 'Diproses'}
                             </span>
                         </td>
                         <td class="py-4 px-4 sm:px-6 text-center">
@@ -1271,10 +1272,10 @@ function doPost(e) {
             const statusFilter = document.getElementById('status-filter-select').value;
 
             const filtered = currentSuratList.filter(item => {
-                const matchQuery = item.nomorSurat.toLowerCase().includes(query) ||
-                                   item.perihal.toLowerCase().includes(query) ||
-                                   item.asalSurat.toLowerCase().includes(query) ||
-                                   (item.penanggungJawab && item.penanggungJawab.toLowerCase().includes(query));
+                const matchQuery = (item.nomorSurat && item.nomorSurat.toString().toLowerCase().includes(query)) ||
+                                   (item.perihal && item.perihal.toString().toLowerCase().includes(query)) ||
+                                   (item.asalSurat && item.asalSurat.toString().toLowerCase().includes(query)) ||
+                                   (item.penanggungJawab && item.penanggungJawab.toString().toLowerCase().includes(query));
 
                 const matchStatus = (statusFilter === 'ALL') || (item.status === statusFilter);
 
@@ -1295,18 +1296,21 @@ function doPost(e) {
         }
 
         function openDetailModal(item) {
-            // Normalize item arrays if missing
             if (!item.scanUrls) item.scanUrls = item.scanUrl ? [item.scanUrl] : [];
             if (!item.dokumentasiUrls) item.dokumentasiUrls = item.dokumentasiUrl ? [item.dokumentasiUrl] : [];
 
             currentActiveSuratItem = item;
-            document.getElementById('modal-nomor-surat-badge').textContent = item.nomorSurat;
-            document.getElementById('modal-perihal-title').textContent = item.perihal;
-            document.getElementById('det-nomor').textContent = item.nomorSurat;
-            document.getElementById('det-tanggal').textContent = item.tanggalSurat;
-            document.getElementById('det-asal').textContent = item.asalSurat;
+            document.getElementById('modal-nomor-surat-badge').textContent = item.nomorSurat || '-';
+            document.getElementById('modal-perihal-title').textContent = item.perihal || '-';
+            document.getElementById('det-nomor').textContent = item.nomorSurat || '-';
+            document.getElementById('det-tanggal').textContent = item.tanggalSurat || '-';
+            document.getElementById('det-asal').textContent = item.asalSurat || '-';
             document.getElementById('det-pj').innerHTML = `<i class="fa-solid fa-user-check text-emerald-600"></i> ${item.penanggungJawab || 'Belum Ditentukan'}`;
-            document.getElementById('det-disposisi').textContent = item.disposisi || 'Belum ada catatan disposisi.';
+            
+            const dispSelect = document.getElementById('det-disposisi-select');
+            if (dispSelect) {
+                dispSelect.value = item.disposisi || '';
+            }
 
             const pjCheckboxes = document.querySelectorAll('input[name="editPenanggungJawab"]');
             pjCheckboxes.forEach(cb => {
@@ -1320,14 +1324,13 @@ function doPost(e) {
 
             const statusBadge = document.getElementById('det-status-badge');
             statusBadge.className = 'px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-300';
-            statusBadge.textContent = item.status;
+            statusBadge.textContent = item.status || 'Diproses';
 
             renderDetailGalleries();
             document.getElementById('modal-detail-surat').classList.remove('hidden');
         }
 
         function renderDetailGalleries() {
-            // Render Scan/PDF files list in Detail Modal
             const scanBox = document.getElementById('det-scan-preview-box');
             if (currentActiveSuratItem.scanUrls && currentActiveSuratItem.scanUrls.length > 0) {
                 scanBox.innerHTML = currentActiveSuratItem.scanUrls.map((url, idx) => `
@@ -1346,7 +1349,6 @@ function doPost(e) {
                 scanBox.innerHTML = `<div class="flex items-center justify-center h-full text-slate-400 text-xs">Belum ada berkas scan/PDF.</div>`;
             }
 
-            // Render Dokumentasi images grid in Detail Modal
             const dokBox = document.getElementById('det-dok-preview-box');
             if (currentActiveSuratItem.dokumentasiUrls && currentActiveSuratItem.dokumentasiUrls.length > 0) {
                 dokBox.innerHTML = currentActiveSuratItem.dokumentasiUrls.map((url, idx) => `
@@ -1404,6 +1406,30 @@ function doPost(e) {
             showToast('Foto dokumentasi dihapus.', 'info');
         }
 
+        function formatPublicDriveUrl(rawUrl) {
+            if (!rawUrl) return '';
+            let url = rawUrl.trim();
+            if (url.includes('drive.google.com')) {
+                const match = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+                if (match && match[1]) {
+                    const fileId = match[1];
+                    return `https://drive.google.com/file/d/${fileId}/preview`;
+                }
+            }
+            return url;
+        }
+
+        function getShortFileLink(suratObj) {
+            if (!suratObj) return window.location.href;
+            
+            if (suratObj.scanUrl && (suratObj.scanUrl.startsWith('http://') || suratObj.scanUrl.startsWith('https://'))) {
+                return formatPublicDriveUrl(suratObj.scanUrl);
+            }
+            
+            const baseUrl = window.location.origin + window.location.pathname;
+            return `${baseUrl}?cari=${encodeURIComponent(suratObj.nomorSurat)}`;
+        }
+
         function saveCurrentLetterChanges() {
             if (!currentActiveSuratItem) return;
 
@@ -1412,17 +1438,18 @@ function doPost(e) {
             const penanggungJawabStr = checkedPj.length > 0 ? checkedPj.join(', ') : 'Belum Ditentukan';
 
             currentActiveSuratItem.penanggungJawab = penanggungJawabStr;
-            // For backward compatibility matching string properties
             currentActiveSuratItem.scanUrl = currentActiveSuratItem.scanUrls?.[0] || '';
             currentActiveSuratItem.dokumentasiUrl = currentActiveSuratItem.dokumentasiUrls?.[0] || '';
+            currentActiveSuratItem.nomorSurat = currentActiveSuratItem.nomorSurat.toString().trim();
 
-            const index = currentSuratList.findIndex(item => item.nomorSurat === currentActiveSuratItem.nomorSurat);
+            const index = currentSuratList.findIndex(item => item.nomorSurat && item.nomorSurat.toString().trim() === currentActiveSuratItem.nomorSurat);
             if (index !== -1) {
                 currentSuratList[index] = { ...currentActiveSuratItem };
             } else {
                 currentSuratList.push(currentActiveSuratItem);
             }
 
+            currentSuratList = deduplicateSurat(currentSuratList);
             sortSuratByNewestDate(currentSuratList);
 
             try {
@@ -1432,7 +1459,7 @@ function doPost(e) {
             }
 
             renderSuratTable(currentSuratList);
-            showToast('Surat berhasil dikonfirmasi & diperbarui berdasarkan kode!', 'success');
+            showToast('Surat berhasil dikonfirmasi & diperbarui tanpa duplikasi!', 'success');
 
             if (googleAppsScriptUrl) {
                 fetch(googleAppsScriptUrl, {
@@ -1451,32 +1478,38 @@ function doPost(e) {
                         scanUrl: currentActiveSuratItem.scanUrl,
                         dokumentasiUrl: currentActiveSuratItem.dokumentasiUrl
                     })
-                }).then(() => {
-                    showToast('Data berhasil disinkronkan ke Google Spreadsheet!', 'info');
                 }).catch(err => console.error(err));
             }
 
             closeModal('modal-detail-surat');
 
             if (checkedBoxes.length > 0) {
-                window.selectedStaffForWa = checkedBoxes.map(el => ({
-                    nama: el.value,
-                    whatsapp: el.getAttribute('data-whatsapp') || ''
-                }));
+                window.selectedStaffForWa = checkedBoxes.map(el => {
+                    const name = el.value;
+                    const foundStaff = staffList.find(s => s.nama === name);
+                    return {
+                        nama: name,
+                        whatsapp: (foundStaff && foundStaff.whatsapp) ? foundStaff.whatsapp : (el.getAttribute('data-whatsapp') || '')
+                    };
+                });
 
-                const waMessage = `*NOTIFIKASI UPDATE E-DISPOSISI SURAT PUPR KOTA AMBON*\n\n` +
-                                  `Halo/Yth. Staf Teknis *(${penanggungJawabStr})*,\n\n` +
-                                  `Terdapat pembaruan penugasan/disposisi surat:\n` +
-                                  `• *No. Surat:* ${currentActiveSuratItem.nomorSurat}\n` +
-                                  `• *Tanggal:* ${currentActiveSuratItem.tanggalSurat}\n` +
-                                  `• *Asal:* ${currentActiveSuratItem.asalSurat}\n` +
-                                  `• *Perihal:* ${currentActiveSuratItem.perihal}\n` +
-                                  `• *Disposisi Pimpinan:* ${currentActiveSuratItem.disposisi}\n` +
-                                  `• *Status:* ${currentActiveSuratItem.status}\n\n` +
-                                  `Mohon segera dicek pada portal resmi Dinas PUPR Kota Ambon. Terima kasih.`;
+                const firstStaff = window.selectedStaffForWa[0] || { nama: penanggungJawabStr };
+                const suratLink = getShortFileLink(currentActiveSuratItem);
+                
+                const sampleWaMessage = `*NOTIFIKASI UPDATE E-DISPOSISI SURAT PUPR KOTA AMBON*\n\n` +
+                                        `Halo/Yth. *${firstStaff.nama}*,\n\n` +
+                                        `Terdapat pembaruan penugasan/disposisi surat:\n` +
+                                        `• *No. Surat:* ${currentActiveSuratItem.nomorSurat}\n` +
+                                        `• *Tanggal:* ${currentActiveSuratItem.tanggalSurat}\n` +
+                                        `• *Asal:* ${currentActiveSuratItem.asalSurat}\n` +
+                                        `• *Perihal:* ${currentActiveSuratItem.perihal}\n` +
+                                        `• *Disposisi Pimpinan:* ${currentActiveSuratItem.disposisi}\n` +
+                                        `• *Status:* ${currentActiveSuratItem.status}\n\n` +
+                                        `📄 *Link Buka File Surat:* ${suratLink}\n\n` +
+                                        `Mohon segera dicek pada portal resmi Dinas PUPR Kota Ambon. Terima kasih.`;
 
-                document.getElementById('wa-target-phone').value = window.selectedStaffForWa.map(s => s.whatsapp).join(', ');
-                document.getElementById('wa-preview-message').value = waMessage;
+                document.getElementById('wa-target-phone').value = window.selectedStaffForWa.map(s => `${s.nama} (${s.whatsapp})`).join(', ');
+                document.getElementById('wa-preview-message').value = sampleWaMessage;
                 document.getElementById('modal-whatsapp-preview').classList.remove('hidden');
             }
         }
@@ -1582,11 +1615,26 @@ function doPost(e) {
             const checkedPj = checkedBoxes.map(el => el.value);
             const penanggungJawabStr = checkedPj.length > 0 ? checkedPj.join(', ') : 'Belum Ditentukan';
 
-            const scanUrlsArr = uploadedScanFiles.length > 0 ? uploadedScanFiles.map(f => f.url) : ['https://images.unsplash.com/photo-1568667256549-094345857637?q=80&w=800&auto=format&fit=crop'];
+            const rawFileUrl = document.getElementById('input-file-url')?.value.trim();
+            const customFileUrl = formatPublicDriveUrl(rawFileUrl);
+
+            let scanUrlsArr = [];
+            if (customFileUrl) {
+                scanUrlsArr.push(customFileUrl);
+            }
+            if (uploadedScanFiles.length > 0) {
+                uploadedScanFiles.forEach(f => scanUrlsArr.push(f.url));
+            }
+            if (scanUrlsArr.length === 0) {
+                scanUrlsArr = ['https://images.unsplash.com/photo-1568667256549-094345857637?q=80&w=800&auto=format&fit=crop'];
+            }
+
             const dokUrlsArr = uploadedDokFiles.length > 0 ? uploadedDokFiles.map(f => f.url) : ['https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?q=80&w=800&auto=format&fit=crop'];
 
+            const nomorSuratInput = document.getElementById('input-nomor').value.toString().trim();
+
             const newSurat = {
-                nomorSurat: document.getElementById('input-nomor').value,
+                nomorSurat: nomorSuratInput,
                 tanggalSurat: document.getElementById('input-tanggal').value,
                 asalSurat: document.getElementById('input-asal').value,
                 perihal: document.getElementById('input-perihal').value,
@@ -1599,12 +1647,14 @@ function doPost(e) {
                 dokumentasiUrl: dokUrlsArr[0]
             };
 
-            const existingIndex = currentSuratList.findIndex(item => item.nomorSurat === newSurat.nomorSurat);
+            const existingIndex = currentSuratList.findIndex(item => item.nomorSurat && item.nomorSurat.toString().trim() === newSurat.nomorSurat);
             if (existingIndex !== -1) {
                 currentSuratList[existingIndex] = newSurat;
             } else {
                 currentSuratList.push(newSurat);
             }
+
+            currentSuratList = deduplicateSurat(currentSuratList);
             sortSuratByNewestDate(currentSuratList);
 
             try {
@@ -1615,24 +1665,32 @@ function doPost(e) {
             showToast('Surat & Berkas berhasil disimpan!', 'success');
 
             if (checkedBoxes.length > 0) {
-                window.selectedStaffForWa = checkedBoxes.map(el => ({
-                    nama: el.value,
-                    whatsapp: el.getAttribute('data-whatsapp') || ''
-                }));
+                window.selectedStaffForWa = checkedBoxes.map(el => {
+                    const name = el.value;
+                    const foundStaff = staffList.find(s => s.nama === name);
+                    return {
+                        nama: name,
+                        whatsapp: (foundStaff && foundStaff.whatsapp) ? foundStaff.whatsapp : (el.getAttribute('data-whatsapp') || '')
+                    };
+                });
 
-                const waMessage = `*NOTIFIKASI E-DISPOSISI SURAT PUPR KOTA AMBON*\n\n` +
-                                  `Halo/Yth. Staf Teknis *(${penanggungJawabStr})*,\n\n` +
-                                  `Terdapat surat masuk yang didisposisikan kepada Tim Anda:\n` +
-                                  `• *No. Surat:* ${newSurat.nomorSurat}\n` +
-                                  `• *Tanggal:* ${newSurat.tanggalSurat}\n` +
-                                  `• *Asal:* ${newSurat.asalSurat}\n` +
-                                  `• *Perihal:* ${newSurat.perihal}\n` +
-                                  `• *Disposisi Pimpinan:* ${newSurat.disposisi}\n` +
-                                  `• *Status:* ${newSurat.status}\n\n` +
-                                  `Mohon segera dicek pada portal resmi Dinas PUPR Kota Ambon untuk ditindaklanjuti. Terima kasih.`;
+                const firstStaff = window.selectedStaffForWa[0] || { nama: penanggungJawabStr };
+                const suratLink = getShortFileLink(newSurat);
 
-                document.getElementById('wa-target-phone').value = window.selectedStaffForWa.map(s => s.whatsapp).join(', ');
-                document.getElementById('wa-preview-message').value = waMessage;
+                const sampleWaMessage = `*NOTIFIKASI E-DISPOSISI SURAT PUPR KOTA AMBON*\n\n` +
+                                        `Halo/Yth. *${firstStaff.nama}*,\n\n` +
+                                        `Terdapat surat masuk yang didisposisikan kepada Tim Anda:\n` +
+                                        `• *No. Surat:* ${newSurat.nomorSurat}\n` +
+                                        `• *Tanggal:* ${newSurat.tanggalSurat}\n` +
+                                        `• *Asal:* ${newSurat.asalSurat}\n` +
+                                        `• *Perihal:* ${newSurat.perihal}\n` +
+                                        `• *Disposisi Pimpinan:* ${newSurat.disposisi}\n` +
+                                        `• *Status:* ${newSurat.status}\n\n` +
+                                        `📄 *Link Buka File Surat:* ${suratLink}\n\n` +
+                                        `Mohon segera dicek pada portal resmi Dinas PUPR Kota Ambon untuk ditindaklanjuti. Terima kasih.`;
+
+                document.getElementById('wa-target-phone').value = window.selectedStaffForWa.map(s => `${s.nama} (${s.whatsapp})`).join(', ');
+                document.getElementById('wa-preview-message').value = sampleWaMessage;
                 document.getElementById('modal-whatsapp-preview').classList.remove('hidden');
             }
 
@@ -1645,33 +1703,63 @@ function doPost(e) {
                     mode: 'no-cors',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(newSurat)
-                }).then(() => {
-                    showToast('Data dikirim ke Google Sheets!', 'info');
                 }).catch(err => console.error(err));
             }
         }
 
         function sendWhatsAppMessage() {
-            const message = document.getElementById('wa-preview-message').value;
-            
             if (!window.selectedStaffForWa || window.selectedStaffForWa.length === 0) {
                 showToast('Tidak ada nomor WhatsApp tujuan yang ditemukan!', 'warning');
                 return;
             }
 
+            const activeSurat = currentActiveSuratItem || {};
+            const nomorSurat = activeSurat.nomorSurat || document.getElementById('input-nomor')?.value.trim() || '-';
+            const tanggalSurat = activeSurat.tanggalSurat || document.getElementById('input-tanggal')?.value || '-';
+            const asalSurat = activeSurat.asalSurat || document.getElementById('input-asal')?.value || '-';
+            const perihal = activeSurat.perihal || document.getElementById('input-perihal')?.value || '-';
+            const disposisi = activeSurat.disposisi || document.getElementById('input-disposisi')?.value || '-';
+            const status = activeSurat.status || document.getElementById('input-status')?.value || 'Diproses';
+
+            const suratLink = getShortFileLink(activeSurat.nomorSurat ? activeSurat : {
+                nomorSurat: nomorSurat,
+                scanUrl: document.getElementById('input-file-url')?.value.trim() || (uploadedScanFiles.length > 0 ? uploadedScanFiles[0].url : '')
+            });
+
+            let sentCount = 0;
+
             window.selectedStaffForWa.forEach((staff, index) => {
                 if (staff.whatsapp) {
-                    const encodedMessage = encodeURIComponent(message);
+                    const personalMessage = `*NOTIFIKASI E-DISPOSISI SURAT PUPR KOTA AMBON*\n\n` +
+                                            `Halo/Yth. *${staff.nama}*,\n\n` +
+                                            `Terdapat penugasan/disposisi surat yang ditujukan kepada Anda:\n` +
+                                            `• *No. Surat:* ${nomorSurat}\n` +
+                                            `• *Tanggal:* ${tanggalSurat}\n` +
+                                            `• *Asal:* ${asalSurat}\n` +
+                                            `• *Perihal:* ${perihal}\n` +
+                                            `• *Disposisi Pimpinan:* ${disposisi}\n` +
+                                            `• *Status:* ${status}\n\n` +
+                                            `📄 *Link Buka File Surat:* ${suratLink}\n\n` +
+                                            `Mohon segera dicek pada portal resmi Dinas PUPR Kota Ambon untuk ditindaklanjuti. Terima kasih.`;
+
+                    const encodedMessage = encodeURIComponent(personalMessage);
                     const waUrl = `https://api.whatsapp.com/send?phone=${staff.whatsapp}&text=${encodedMessage}`;
                     
                     setTimeout(() => {
                         window.open(waUrl, '_blank');
-                    }, index * 800); 
+                    }, index * 1200);
+
+                    sentCount++;
                 }
             });
 
             closeModal('modal-whatsapp-preview');
-            showToast('Membuka tab WhatsApp untuk semua penanggung jawab terpilih.', 'success');
+
+            if (sentCount > 0) {
+                showToast(`Membuka ${sentCount} tab WhatsApp pesan personal untuk masing-masing penanggung jawab.`, 'success');
+            } else {
+                showToast('Nomor WhatsApp staf belum dikonfigurasi.', 'warning');
+            }
         }
 
         function copyAppsScriptCode() {
@@ -1698,7 +1786,7 @@ function doPost(e) {
                 document.getElementById('status-log').textContent = '> Connection Endpoint Saved: Ready to fetch remote data.';
                 closeModal('modal-config-api');
                 showToast('URL Web App Google Apps Script berhasil dihubungkan & disimpan permanen!', 'success');
-                testConnection();
+                testConnectionBackground();
             }
         }
 
@@ -1713,34 +1801,47 @@ function doPost(e) {
             showToast('Beralih ke mode simulasi lokal.', 'info');
         }
 
-        function testConnection() {
-            if (!googleAppsScriptUrl) {
-                showToast('Modul berjalan dalam Mode Simulasi (Local Data)', 'info');
-                return;
-            }
+        function testConnectionBackground() {
+            if (!googleAppsScriptUrl) return;
 
             const log = document.getElementById('status-log');
-            log.textContent = '> Fetching live data from Google Sheets...';
+            if(log) log.textContent = '> Syncing data in background...';
 
             fetch(googleAppsScriptUrl)
                 .then(res => res.json())
                 .then(data => {
                     if (Array.isArray(data) && data.length > 0) {
-                        currentSuratList = sortSuratByNewestDate(data);
+                        const mappedData = data.map(row => ({
+                            nomorSurat: row.nomorSurat || row['Nomor Surat'] || row.nomor || '',
+                            tanggalSurat: row.tanggalSurat || row['Tanggal Surat'] || row.tanggal || '',
+                            asalSurat: row.asalSurat || row['Asal Surat'] || row.asal || '',
+                            perihal: row.perihal || row['Perihal'] || '',
+                            penanggungJawab: row.penanggungJawab || row['Penanggung Jawab'] || row.pj || '',
+                            status: row.status || row['Status'] || 'Diproses',
+                            disposisi: row.disposisi || row['Disposisi'] || '',
+                            scanUrl: row.scanUrl || row['Scan URL'] || row.scan || '',
+                            dokumentasiUrl: row.dokumentasiUrl || row['Dokumentasi URL'] || row.dokumentasi || '',
+                            scanUrls: row.scanUrls || [row.scanUrl || row['Scan URL'] || ''],
+                            dokumentasiUrls: row.dokumentasiUrls || [row.dokumentasiUrl || row['Dokumentasi URL'] || '']
+                        }));
+
+                        currentSuratList = sortSuratByNewestDate(deduplicateSurat(mappedData));
                         renderSuratTable(currentSuratList);
-                        log.textContent = `> Sync Successful! Fetched ${data.length} records.`;
-                        showToast(`Berhasil menyinkronkan ${data.length} surat dari Google Sheets!`, 'success');
+                        try {
+                            localStorage.setItem('surat_data_cache', JSON.stringify(currentSuratList));
+                        } catch(e) {}
+                        if(log) log.textContent = `> Background Sync Success! Loaded ${data.length} records.`;
                     }
                 })
                 .catch(err => {
-                    log.textContent = '> Sync Failed: Returning to fallback buffer.';
-                    showToast('Gagal terhubung ke URL Google Script.', 'warning');
+                    if(log) log.textContent = '> Background Sync skipped: using local cache.';
                 });
         }
 
         function refreshData() {
             if (googleAppsScriptUrl) {
-                testConnection();
+                testConnectionBackground();
+                showToast('Menyegarkan data dari Google Spreadsheet...', 'info');
             } else {
                 renderSuratTable(currentSuratList);
                 showToast('Tampilan data surat diperbarui.', 'info');
