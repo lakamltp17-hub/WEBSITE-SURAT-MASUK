@@ -256,15 +256,13 @@
                         </select>
                     </div>
 
-                    <div>
+<div>
                         <label class="block font-bold text-slate-700 mb-1">Kata Kunci Otorisasi Staf / PIN *</label>
                         <div class="relative">
                             <i class="fa-solid fa-key absolute left-3.5 top-3.5 text-slate-400"></i>
-                            <input type="password" id="survei-auth-pin" required placeholder="Masukkan PIN Staf (Default: 12345 atau pupr2026)" class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-pu-blue font-medium">
+                            <input type="password" id="survei-auth-pin" required placeholder="Masukkan PIN Staf" class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-pu-blue font-medium">
                         </div>
-                        <p class="text-[10px] text-slate-400 mt-1">*PIN default internal: <code class="bg-slate-100 px-1 py-0.5 rounded text-pu-blue font-bold">12345</code> atau <code class="bg-slate-100 px-1 py-0.5 rounded text-pu-blue font-bold">pupr2026</code></p>
                     </div>
-
                     <button type="submit" class="w-full py-3 bg-pu-blue hover:bg-pu-darkblue text-amber-300 font-extrabold rounded-xl shadow-lg transition flex items-center justify-center gap-2">
                         <i class="fa-solid fa-unlock-keyhole"></i>
                         <span>Buka Room Upload Survei</span>
@@ -1105,8 +1103,7 @@ function doPost(e) {
             room.classList.add('hidden');
             document.body.style.overflow = 'auto';
         }
-
-        function handleSurveiAuth(e) {
+function handleSurveiAuth(e) {
             e.preventDefault();
             const staffName = document.getElementById('survei-auth-staff').value;
             const pin = document.getElementById('survei-auth-pin').value.trim();
@@ -1117,8 +1114,8 @@ function doPost(e) {
                 return;
             }
 
-            // Validasi PIN Staf (menerima 12345 atau pupr2026 atau puprambon)
-            if (pin === '12345' || pin === 'pupr2026' || pin === 'puprambon') {
+            // Validasi PIN Staf
+            if (pin === 'PSDA' || pin === 'pupr2026' || pin === 'puprambon') {
                 errorEl.classList.add('hidden');
                 activeSurveiStaff = staffName;
                 sessionStorage.setItem('active_survei_staff', staffName);
@@ -1150,17 +1147,25 @@ function doPost(e) {
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('survei-tanggal-pelaksanaan').value = today;
         }
-
-        function populateSurveiSuratSelect() {
+function populateSurveiSuratSelect() {
             const select = document.getElementById('survei-select-surat');
             if (!select) return;
 
-            // Prioritaskan surat yang ditugaskan kepada staf aktif
+            // Filter hanya surat yang penanggungJawab-nya mencakup nama staf yang sedang aktif/login
+            const assignedSuratList = currentSuratList.filter(s => {
+                return s.penanggungJawab && s.penanggungJawab.includes(activeSurveiStaff);
+            });
+
+            // Jika staf belum memiliki tugas disposisi
+            if (assignedSuratList.length === 0) {
+                select.innerHTML = '<option value="">-- Belum ada tugas disposisi untuk Anda --</option>';
+                return;
+            }
+
+            // Tampilkan hanya tugas milik staf yang bersangkutan
             select.innerHTML = '<option value="">-- Pilih Surat Masuk / Disposisi Lapangan --</option>' +
-                currentSuratList.map(s => {
-                    const isAssigned = s.penanggungJawab && s.penanggungJawab.includes(activeSurveiStaff);
-                    const tag = isAssigned ? ' [TUGAS ANDA]' : '';
-                    return `<option value="${s.nomorSurat}">${s.nomorSurat} - ${s.perihal} (${s.asalSurat})${tag}</option>`;
+                assignedSuratList.map(s => {
+                    return `<option value="${s.nomorSurat}">${s.nomorSurat} - ${s.perihal} (${s.asalSurat})</option>`;
                 }).join('');
         }
 
@@ -1308,19 +1313,33 @@ function doPost(e) {
             }
         });
 
-        function handleLogin(e) {
-            e.preventDefault();
-            const user = document.getElementById('login-username').value.trim();
-            const pass = document.getElementById('login-password').value.trim();
-            const errorMsg = document.getElementById('login-error-msg');
+function handleLogin(e) {
+    e.preventDefault();
+    const user = document.getElementById('login-username').value.trim();
+    const pass = document.getElementById('login-password').value.trim();
+    const errorMsg = document.getElementById('login-error-msg');
 
-            if (user === 'admin' && pass === 'puprambon') {
-                document.getElementById('login-overlay').classList.add('hidden');
-                showToast('Berhasil masuk ke portal Dinas PUPR Kota Ambon!', 'success');
-            } else {
-                errorMsg.classList.remove('hidden');
-            }
+    if (user === 'admin' && pass === 'puprambon') {
+        document.getElementById('login-overlay').classList.add('hidden');
+        
+        // --- TAMBAHKAN KODE INI AGAR LAGU BERPUTAR SETELAH LOGIN ---
+        const audioEl = document.getElementById('dashboard-audio');
+        const musicWidget = document.getElementById('music-control-widget');
+        if (audioEl) {
+            audioEl.play().then(() => {
+                if (musicWidget) musicWidget.classList.remove('hidden');
+            }).catch(error => {
+                console.log("Pemutaran audio dibatasi browser:", error);
+            });
         }
+        // -----------------------------------------------------------
+
+        showToast('Berhasil masuk ke portal Dinas PUPR Kota Ambon!', 'success');
+    } else {
+        errorMsg.classList.remove('hidden');
+    }
+}
+
 
         function handleLogout() {
             const konfirmasi = confirm("Apakah Anda yakin ingin keluar dari sistem?");
@@ -2280,5 +2299,6 @@ function sendWhatsAppMessage() {
             }, 3500);
         }
     </script>
+	<audio id="dashboard-audio" src="tifa-totobuang.mp3" preload="auto" loop></audio>
 </body>
 </html>
