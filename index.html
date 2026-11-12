@@ -256,7 +256,7 @@
                         </select>
                     </div>
 
-<div>
+                    <div>
                         <label class="block font-bold text-slate-700 mb-1">Kata Kunci Otorisasi Staf / PIN *</label>
                         <div class="relative">
                             <i class="fa-solid fa-key absolute left-3.5 top-3.5 text-slate-400"></i>
@@ -299,15 +299,40 @@
                         </div>
                     </div>
 
-                    <!-- FOTO DOKUMENTASI LAPANGAN -->
+                    <!-- FOTO DOKUMENTASI LAPANGAN (TERHUBUNG KE GOOGLE DRIVE FOLDER & SINKRON OTOMATIS KE SPREADSHEET) -->
                     <div class="space-y-3">
-                        <label class="block font-bold text-slate-800 text-sm">2. Foto Dokumentasi Hasil Survei Lapangan (Bisa Banyak) *</label>
-                        <div class="border-2 border-dashed border-slate-300 bg-slate-50 hover:bg-slate-100/80 rounded-2xl p-6 text-center transition cursor-pointer" onclick="document.getElementById('survei-file-input').click()">
-                            <i class="fa-solid fa-cloud-arrow-up text-4xl text-pu-blue mb-2"></i>
-                            <p class="font-bold text-slate-700">Klik di sini untuk upload foto kamera/galeri survei</p>
-                            <p class="text-[11px] text-slate-400 mt-1">Mendukung format JPG, PNG, WEBP. Kompresi gambar otomatis aktif.</p>
-                            <input type="file" id="survei-file-input" accept="image/*" multiple class="hidden" onchange="handleSurveiImagesSelected(this)">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                            <label class="block font-bold text-slate-800 text-sm">2. Foto Dokumentasi Hasil Survei Lapangan (Google Drive & Lokal) *</label>
+                            <a href="https://drive.google.com/drive/u/0/folders/1cxw5RKGkfBhFrvSEHbteFl6Me1oXUyai" target="_blank" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-sm transition self-start sm:self-auto">
+                                <i class="fa-brands fa-google-drive"></i> Buka Folder Google Drive
+                            </a>
                         </div>
+
+                        <div class="border-2 border-dashed border-slate-300 bg-slate-50 hover:bg-slate-100/80 rounded-2xl p-6 text-center transition cursor-pointer" onclick="window.open('https://drive.google.com/drive/u/0/folders/1cxw5RKGkfBhFrvSEHbteFl6Me1oXUyai', '_blank')">
+                            <i class="fa-brands fa-google-drive text-4xl text-blue-600 mb-2"></i>
+                            <p class="font-bold text-slate-700">Klik di sini untuk langsung masuk ke Google Drive Folder Dokumentasi</p>
+                            <p class="text-[11px] text-slate-400 mt-1">Unggah foto/file Anda ke folder Google Drive di atas, lalu tempelkan link-nya pada kolom di bawah agar langsung tersinkron ke Spreadsheet.</p>
+                        </div>
+
+                        <!-- Kolom Input Link Google Drive yang Otomatis Terkirim ke kolom dokumentasiUrl Spreadsheet -->
+                        <div class="p-3.5 bg-blue-50/70 border border-blue-200 rounded-xl space-y-1.5">
+                            <label class="block font-bold text-slate-800 text-xs flex items-center gap-1.5">
+                                <i class="fa-solid fa-link text-blue-600"></i> Link Google Drive Dokumentasi (Otomatis Masuk ke Spreadsheet Kolom dokumentasiUrl) *
+                            </label>
+                            <input type="url" id="survei-gdrive-url" required value="https://drive.google.com/drive/u/0/folders/1cxw5RKGkfBhFrvSEHbteFl6Me1oXUyai" placeholder="https://drive.google.com/file/d/.../view atau link folder" class="w-full p-2.5 bg-white border border-slate-300 rounded-xl focus:ring-2 focus:ring-pu-blue font-mono text-xs text-blue-800">
+                            <p class="text-[10px] text-slate-600">
+                                <i class="fa-solid fa-circle-check text-emerald-600 mr-1"></i> Tautan ini otomatis menggantikan link default pada kolom <b>dokumentasiUrl</b> di Google Spreadsheet saat Anda menyimpan laporan.
+                            </p>
+                        </div>
+
+                        <!-- Tombol Tambahan Upload File Lokal / Kamera (Opsional untuk pratinjau lokal) -->
+                        <div class="flex items-center justify-between pt-1">
+                            <span class="text-[11px] text-slate-500 font-medium">Pratinjau foto tambahan dari perangkat (opsional):</span>
+                            <button type="button" onclick="document.getElementById('survei-file-input').click()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold flex items-center gap-1 transition">
+                                <i class="fa-solid fa-cloud-arrow-up"></i> Pilih File Foto
+                            </button>
+                        </div>
+                        <input type="file" id="survei-file-input" accept="image/*" multiple class="hidden" onchange="handleSurveiImagesSelected(this)">
 
                         <!-- Preview Foto Terpilih -->
                         <div id="survei-images-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2"></div>
@@ -434,7 +459,7 @@
                 </button>
                 
                 <button onclick="openStafTeknisViewer()" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-200 hover:text-white hover:bg-white/10 transition text-left cursor-pointer">Staf Teknis</button>
-			
+            
                 
                 <button onclick="handleLogout()" class="hidden sm:inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-sm shadow-md transition-all duration-200">
                     <i class="fa-solid fa-right-from-bracket"></i>
@@ -444,7 +469,7 @@
                 <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg bg-white/10 text-slate-200 hover:text-white focus:outline-none">
                     <i class="fa-solid fa-bars text-xl"></i>
                 </button>
-            </div>
+            </nav>
         </div>
 
         <div id="mobile-menu" class="hidden md:hidden bg-pu-darkblue/95 border-b border-slate-700 px-4 pt-2 pb-6 space-y-2">
@@ -1073,6 +1098,7 @@ function doPost(e) {
         /* --- SCRIPT KHUSUS ROOM UPLOAD SURVEI LAPANGAN --- */
         let activeSurveiStaff = null;
         let surveiUploadedImages = [];
+        const DEFAULT_SURVEI_GDRIVE_URL = 'https://drive.google.com/drive/u/0/folders/1cxw5RKGkfBhFrvSEHbteFl6Me1oXUyai';
 
         function populateSurveiAuthStaffDropdown() {
             const select = document.getElementById('survei-auth-staff');
@@ -1103,7 +1129,8 @@ function doPost(e) {
             room.classList.add('hidden');
             document.body.style.overflow = 'auto';
         }
-function handleSurveiAuth(e) {
+
+        function handleSurveiAuth(e) {
             e.preventDefault();
             const staffName = document.getElementById('survei-auth-staff').value;
             const pin = document.getElementById('survei-auth-pin').value.trim();
@@ -1146,8 +1173,15 @@ function handleSurveiAuth(e) {
             // Set default tanggal survei hari ini
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('survei-tanggal-pelaksanaan').value = today;
+
+            // Pastikan link Google Drive default terisi
+            const gdriveInput = document.getElementById('survei-gdrive-url');
+            if (gdriveInput && !gdriveInput.value) {
+                gdriveInput.value = DEFAULT_SURVEI_GDRIVE_URL;
+            }
         }
-function populateSurveiSuratSelect() {
+
+        function populateSurveiSuratSelect() {
             const select = document.getElementById('survei-select-surat');
             if (!select) return;
 
@@ -1184,6 +1218,16 @@ function populateSurveiSuratSelect() {
                 document.getElementById('surv-preview-nomor').textContent = surat.nomorSurat;
                 document.getElementById('surv-preview-perihal').textContent = `${surat.perihal} (Dari: ${surat.asalSurat})`;
                 document.getElementById('surv-preview-disposisi').textContent = `"${surat.disposisi || 'Tidak ada instruksi khusus'}"`;
+
+                // Isi kolom Google Drive dengan link folder/file dokumentasi (jika sudah ada link drive sebelumnya, tampilkan, jika tidak gunakan link folder default)
+                const gdriveInput = document.getElementById('survei-gdrive-url');
+                if (gdriveInput) {
+                    if (surat.dokumentasiUrl && surat.dokumentasiUrl.includes('drive.google.com')) {
+                        gdriveInput.value = surat.dokumentasiUrl;
+                    } else {
+                        gdriveInput.value = DEFAULT_SURVEI_GDRIVE_URL;
+                    }
+                }
             }
         }
 
@@ -1211,7 +1255,7 @@ function populateSurveiSuratSelect() {
             if (!grid) return;
 
             if (surveiUploadedImages.length === 0) {
-                grid.innerHTML = '<div class="col-span-full text-slate-400 text-center py-2 text-xs">Belum ada foto yang diunggah.</div>';
+                grid.innerHTML = '<div class="col-span-full text-slate-400 text-center py-2 text-xs">Belum ada foto lokal tambahan yang diunggah.</div>';
                 return;
             }
 
@@ -1232,23 +1276,24 @@ function populateSurveiSuratSelect() {
             const tglPelaksanaan = document.getElementById('survei-tanggal-pelaksanaan').value;
             const updateStatus = document.getElementById('survei-update-status').value;
             const catatan = document.getElementById('survei-catatan-teknis').value.trim();
+            const gdriveUrlInput = document.getElementById('survei-gdrive-url')?.value.trim() || DEFAULT_SURVEI_GDRIVE_URL;
 
             if (!noSurat) {
                 showToast('Pilih surat disposisi terlebih dahulu!', 'warning');
                 return;
             }
 
-            if (surveiUploadedImages.length === 0) {
-                showToast('Mohon unggah minimal 1 foto dokumentasi survei lapangan!', 'warning');
+            if (!gdriveUrlInput && surveiUploadedImages.length === 0) {
+                showToast('Mohon masukkan link Google Drive dokumentasi atau unggah minimal 1 foto!', 'warning');
                 return;
             }
 
             const targetSurat = currentSuratList.find(s => s.nomorSurat === noSurat);
             if (targetSurat) {
-                // Perbarui data dokumentasi dan status
-                if (!targetSurat.dokumentasiUrls) targetSurat.dokumentasiUrls = [];
-                targetSurat.dokumentasiUrls = [...targetSurat.dokumentasiUrls, ...surveiUploadedImages];
-                targetSurat.dokumentasiUrl = targetSurat.dokumentasiUrls[0];
+                // Pastikan link Google Drive menempati posisi utama agar langsung menimpa kolom dokumentasiUrl di Spreadsheet
+                const existingLocalImages = (targetSurat.dokumentasiUrls || []).filter(url => url && !url.includes('unsplash.com') && !url.includes('drive.google.com'));
+                targetSurat.dokumentasiUrls = [gdriveUrlInput, ...existingLocalImages, ...surveiUploadedImages];
+                targetSurat.dokumentasiUrl = gdriveUrlInput;
                 targetSurat.status = updateStatus;
                 
                 const formatTgl = formatTanggalIndo(tglPelaksanaan);
@@ -1263,7 +1308,7 @@ function populateSurveiSuratSelect() {
                 // Render ulang tabel utama
                 renderSuratTable(currentSuratList);
 
-                // Sinkronisasi ke Google Apps Script / Google Sheets
+                // Sinkronisasi otomatis ke Google Apps Script / Google Sheets (mengganti kolom dokumentasiUrl)
                 if (googleAppsScriptUrl) {
                     fetch(googleAppsScriptUrl, {
                         method: 'POST',
@@ -1279,18 +1324,19 @@ function populateSurveiSuratSelect() {
                             status: targetSurat.status,
                             disposisi: targetSurat.disposisi,
                             scanUrl: targetSurat.scanUrl,
-                            dokumentasiUrl: targetSurat.dokumentasiUrl
+                            dokumentasiUrl: gdriveUrlInput
                         })
                     }).catch(err => console.error(err));
                 }
 
-                showToast('Dokumentasi & Laporan Hasil Survei Lapangan Berhasil Diunggah!', 'success');
+                showToast('Dokumentasi & Link Google Drive Berhasil Tersimpan ke Spreadsheet!', 'success');
                 
                 // Reset form & foto
                 surveiUploadedImages = [];
                 renderSurveiImagesGrid();
                 document.getElementById('survei-catatan-teknis').value = '';
                 document.getElementById('survei-select-surat').value = '';
+                document.getElementById('survei-gdrive-url').value = DEFAULT_SURVEI_GDRIVE_URL;
                 document.getElementById('survei-surat-detail-preview').classList.add('hidden');
 
                 closeUploadSurveiRoom();
@@ -1313,33 +1359,30 @@ function populateSurveiSuratSelect() {
             }
         });
 
-function handleLogin(e) {
-    e.preventDefault();
-    const user = document.getElementById('login-username').value.trim();
-    const pass = document.getElementById('login-password').value.trim();
-    const errorMsg = document.getElementById('login-error-msg');
+        function handleLogin(e) {
+            e.preventDefault();
+            const user = document.getElementById('login-username').value.trim();
+            const pass = document.getElementById('login-password').value.trim();
+            const errorMsg = document.getElementById('login-error-msg');
 
-    if (user === 'admin' && pass === 'puprambon') {
-        document.getElementById('login-overlay').classList.add('hidden');
-        
-        // --- TAMBAHKAN KODE INI AGAR LAGU BERPUTAR SETELAH LOGIN ---
-        const audioEl = document.getElementById('dashboard-audio');
-        const musicWidget = document.getElementById('music-control-widget');
-        if (audioEl) {
-            audioEl.play().then(() => {
-                if (musicWidget) musicWidget.classList.remove('hidden');
-            }).catch(error => {
-                console.log("Pemutaran audio dibatasi browser:", error);
-            });
+            if (user === 'admin' && pass === 'puprambon') {
+                document.getElementById('login-overlay').classList.add('hidden');
+                
+                const audioEl = document.getElementById('dashboard-audio');
+                const musicWidget = document.getElementById('music-control-widget');
+                if (audioEl) {
+                    audioEl.play().then(() => {
+                        if (musicWidget) musicWidget.classList.remove('hidden');
+                    }).catch(error => {
+                        console.log("Pemutaran audio dibatasi browser:", error);
+                    });
+                }
+
+                showToast('Berhasil masuk ke portal Dinas PUPR Kota Ambon!', 'success');
+            } else {
+                errorMsg.classList.remove('hidden');
+            }
         }
-        // -----------------------------------------------------------
-
-        showToast('Berhasil masuk ke portal Dinas PUPR Kota Ambon!', 'success');
-    } else {
-        errorMsg.classList.remove('hidden');
-    }
-}
-
 
         function handleLogout() {
             const konfirmasi = confirm("Apakah Anda yakin ingin keluar dari sistem?");
@@ -1393,7 +1436,6 @@ function handleLogin(e) {
             return list.sort((a, b) => new Date(b.tanggalSurat) - new Date(a.tanggalSurat));
         }
 
-        // Fungsi helper untuk memformat tanggal ke format Indonesia (Contoh: 21 Oktober 2026)
         function formatTanggalIndo(dateStr) {
             if (!dateStr) return '-';
             if (isNaN(new Date(dateStr).getTime())) return dateStr;
@@ -1619,7 +1661,6 @@ function handleLogin(e) {
 
             const uniqueData = deduplicateSurat(data);
             
-            // Urutkan berdasarkan tanggal terbaru paling atas
             sortSuratByNewestDate(uniqueData);
 
             showingCount.textContent = uniqueData.length;
@@ -1763,12 +1804,29 @@ function handleLogin(e) {
 
             const dokBox = document.getElementById('det-dok-preview-box');
             if (currentActiveSuratItem.dokumentasiUrls && currentActiveSuratItem.dokumentasiUrls.length > 0) {
-                dokBox.innerHTML = currentActiveSuratItem.dokumentasiUrls.map((url, idx) => `
-                    <div class="relative rounded-xl overflow-hidden border border-slate-300 h-28 group bg-slate-900">
-                        <img src="${url}" alt="Dokumentasi" class="w-full h-full object-cover group-hover:scale-105 transition cursor-pointer" onclick="openFullscreenImage('${url}', 'Dokumentasi Lapangan')">
-                        <button type="button" onclick="removeDetailDokItem(${idx})" class="absolute top-1 right-1 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-[10px] shadow hover:bg-red-700"><i class="fa-solid fa-xmark"></i></button>
-                    </div>
-                `).join('');
+                dokBox.innerHTML = currentActiveSuratItem.dokumentasiUrls.map((url, idx) => {
+                    const isDriveUrl = url && url.includes('drive.google.com');
+                    if (isDriveUrl) {
+                        return `
+                            <div class="col-span-2 flex items-center justify-between p-2.5 bg-blue-50 border border-blue-200 rounded-xl shadow-sm text-xs">
+                                <div class="flex items-center gap-2 truncate cursor-pointer" onclick="openFullscreenImage('${url}', 'Dokumentasi Google Drive')">
+                                    <i class="fa-brands fa-google-drive text-blue-600 text-base"></i>
+                                    <span class="font-semibold text-blue-900 truncate">Dokumentasi Google Drive #${idx + 1}</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <button type="button" onclick="openFullscreenImage('${url}', 'Dokumentasi Google Drive')" class="px-2.5 py-1 bg-blue-600 text-white rounded-lg text-[11px] font-semibold hover:bg-blue-700">Buka</button>
+                                    <button type="button" onclick="removeDetailDokItem(${idx})" class="w-6 h-6 bg-red-100 text-red-600 hover:bg-red-200 rounded-full flex items-center justify-center"><i class="fa-solid fa-xmark text-xs"></i></button>
+                                </div>
+                            </div>
+                        `;
+                    }
+                    return `
+                        <div class="relative rounded-xl overflow-hidden border border-slate-300 h-28 group bg-slate-900">
+                            <img src="${url}" alt="Dokumentasi" class="w-full h-full object-cover group-hover:scale-105 transition cursor-pointer" onclick="openFullscreenImage('${url}', 'Dokumentasi Lapangan')">
+                            <button type="button" onclick="removeDetailDokItem(${idx})" class="absolute top-1 right-1 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-[10px] shadow hover:bg-red-700"><i class="fa-solid fa-xmark"></i></button>
+                        </div>
+                    `;
+                }).join('');
             } else {
                 dokBox.innerHTML = `<div class="col-span-2 flex items-center justify-center h-full text-slate-400 text-xs">Belum ada foto dokumentasi lapangan.</div>`;
             }
@@ -2119,74 +2177,72 @@ function handleLogin(e) {
             }
         }
 
-function sendWhatsAppMessage() {
-    if (!window.selectedStaffForWa || window.selectedStaffForWa.length === 0) {
-        showToast('Tidak ada nomor WhatsApp tujuan yang ditemukan!', 'warning');
-        return;
-    }
+        function sendWhatsAppMessage() {
+            if (!window.selectedStaffForWa || window.selectedStaffForWa.length === 0) {
+                showToast('Tidak ada nomor WhatsApp tujuan yang ditemukan!', 'warning');
+                return;
+            }
 
-    const activeSurat = currentActiveSuratItem || {};
-    const nomorSurat = activeSurat.nomorSurat || document.getElementById('input-nomor')?.value.trim() || '-';
-    const tanggalSurat = formatTanggalIndo(activeSurat.tanggalSurat || document.getElementById('input-tanggal')?.value || '-');
-    const asalSurat = activeSurat.asalSurat || document.getElementById('input-asal')?.value || '-';
-    const perihal = activeSurat.perihal || document.getElementById('input-perihal')?.value || '-';
-    const disposisi = activeSurat.disposisi || document.getElementById('input-disposisi')?.value || '-';
-    const status = activeSurat.status || document.getElementById('input-status')?.value || 'Diproses';
+            const activeSurat = currentActiveSuratItem || {};
+            const nomorSurat = activeSurat.nomorSurat || document.getElementById('input-nomor')?.value.trim() || '-';
+            const tanggalSurat = formatTanggalIndo(activeSurat.tanggalSurat || document.getElementById('input-tanggal')?.value || '-');
+            const asalSurat = activeSurat.asalSurat || document.getElementById('input-asal')?.value || '-';
+            const perihal = activeSurat.perihal || document.getElementById('input-perihal')?.value || '-';
+            const disposisi = activeSurat.disposisi || document.getElementById('input-disposisi')?.value || '-';
+            const status = activeSurat.status || document.getElementById('input-status')?.value || 'Diproses';
 
-    const suratLink = getShortFileLink(activeSurat.nomorSurat ? activeSurat : {
-        nomorSurat: nomorSurat,
-        scanUrl: document.getElementById('input-file-url')?.value.trim() || (uploadedScanFiles.length > 0 ? uploadedScanFiles[0].url : '')
-    });
-
-    let sentCount = 0;
-
-    // Perulangan mengirim pesan otomatis ke setiap staf yang dipilih menggunakan WhatsApp API
-    window.selectedStaffForWa.forEach((staff) => {
-        if (staff.whatsapp) {
-            const personalMessage = `*NOTIFIKASI E-DISPOSISI SURAT PUPR KOTA AMBON*\n\n` +
-                                    `Halo/Yth. *${staff.nama}*,\n\n` +
-                                    `Terdapat penugasan/disposisi surat yang ditujukan kepada Anda:\n` +
-                                    `• *No. Surat:* ${nomorSurat}\n` +
-                                    `• *Tanggal:* ${tanggalSurat}\n` +
-                                    `• *Asal:* ${asalSurat}\n` +
-                                    `• *Perihal:* ${perihal}\n` +
-                                    `• *Disposisi Pimpinan:* ${disposisi}\n` +
-                                    `• *Status:* ${status}\n\n` +
-                                    `📄 *Link Buka File Surat:* ${suratLink}\n\n` +
-                                    `Mohon segera dicek pada portal resmi Dinas PUPR Kota Ambon untuk ditindaklanjuti. Terima kasih.`;
-
-            // Kirim pesan secara asynchronous ke WhatsApp API Gateway
-            fetch('https://api.fonnte.com/send', {
-                method: 'POST',
-                headers: {
-                    'Authorization': 'tLuMsRPEfMAx7YKHcDJ7', // <-- Ganti dengan Token API Anda
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    target: staff.whatsapp,
-                    message: personalMessage
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log(`Pesan berhasil dikirim ke ${staff.nama}:`, data);
-            })
-            .catch(error => {
-                console.error(`Gagal mengirim pesan ke ${staff.nama}:`, error);
+            const suratLink = getShortFileLink(activeSurat.nomorSurat ? activeSurat : {
+                nomorSurat: nomorSurat,
+                scanUrl: document.getElementById('input-file-url')?.value.trim() || (uploadedScanFiles.length > 0 ? uploadedScanFiles[0].url : '')
             });
 
-            sentCount++;
+            let sentCount = 0;
+
+            window.selectedStaffForWa.forEach((staff) => {
+                if (staff.whatsapp) {
+                    const personalMessage = `*NOTIFIKASI E-DISPOSISI SURAT PUPR KOTA AMBON*\n\n` +
+                                            `Halo/Yth. *${staff.nama}*,\n\n` +
+                                            `Terdapat penugasan/disposisi surat yang ditujukan kepada Anda:\n` +
+                                            `• *No. Surat:* ${nomorSurat}\n` +
+                                            `• *Tanggal:* ${tanggalSurat}\n` +
+                                            `• *Asal:* ${asalSurat}\n` +
+                                            `• *Perihal:* ${perihal}\n` +
+                                            `• *Disposisi Pimpinan:* ${disposisi}\n` +
+                                            `• *Status:* ${status}\n\n` +
+                                            `📄 *Link Buka File Surat:* ${suratLink}\n\n` +
+                                            `Mohon segera dicek pada portal resmi Dinas PUPR Kota Ambon untuk ditindaklanjuti. Terima kasih.`;
+
+                    fetch('https://api.fonnte.com/send', {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': 'tLuMsRPEfMAx7YKHcDJ7',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            target: staff.whatsapp,
+                            message: personalMessage
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(`Pesan berhasil dikirim ke ${staff.nama}:`, data);
+                    })
+                    .catch(error => {
+                        console.error(`Gagal mengirim pesan ke ${staff.nama}:`, error);
+                    });
+
+                    sentCount++;
+                }
+            });
+
+            closeModal('modal-whatsapp-preview');
+
+            if (sentCount > 0) {
+                showToast(`Mengirim pesan WhatsApp otomatis ke ${sentCount} staf via API.`, 'success');
+            } else {
+                showToast('Nomor WhatsApp staf belum dikonfigurasi.', 'warning');
+            }
         }
-    });
-
-    closeModal('modal-whatsapp-preview');
-
-    if (sentCount > 0) {
-        showToast(`Mengirim pesan WhatsApp otomatis ke ${sentCount} staf via API.`, 'success');
-    } else {
-        showToast('Nomor WhatsApp staf belum dikonfigurasi.', 'warning');
-    }
-}
 
         function copyAppsScriptCode() {
             const codeText = document.getElementById('apps-script-code-block').innerText;
@@ -2299,6 +2355,6 @@ function sendWhatsAppMessage() {
             }, 3500);
         }
     </script>
-	<audio id="dashboard-audio" src="tifa.mp3" preload="auto" loop></audio>
+    <audio id="dashboard-audio" src="tifa.mp3" preload="auto" loop></audio>
 </body>
 </html>
